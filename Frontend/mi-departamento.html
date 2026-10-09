@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Departamento - CoorCBTIS 258</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>CoorCBTIS 258</h2>
+                <p>Plataforma Escolar</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="mi-departamento.html" class="nav-item active"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
+                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
+                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
+                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
+                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
+                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
+                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Barra Superior -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>CoorCBTIS 258</h1>
+                </div>
+                <div class="topbar-center">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar en mi departamento...">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-user">
+                        <div class="user-info">
+                            <img src="https://via.placeholder.com/40" alt="Usuario">
+                            <span>Docente Ejemplo</span>
+                        </div>
+                        <div class="user-menu">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Panel Principal -->
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Mi Departamento</h2>
+                    <p>Departamento: Académico</p>
+                </div>
+
+                <!-- Información del Departamento -->
+                <div class="dashboard-section">
+                    <h3><i class="fas fa-info-circle"></i> Información del Departamento</h3>
+                    <div class="departamento-info">
+                        <div class="info-item">
+                            <span class="info-label">Nombre:</span>
+                            <span class="info-value">Académico</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Descripción:</span>
+                            <span class="info-value">Departamento responsable de la planeación y ejecución del currículo educativo.</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Jefe de Departamento:</span>
+                            <span class="info-value">María González López</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Fecha de Creación:</span>
+                            <span class="info-value">Marzo 2025</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Código de Departamento:</span>
+                            <span class="info-value">ACD-001</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estadísticas del Departamento -->
+                <div class="dashboard-section">
+                    <h3><i class="fas fa-chart-bar"></i> Estadísticas del Departamento</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Docentes</h4>
+                                <p class="stat-number">8</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-file-alt"></i>
+                            <div>
+                                <h4>Archivos Compartidos</h4>
+                                <p class="stat-number">24</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <h4>Anuncios Este Mes</h4>
+                                <p class="stat-number">12</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h4>Próximos Eventos</h4>
+                                <p class="stat-number">5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Departamento (solo para jefes y administradores) -->
+                <div class="dashboard-section">
+                    <h3><i class="fas fa-cogs"></i> Gestión del Departamento</h3>
+                    <div class="departamento-actions">
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Agregar Docente</a>
+                        <a href="#" class="btn btn-success btn-sm"><i class="fas fa-upload"></i> Subir Archivo</a>
+                        <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-bell"></i> Crear Anuncio</a>
+                        <a href="#" class="btn btn-info btn-sm"><i class="fas fa-calendar-plus"></i> Programar Evento</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modals (misma estructura que en index.html) -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </form>
+                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="registerModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerNombre">Nombre completo</label>
+                        <input type="text" id="registerNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRol">Rol</label>
+                        <select id="registerRol" required>
+                            <option value="">Seleccione su rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDepartamento">Departamento</label>
+                        <select id="registerDepartamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                </form>
+                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="createAnnouncementModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Crear Nuevo Anuncio</h2>
+                <form id="announcementForm">
+                    <div class="form-group">
+                        <label for="announcementTitle">Título</label>
+                        <input type="text" id="announcementTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDescription">Descripción</label>
+                        <textarea id="announcementDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDepartment">Departamento</label>
+                        <select id="announcementDepartment" required>
+                            <option value="">Seleccione departamento</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDate">Fecha de expiración (opcional)</label>
+                        <input type="date" id="announcementDate">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="announcementImportant">
+                            Marcar como importante
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementPriority">Prioridad</label>
+                        <select id="announcementPriority">
+                            <option value="baja">Baja</option>
+                            <option value="media" selected>Media</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Crear Anuncio</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

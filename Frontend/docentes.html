@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docentes - CoorCBTIS 258</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>CoorCBTIS 258</h2>
+                <p>Plataforma Escolar</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
+                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
+                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
+                    <li><a href="docentes.html" class="nav-item active"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
+                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
+                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
+                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Barra Superior -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>CoorCBTIS 258</h1>
+                </div>
+                <div class="topbar-center">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar docentes...">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-user">
+                        <div class="user-info">
+                            <img src="https://via.placeholder.com/40" alt="Usuario">
+                            <span>Docente Ejemplo</span>
+                        </div>
+                        <div class="user-menu">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Panel Principal -->
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Docentes</h2>
+                    <p>Consulta el directorio de docentes por departamento</p>
+                </div>
+
+                <!-- Filtros y acciones -->
+                <div class="dashboard-section filtros-section">
+                    <div class="filtros-header">
+                        <h3><i class="fas fa-filter"></i> Filtros</h3>
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Agregar Docente</a>
+                    </div>
+                    <div class="filtros-content">
+                        <div class="filtro-group">
+                            <label for="filtroDepartamento">Departamento:</label>
+                            <select id="filtroDepartamento">
+                                <option value="">Todos los departamentos</option>
+                                <option value="academico">Académico</option>
+                                <option value="servicios_escolares">Servicios Escolares</option>
+                                <option value="vinculación">Vinculación</option>
+                                <option value="orientacion">Orientación</option>
+                                <option value="control_escolar">Control Escolar</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label for="filtroRol">Rol:</label>
+                            <select id="filtroRol">
+                                <option value="">Todos los roles</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="jefe_departamento">Jefe de Departamento</option>
+                                <option value="docente">Docente</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de docentes -->
+                <div class="dashboard-section docentes-lista-section">
+                    <h3><i class="fas fa-list"></i> Lista de Docentes</h3>
+                    <div class="docentes-container">
+                        <!-- Docente 1 -->
+                        <div class="docente-card">
+                            <div class="docente-header">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>María González López</h4>
+                                    <p>Jefe de Departamento Académico</p>
+                                </div>
+                            </div>
+                            <div class="docente-body">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">maria.gonzalez@cbti258.edu.mx</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Departamento:</span>
+                                    <span class="info-value">Académico</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Teléfono:</span>
+                                    <span class="info-value">555-1234</span>
+                                </div>
+                            </div>
+                            <div class="docente-footer">
+                                <span class="status active">Activo</span>
+                                <div class="docente-actions">
+                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Docente 2 -->
+                        <div class="docente-card">
+                            <div class="docente-header">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>Carlos Ramírez Méndez</h4>
+                                    <p>Docente de Matemáticas</p>
+                                </div>
+                            </div>
+                            <div class="docente-body">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">carlos.ramirez@cbti258.edu.mx</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Departamento:</span>
+                                    <span class="info-value">Académico</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Teléfono:</span>
+                                    <span class="info-value">555-5678</span>
+                                </div>
+                            </div>
+                            <div class="docente-footer">
+                                <span class="status active">Activo</span>
+                                <div class="docente-actions">
+                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Docente 3 -->
+                        <div class="docente-card">
+                            <div class="docente-header">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>Ana Torres Ruiz</h4>
+                                    <p>Docente de Servicios Escolares</p>
+                                </div>
+                            </div>
+                            <div class="docente-body">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">ana.torres@cbti258.edu.mx</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Departamento:</span>
+                                    <span class="info-value">Servicios Escolares</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Teléfono:</span>
+                                    <span class="info-value">555-9012</span>
+                                </div>
+                            </div>
+                            <div class="docente-footer">
+                                <span class="status active">Activo</span>
+                                <div class="docente-actions">
+                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar
+</div>
+</div>
+
+<div class="docente-card">
+    <div class="docente-header">
+        <i class="fas fa-user"></i>
+        <div>
+            <h4>Luis Hernández Castillo</h4>
+            <p>Docente de Vinculación</p>
+        </div>
+    </div>
+    <div class="docente-body">
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">luis.hernandez@cbti258.edu.mx</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Departamento:</span>
+            <span class="info-value">Vinculación</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">555-3456</span>
+        </div>
+    </div>
+    <div class="docente-footer">
+        <span class="status active">Activo</span>
+        <div class="docente-actions">
+            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+        </div>
+    </div>
+</div>
+
+<div class="docente-card">
+    <div class="docente-header">
+        <i class="fas fa-user"></i>
+        <div>
+            <h4>Juana Pérez Martínez</h4>
+            <p>Orientadora Vocacional</p>
+        </div>
+    </div>
+    <div class="docente-body">
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">juana.perez@cbti258.edu.mx</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Departamento:</span>
+            <span class="info-value">Orientación</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">555-7890</span>
+        </div>
+    </div>
+    <div class="docente-footer">
+        <span class="status active">Activo</span>
+        <div class="docente-actions">
+            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+        </div>
+    </div>
+</div>
+
+<div class="docente-card">
+    <div class="docente-header">
+        <i class="fas fa-user"></i>
+        <div>
+            <h4>Roberto Gómez Sánchez</h4>
+            <p>Docente de Control Escolar</p>
+        </div>
+    </div>
+    <div class="docente-body">
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">roberto.gomez@cbti258.edu.mx</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Departamento:</span>
+            <span class="info-value">Control Escolar</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">555-2345</span>
+        </div>
+    </div>
+    <div class="docente-footer">
+        <span class="status active">Activo</span>
+        <div class="docente-actions">
+            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+        </div>
+    </div>
+</div>
+
+<div class="docente-card">
+    <div class="docente-header">
+        <i class="fas fa-user"></i>
+        <div>
+            <h4>Laura Díaz López</h4>
+            <p>Docente de Historia</p>
+        </div>
+    </div>
+    <div class="docente-body">
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">laura.diaz@cbti258.edu.mx</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Departamento:</span>
+            <span class="info-value">Académico</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">555-6789</span>
+        </div>
+    </div>
+    <div class="docente-footer">
+        <span class="status active">Activo</span>
+        <div class="docente-actions">
+            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
+        </div>
+    </div>
+</div>
+
+                    </div>
+
+                    <!-- Paginación -->
+                    <div class="paginacion">
+                        <button class="btn btn-sm btn-outline">&laquo; Anterior</button>
+                        <span class="pagina-actual">1</span>
+                        <span>de</span>
+                        <span class="total-paginas">2</span>
+                        <button class="btn btn-sm btn-outline">Siguiente &raquo;</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modals (misma estructura que en index.html) -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </form>
+                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="registerModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerNombre">Nombre completo</label>
+                        <input type="text" id="registerNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRol">Rol</label>
+                        <select id="registerRol" required>
+                            <option value="">Seleccione su rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDepartamento">Departamento</label>
+                        <select id="registerDepartamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                </form>
+                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="createDocenteModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Agregar Nuevo Docente</h2>
+                <form id="docenteForm">
+                    <div class="form-group">
+                        <label for="docenteNombre">Nombre completo</label>
+                        <input type="text" id="docenteNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docenteEmail">Email</label>
+                        <input type="email" id="docenteEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docentePassword">Password</label>
+                        <input type="password" id="docentePassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docenteDepartamento">Departamento</label>
+                        <select id="docenteDepartamento" required>
+                            <option value="">Seleccione departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="docenteRol">Rol</label>
+                        <select id="docenteRol" required>
+                            <option value="">Seleccione rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Agregar Docente</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

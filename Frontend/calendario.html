@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - CoorCBTIS 258</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>CoorCBTIS 258</h2>
+                <p>Plataforma Escolar</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
+                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
+                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
+                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
+                    <li><a href="calendario.html" class="nav-item active"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
+                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
+                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Barra Superior -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>CoorCBTIS 258</h1>
+                </div>
+                <div class="topbar-center">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar eventos...">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-user">
+                        <div class="user-info">
+                            <img src="https://via.placeholder.com/40" alt="Usuario">
+                            <span>Docente Ejemplo</span>
+                        </div>
+                        <div class="user-menu">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Panel Principal -->
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Calendario Escolar</h2>
+                    <p>Consulta y gestiona los eventos importantes del CBTIS 258</p>
+                </div>
+
+                <!-- Filtros y acciones -->
+                <div class="dashboard-section filtros-section">
+                    <div class="filtros-header">
+                        <h3><i class="fas fa-filter"></i> Filtros</h3>
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Crear Evento</a>
+                    </div>
+                    <div class="filtros-content">
+                        <div class="filtro-group">
+                            <label for="filtroDepartamento">Departamento:</label>
+                            <select id="filtroDepartamento">
+                                <option value="">Todos los departamentos</option>
+                                <option value="academico">Académico</option>
+                                <option value="servicios_escolares">Servicios Escolares</option>
+                                <option value="vinculación">Vinculación</option>
+                                <option value="orientacion">Orientación</option>
+                                <option value="control_escolar">Control Escolar</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label for="filtroTipo">Tipo de evento:</label>
+                            <select id="filtroTipo">
+                                <option value="">Todos los tipos</option>
+                                <option value="reunion">Reunión</option>
+                                <option value="entrega">Entrega</option>
+                                <option value="actividad">Actividad</option>
+                                <option value="aviso">Aviso</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label for="filtroMes">Mes:</label>
+                            <select id="filtroMes">
+                                <option value="">Todos los meses</option>
+                                <option value="octubre">Octubre 2026</option>
+                                <option value="noviembre">Noviembre 2026</option>
+                                <option value="diciembre">Diciembre 2026</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista del calendario -->
+                <div class="dashboard-section calendario-vista-section">
+                    <h3><i class="fas fa-calendar-week"></i> Vista Mensual</h3>
+                    <div class="calendario-container">
+                        <!-- Encabezado de días de la semana -->
+                        <div class="calendario-dias-semana">
+                            <div class="dia-semana">Lun</div>
+                            <div class="dia-semana">Mar</div>
+                            <div class="dia-semana">Mié</div>
+                            <div class="dia-semana">Jue</div>
+                            <div class="dia-semana">Vie</div>
+                            <div class="dia-semana">Sáb</div>
+                            <div class="dia-semana">Dom</div>
+                        </div>
+
+                        <!-- Días del calendario -->
+                        <div class="calendario-dias">
+                            <!-- Fila 1 -->
+                            <div class="dia">1</div>
+                            <div class="dia">2</div>
+                            <div class="dia">3</div>
+                            <div class="dia">4</div>
+                            <div class="dia evento"><span class="evento-dot reunion"></span>5</div>
+                            <div class="dia">6</div>
+                            <div class="dia">7</div>
+
+                            <!-- Fila 2 -->
+                            <div class="dia">8</div>
+                            <div class="dia">9</div>
+                            <div class="dia evento"><span class="evento-dot actividad"></span>10</div>
+                            <div class="dia">11</div>
+                            <div class="dia">12</div>
+                            <div class="dia">13</div>
+                            <div class="dia">14</div>
+
+                            <!-- Fila 3 -->
+                            <div class="dia">15</div>
+                            <div class="dia evento"><span class="evento-dot entrega"></span>16</div>
+                            <div class="dia">17</div>
+                            <div class="dia">18</div>
+                            <div class="dia evento"><span class="evento-dot aviso"></span>19</div>
+                            <div class="dia">20</div>
+                            <div class="dia">21</div>
+
+                            <!-- Fila 4 -->
+                            <div class="dia">22</div>
+                            <div class="dia evento"><span class="evento-dot reunion"></span>23</div>
+                            <div class="dia">24</div>
+                            <div class="dia">25</div>
+                            <div class="dia">26</div>
+                            <div class="dia">27</div>
+                            <div class="dia">28</div>
+
+                            <!-- Fila 5 -->
+                            <div class="dia">29</div>
+                            <div class="dia">30</div>
+                            <div class="dia">31</div>
+                            <div class="dia"></div>
+                            <div class="dia"></div>
+                            <div class="dia"></div>
+                            <div class="dia"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de eventos -->
+                <div class="dashboard-section eventos-lista-section">
+                    <h3><i class="fas fa-list"></i> Próximos Eventos</h3>
+                    <div class="eventos-container">
+                        <!-- Evento 1 -->
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <h4>Reunión de Departamento Académico</h4>
+                                <span class="evento-tipo reunion">Reunión</span>
+                            </div>
+                            <div class="evento-body">
+                                <p><strong>Fecha:</strong> Viernes 5 de octubre, 2026</p>
+                                <p><strong>Hora:</strong> 3:00 PM - 5:00 PM</p>
+                                <p><strong>Lugar:</strong> Sala de Juntas, Departamento Académico</p>
+                                <p><strong>Descripción:</strong> Reunión mensual para revisión de avances académicos y planificación de actividades.</p>
+                            </div>
+                            <div class="evento-footer">
+                                <span>Creado por: María González López</span>
+                                <span>Recordatorio activado</span>
+                            </div>
+                        </div>
+
+                        <!-- Evento 2 -->
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <h4>Taller de Inteligencia Emocional para Docentes</h4>
+                                <span class="evento-tipo actividad">Actividad</span>
+                            </div>
+                            <div class="evento-body">
+                                <p><strong>Fecha:</strong> Miércoles 10 de octubre, 2026</p>
+                                <p><strong>Hora:</strong> 9:00 AM - 1:00 PM</p>
+                                <p><strong>Lugar:</strong> Auditorio Principal</p>
+                                <p><strong>Descripción:</strong> Capacitación en habilidades socioemocionales para mejorar el ambiente escolar y las relaciones docente-estudiante.</p>
+                            </div>
+                            <div class="evento-footer">
+                                <span>Creado por: Ana Torres Ruiz</span>
+                                <span>Recordatorio activado</span>
+                            </div>
+                        </div>
+
+                        <!-- Evento 3 -->
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <h4>Entrega de Calificaciones Parciales</h4>
+                                <span class="evento-tipo entrega">Entrega</span>
+                            </div>
+                            <div class="evento-body">
+                    <p><strong>Fecha:</strong> Viernes 16 de octubre, 2026</p>
+                                <p><strong>Hora:</strong> 8:00 AM - 3:00 PM</p>
+                                <p><strong>Lugar:</strong> Sistema Escolar en Línea</p>
+                                <p><strong>Descripción:</strong> Fecha límite para la entrega de calificaciones del primer parcial mediante el plataforma institucional.</p>
+                            </div>
+                            <div class="evento-footer">
+                                <span>Creado por: Carlos Ramírez Méndez</span>
+                                <span>Recordatorio activado</span>
+                            </div>
+                        </div>
+
+                        <!-- Evento 4 -->
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <h4>Día de la Juventud CBTIS 258</h4>
+                                <span class="evento-tipo aviso">Aviso</span>
+                            </div>
+                            <div class="evento-body">
+                                <p><strong>Fecha:</strong> Sábado 19 de octubre, 2026</p>
+                                <p><strong>Hora:</strong> 8:00 AM - 2:00 PM</p>
+                                <p><strong>Lugar:</strong> Instalaciones Deportivas</p>
+                                <p><strong>Descripción:</strong> Celebración del Día de la Juventud con actividades culturales, deportivas y recreativas para toda la comunidad estudiantil.</p>
+                            </div>
+                            <div class="evento-footer">
+                                <span>Creado por: Servicios Escolares</span>
+                                <span>Sin recordatorio</span>
+                            </div>
+                        </div>
+
+                        <!-- Evento 5 -->
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <h4>Feria de Vinculación Universitaria</h4>
+                                <span class="evento-tipo actividad">Actividad</span>
+                            </div>
+                            <div class="evento-body">
+                                <p><strong>Fecha:</strong> Viernes 23 de octubre, 2026</p>
+                                <p><strong>Hora:</strong> 10:00 AM - 4:00 PM</p>
+                                <p><strong>Lugar:</strong> Área Verde Central</p>
+                                <p><strong>Descripción:</strong> Evento para conectar a estudiantes de último semestre con universidades y opciones de educación continuada.</p>
+                            </div>
+                            <div class="evento-footer">
+                                <span>Creado por: Luis Hernández Castillo</span>
+                                <span>Recordatorio activado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón para ver más -->
+                    <div class="text-center mt-4">
+                        <a href="#" class="btn btn-outline">Ver Calendario Completo</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modals (misma estructura que en index.html) -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </form>
+                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="registerModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerNombre">Nombre completo</label>
+                        <input type="text" id="registerNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRol">Rol</label>
+                        <select id="registerRol" required>
+                            <option value="">Seleccione su rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDepartamento">Departamento</label>
+                        <select id="registerDepartamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                </form>
+                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="createEventoModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Crear Nuevo Evento</h2>
+                <form id="eventoForm">
+                    <div class="form-group">
+                        <label for="eventoTitulo">Título del evento</label>
+                        <input type="text" id="eventoTitulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoDescripcion">Descripción</label>
+                        <textarea id="eventoDescripcion" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoFecha">Fecha</label>
+                        <input type="date" id="eventoFecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoHoraInicio">Hora de inicio</label>
+                        <input type="time" id="eventoHoraInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoHoraFin">Hora de fin (opcional)</label>
+                        <input type="time" id="eventoHoraFin">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoTipo">Tipo de evento</label>
+                        <select id="eventoTipo" required>
+                            <option value="">Seleccione tipo</option>
+                            <option value="reunion">Reunión</option>
+                            <option value="entrega">Entrega de documentos</option>
+                            <option value="actividad">Actividad escolar</option>
+                            <option value="aviso">Aviso o anuncio</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventoDepartamento">Departamento</label>
+                        <select id="eventoDepartamento" required>
+                            <option value="">Seleccione departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="eventoRecordatorio">
+                            Activar recordatorio
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Crear Evento</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

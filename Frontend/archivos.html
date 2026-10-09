@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivos - CoorCBTIS 258</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>CoorCBTIS 258</h2>
+                <p>Plataforma Escolar</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
+                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
+                    <li><a href="archivos.html" class="nav-item active"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
+                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
+                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
+                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
+                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Barra Superior -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>CoorCBTIS 258</h1>
+                </div>
+                <div class="topbar-center">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar archivos...">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-user">
+                        <div class="user-info">
+                            <img src="https://via.placeholder.com/40" alt="Usuario">
+                            <span>Docente Ejemplo</span>
+                        </div>
+                        <div class="user-menu">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Panel Principal -->
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Archivos</h2>
+                    <p>Gestiona y consulta los archivos compartidos por departamento</p>
+                </div>
+
+                <!-- Filtros y acciones -->
+                <div class="dashboard-section filtros-section">
+                    <div class="filtros-header">
+                        <h3><i class="fas fa-filter"></i> Filtros</h3>
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Subir Archivo</a>
+                    </div>
+                    <div class="filtros-content">
+                        <div class="filtro-group">
+                            <label for="filtroDepartamento">Departamento:</label>
+                            <select id="filtroDepartamento">
+                                <option value="">Todos los departamentos</option>
+                                <option value="academico">Académico</option>
+                                <option value="servicios_escolares">Servicios Escolares</option>
+                                <option value="vinculación">Vinculación</option>
+                                <option value="orientacion">Orientación</option>
+                                <option value="control_escolar">Control Escolar</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label for="filtroTipo">Tipo de archivo:</label>
+                            <select id="filtroTipo">
+                                <option value="">Todos los tipos</option>
+                                <option value="pdf">PDF</option>
+                                <option value="word">Word</option>
+                                <option value="excel">Excel</option>
+                                <option value="image">Imagen</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de archivos -->
+                <div class="dashboard-section archivos-lista-section">
+                    <h3><i class="fas fa-list-alt"></i> Lista de Archivos</h3>
+                    <div class="archivos-container">
+                        <!-- Archivo PDF -->
+                        <div class="archivo-card">
+                            <div class="archivo-header">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>Plan de Estudios 2026-2027.pdf</h4>
+                                    <p>PDF • 2.4 MB</p>
+                                </div>
+                            </div>
+                            <div class="archivo-footer">
+                                <span>Departamento: Académico</span>
+                                <span>Subido por: María González López</span>
+                                <span>Hoy • 07:15 AM</span>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Vista Previa</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Descargar</a>
+                            </div>
+                        </div>
+
+                        <!-- Archivo Excel -->
+                        <div class="archivo-card">
+                            <div class="archivo-header">
+                                <i class="fas fa-file-excel"></i>
+                                <div>
+                                    <h4>Lista de Alumnos Inscritos.xlsx</h4>
+                                    <p>XLSX • 1.8 MB</p>
+                                </div>
+                            </div>
+                            <div class="archivo-footer">
+                                <span>Departamento: Control Escolar</span>
+                                <span>Subido por: Administrador Sistema</span>
+                                <span>Ayer • 04:20 PM</span>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Vista Previa</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Descargar</a>
+                            </div>
+                        </div>
+
+                        <!-- Archivo Word -->
+                        <div class="archivo-card">
+                            <div class="archivo-header">
+                                <i class="fas fa-file-word"></i>
+                                <div>
+                                    <h4>Formato de Solicitud de Constancias.docx</h4>
+                                    <p>DOCX • 320 KB</p>
+                                </div>
+                            </div>
+                            <div class="archivo-footer">
+                                <span>Departamento: Servicios Escolares</span>
+                                <span>Subido por: Ana Torres Ruiz</span>
+                                <span>2 días atrás • 10:05 AM</span>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Vista Previa</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Descargar</a>
+                            </div>
+                        </div>
+
+                        <!-- Archivo Imagen -->
+                        <div class="archivo-card">
+                            <div class="archivo-header">
+                                <i class="fas fa-file-image"></i>
+                                <div>
+                                    <h4>Logo_CBtis_258_oficial.png</h4>
+                                    <p>PNG • 850 KB</p>
+                                </div>
+                            </div>
+                            <div class="archivo-footer">
+                                <span>Departamento: Vinculación</span>
+                                <span>Subido por: Luis Hernández Castillo</span>
+                                <span>5 días atrás • 02:30 PM</span>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Vista Previa</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Descargar</a>
+                            </div>
+                        </div>
+
+                        <!-- Archivo PDF -->
+                        <div class="archivo-card">
+                            <div class="archivo-header">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>Manual de Convivencia Escolar.pdf</h4>
+                                    <p>PDF • 1.2 MB</p>
+                                </div>
+                            </div>
+                            <div class="archivo-footer">
+                                <span>Departamento: Orientación</span>
+                                <span>Subido por: Ana Torres Ruiz</span>
+                                <span>1 semana atrás • 09:45 AM</span>
+                            </div>
+                            <div class="archivo-actions">
+                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Vista Previa</a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Descargar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paginación -->
+                    <div class="paginacion">
+                        <button class="btn btn-sm btn-outline">&laquo; Anterior</button>
+                        <span class="pagina-actual">1</span>
+                        <span>de</span>
+                        <span class="total-paginas">3</span>
+                        <button class="btn btn-sm btn-outline">Siguiente &raquo;</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Modals (misma estructura que en index.html) -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </form>
+                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="registerModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerNombre">Nombre completo</label>
+                        <input type="text" id="registerNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRol">Rol</label>
+                        <select id="registerRol" required>
+                            <option value="">Seleccione su rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDepartamento">Departamento</label>
+                        <select id="registerDepartamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                </form>
+                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+
+        <div class="modal" id="uploadArchivoModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Subir Nuevo Archivo</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="archivo">Seleccionar Archivo</label>
+                        <input type="file" id="archivo" name="archivo" required>
+                        <p class="help-text">Formatos permitidos: PDF, DOCX, XLSX, PNG, JPG (máx. 10 MB)</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="departamento">Departamento</label>
+                        <select id="departamento" required>
+                            <option value="">Seleccione departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                        </div>
+                    <div class="form-group">
+                        <label for="categoria">Categoría (opcional)</label>
+                        <input type="text" id="categoria" placeholder="Ej: Curricular, Administrativo, etc.">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Subir Archivo</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>
