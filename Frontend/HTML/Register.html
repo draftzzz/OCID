@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - CoorCBTIS 258</title>
+    <!-- FontAwesome 6 CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset y variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #001f3f; /* Azul marino institucional */
+            --secondary-color: #003366; /* Azul más oscuro */
+            --accent-color: #0066cc; /* Azul eléctrico para acentos */
+            --light-bg: #f8f9fa; /* Fondo gris claro */
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success-color: #28a745;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --max-width: 450px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: var(--max-width);
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .register-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .register-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .register-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .register-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .register-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .register-form {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .register-footer {
+            padding: 1.5rem 2rem 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .register-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .register-container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+
+            .register-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .register-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .register-footer {
+                padding: 1.5rem 1.5rem 2rem;
+            }
+        }
+
+        /* Loading and error states */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-message i {
+            margin-right: 0.5rem;
+        }
+
+        .success-message {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .success-message i {
+            margin-right: 0.5rem;
+        }
+
+        .password-tips {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .password-tips i {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <i class="fas fa-user-plus"></i>
+            <h1>Crear Cuenta</h1>
+            <p>Únete a la comunidad de CoorCBTIS 258</p>
+        </div>
+
+        <div class="register-form">
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerNombre">Nombre Completo</label>
+                    <input type="text" id="registerNombre" placeholder="Juan Pérez González" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <input type="password" id="registerPassword" placeholder="••••••••" minlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="••••••••" minlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerRol">Rol</label>
+                    <select id="registerRol" required>
+                        <option value="">Seleccione su rol</option>
+                        <option value="docente">Docente</option>
+                        <option value="jefe_departamento">Jefe de Departamento</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerDepartamento">Departamento</label>
+                    <select id="registerDepartamento" required>
+                        <option value="">Seleccione su departamento</option>
+                        <option value="academico">Académico</option>
+                        <option value="servicios_escolares">Servicios Escolares</option>
+                        <option value="vinculación">Vinculación</option>
+                        <option value="orientacion">Orientación</option>
+                        <option value="control_escolar">Control Escolar</option>
+                        <option value="administracion">Administración</option>
+                        <option value="recursos_humanos">Recursos Humanos</option>
+                    </select>
+                </div>
+
+                <div class="password-tips">
+                    <i class="fas fa-info-circle"></i>
+                    La contraseña debe tener al menos 6 caracteres
+                </div>
+
+                <button type="submit" class="btn" id="registerBtn">
+                    Registrarse
+                </button>
+            </form>
+
+            <div id="registerError" class="error-message" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="registerErrorText"></span>
+            </div>
+
+            <div id="registerSuccess" class="success-message" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <span id="registerSuccessText"></span>
+            </div>
+        </div>
+
+        <div class="register-footer">
+            <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            const registerBtn = document.getElementById('registerBtn');
+            const registerError = document.getElementById('registerError');
+            const registerErrorText = document.getElementById('registerErrorText');
+            const registerSuccess = document.getElementById('registerSuccess');
+            const registerSuccessText = document.getElementById('registerSuccessText');
+
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Reset messages
+                registerError.style.display = 'none';
+                registerSuccess.style.display = 'none';
+
+                // Get form values
+                const nombre = document.getElementById('registerNombre').value.trim();
+                const email = document.getElementById('registerEmail').value.trim();
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                const rol = document.getElementById('registerRol').value;
+                const departamento = document.getElementById('registerDepartamento').value;
+
+                // Basic validation
+                if (!nombre || !email || !password || !confirmPassword || !rol || !departamento) {
+                    registerErrorText.textContent = 'Por favor complete todos los campos';
+                    registerError.style.display = 'block';
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    registerErrorText.textContent = 'Las contraseñas no coinciden';
+                    registerError.style.display = 'block';
+                    return;
+                }
+
+                if (password.length < 6) {
+                    registerErrorText.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                    registerError.style.display = 'block';
+                    return;
+                }
+
+                // Basic email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    registerErrorText.textContent = 'Por favor ingrese un correo electrónico válido';
+                    registerError.style.display = 'block';
+                    return;
+                }
+
+                // Show loading state
+                registerBtn.innerHTML = '<span>Creando cuenta...</span> <span class="loading"></span>';
+                registerBtn.disabled = true;
+
+                // Simulate API call (replace with actual fetch when backend is ready)
+                setTimeout(() => {
+                    // In a real app, this would be:
+                    // fetch('/api/auth/registro', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({ nombre, correo: email, contrasena: password, rol, id_departamento: getDepartmentId(departamento) })
+                    // })
+
+                    // For demo purposes, simulate successful registration
+                    const isValid = email && password.length >= 6;
+
+                    if (isValid) {
+                        registerSuccessText.textContent = '¡Cuenta creada exitosamente! Redirigiendo al inicio de sesión...';
+                        registerSuccess.style.display = 'block';
+
+                        // Redirect to login after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                    } else {
+                        registerErrorText.textContent = 'Error al crear la cuenta. Por favor intente nuevamente.';
+                        registerError.style.display = 'block';
+
+                        // Reset button state
+                        registerBtn.innerHTML = 'Registrarse';
+                        registerBtn.disabled = false;
+                    }
+                }, 2000);
+            });
+
+            // Helper function to get department ID (in a real app, this would come from backend)
+            function getDepartmentId(departmentName) {
+                const departments = {
+                    'academico': 1,
+                    'servicios_escolares': 2,
+                    'vinculación': 3,
+                    'orientacion': 4,
+                    'control_escolar': 5,
+                    'administracion': 6,
+                    'recursos_humanos': 7
+                };
+                return departments[departmentName] || 1;
+            }
+
+            // Handle Enter key submission
+            registerForm.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    registerBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
