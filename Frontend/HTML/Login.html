@@ -1,255 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>      
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - OCID</title>
-    <!-- FontAwesome 6 CDN for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Google Fonts: Inter -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
     <style>
-        /* CSS Reset y variables */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #001f3f; /* Azul marino institucional */
-            --secondary-color: #003366; /* Azul más oscuro */
-            --accent-color: #0066cc; /* Azul eléctrico para acentos */
-            --light-bg: #f8f9fa; /* Fondo gris claro */
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            --max-width: 400px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--light-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: var(--max-width);
-            background-color: var(--white);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-        }
-
-        .login-header {
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .login-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-accent);
-        }
-
-        .login-header i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .login-header h1 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .login-header p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .login-form {
-            padding: 2.5rem 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.75rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--white);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
-        }
-
-        .form-group input::placeholder {
-            color: rgba(0,0,0,0.3);
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            letter-spacing: 0.5px;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .login-footer {
-            padding: 1.5rem 2rem 2rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .login-footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 2rem 0;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .divider span {
-            padding: 0 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .login-container {
-                border-radius: 0;
-                min-height: 100vh;
-            }
-
-            .login-header {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-form {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-footer {
-                padding: 1.5rem 1.5rem 2rem;
-            }
-        }
-
-        /* Loading and error states */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: var(--white);
-            animation: spin 1s ease-in-out infinite;
-            margin-left: 0.5rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .error-message i {
-            margin-right: 0.5rem;
-        }
-
-        .success-message {
-            background-color: #e8f5e8;
-            color: #2e7d32;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .success-message i {
-            margin-right: 0.5rem;
-        }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-header">
@@ -262,119 +24,65 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">Correo Electrónico</label>
-                    <input type="email" id="loginEmail" placeholder="correo@ejemplo.com" required>
+                    <input type="email" id="loginEmail"
+                        placeholder="correo@ejemplo.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="loginPassword">Contraseña</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    <input type="password" id="loginPassword"
+                        placeholder="Contraseña" required>
                 </div>
 
                 <button type="submit" class="btn" id="loginBtn">
                     Iniciar Sesión
                 </button>
             </form>
-
-            <div id="loginError" class="error-message" style="display: none;">
-                <i class="fas fa-exclamation-circle"></i>
-                <span id="loginErrorText"></span>
-            </div>
-
-            <div id="loginSuccess" class="success-message" style="display: none;">
-                <i class="fas fa-check-circle"></i>
-                <span id="loginSuccessText">Iniciando sesión...</span>
-            </div>
         </div>
 
         <div class="login-footer">
-            <p>¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a></p>
-            <div class="divider"><span>o continua con</span></div>
-            <div class="social-login">
-                <a href="#" class="btn" style="background-color: #4267B2; margin-bottom: 0.5rem;">
-                    <i class="fab fa-facebook-f"></i> Continuar con Facebook
-                </a>
-                <a href="#" class="btn" style="background-color: #EA4335;">
-                    <i class="fab fa-google"></i> Continuar con Google
-                </a>
-            </div>
+            <p>¿No tienes una cuenta?
+                <a href="registro.html">Regístrate aquí</a>
+            </p>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const loginBtn = document.getElementById('loginBtn');
-            const loginError = document.getElementById('loginError');
-            const loginErrorText = document.getElementById('loginErrorText');
-            const loginSuccess = document.getElementById('loginSuccess');
-            const loginSuccessText = document.getElementById('loginSuccessText');
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const contrasena = document.getElementById('loginPassword').value;
 
-                // Reset messages
-                loginError.style.display = 'none';
-                loginSuccess.style.display = 'none';
-
-                // Get form values
-                const email = document.getElementById('loginEmail').value.trim();
-                const password = document.getElementById('loginPassword').value;
-
-                // Basic validation
-                if (!email || !password) {
-                    loginErrorText.textContent = 'Por favor complete todos los campos';
-                    loginError.style.display = 'block';
-                    return;
-                }
-
-                // Show loading state
-                loginBtn.innerHTML = '<span>Iniciando sesión...</span> <span class="loading"></span>';
-                loginBtn.disabled = true;
-
-                // Send request to backend
-                fetch('http://localhost:3000/api/auth/login', {
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/auth/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo: email, contrasena: password })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === 'Inicio de sesión exitoso') {
-                        loginSuccessText.textContent = '¡Inicio de sesión exitoso! Redirigiendo...';
-                        loginSuccess.style.display = 'block';
-
-                        // Redirect to index.html after 1.5 seconds
-                        setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 1500);
-                    } else {
-                        loginErrorText.textContent = data.message || 'Credenciales inválidas. Por favor intente nuevamente.';
-                        loginError.style.display = 'block';
-
-                        // Reset button state
-                        loginBtn.innerHTML = 'Iniciar Sesión';
-                        loginBtn.disabled = false;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    loginErrorText.textContent = 'Error de conexión. Por favor intente nuevamente.';
-                    loginError.style.display = 'block';
-
-                    // Reset button state
-                    loginBtn.innerHTML = 'Iniciar Sesión';
-                    loginBtn.disabled = false;
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        contrasena: contrasena
+                    })
                 });
-            });
 
-            // Handle Enter key submission
-            loginForm.addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    loginBtn.click();
+                const data = await respuesta.json();
+
+                if (respuesta.ok && data.success) {
+                    localStorage.setItem('id', data.usuario.id);
+                    localStorage.setItem('usuario', data.usuario.nombre);
+
+                    alert('¡Bienvenido, ' + data.usuario.nombre + '!');
+
+                    window.location.href = 'inicio.html';
+                } else {
+                    alert(data.error || 'Correo o contraseña incorrectos');
                 }
-            });
+            } catch (error) {
+                alert('Error al conectar con el servidor');
+                console.log(error);
+            }
         });
-    </script>
     </script>
 </body>
 </html>
