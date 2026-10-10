@@ -2,403 +2,372 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCID - Organización y Comunicacion Interna para Docentes</title>
-    <!-- FontAwesome 6 CDN for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/inicio.css"> 
+    <title>OCID - Plataforma de Coordinación y Comunicación Escolar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header y Navegación -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-school"></i>
-                <span>OCID Organización y Comunicación Interna para Docentes</span>
+    <div class="app">
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>OCID</h2>
+                <p>Plataforma Escolar</p>
             </div>
-            <button class="mobile-menu-btn" aria-label="Abrir menú">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav class="nav-links">
-                <a href="#value">¿Por qué?</a>
-                <a href="#features">Características</a>
-                <a href="#departments">Departamentos</a>
-                <a href="#stats">Beneficios</a>
-                <a href="#cta">Descargar</a>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-item active"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
+                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
+                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
+                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
+                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
+                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
+                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
+                </ul>
             </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <!-- Barra Superior -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>OCID</h1>
+                </div>
+                <div class="topbar-center">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar anuncios, archivos, docentes...">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-user">
+                        <div class="user-info">
+                            <img src="https://via.placeholder.com/40" alt="Usuario">
+                            <span>Docente Ejemplo</span>
+                        </div>
+                        <div class="user-menu">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Panel Principal -->
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2>Dashboard</h2>
+                    <p>¡Hola, docente!</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Tarjeta de Bienvenida -->
+                    <div class="dashboard-card welcome-card">
+                        <h3>Bienvenido a OCID</h3>
+                        <p>Departamento: <strong>Académico</strong></p>
+                        <p>Último acceso: Hoy, 08:30 AM</p>
+                    </div>
+
+                    <!-- Tarjeta de Anuncios -->
+                    <div class="dashboard-card announcements-card">
+                        <h3><i class="fas fa-bell"></i> Anuncios Nuevos</h3>
+                        <div class="card-content">
+                            <div class="announcement-item">
+                                <h4>Reunión de Departamento</h4>
+                                <p>Se informa que hoy habrá reunión de departamento a las 3:00 PM en la sala de juntas.</p>
+                                <span class="announcement-date">Hoy</span>
+                            </div>
+                            <div class="announcement-item">
+                                <h4>Entrega de Calificaciones</h4>
+                                <p>Recuerde entregar las calificaciones del parcial antes del viernes.</p>
+                                <span class="announcement-date">Mañana</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Ver todos los anuncios</button>
+                    </div>
+
+                    <!-- Tarjeta de Archivos -->
+                    <div class="dashboard-card files-card">
+                        <h3><i class="fas fa-file-alt"></i> Archivos Disponibles</h3>
+                        <div class="card-content">
+                            <div class="file-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>Plan de Estudios.pdf</h4>
+                                    <p>Actualizado marzo 2026</p>
+                                </div>
+                            </div>
+                            <div class="file-item">
+                                <i class="fas fa-file-word"></i>
+                                <div>
+                                    <h4>Formato de Solicitud.docx</h4>
+                                    <p>Para trámites escolares</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Ver todos los archivos</button>
+                    </div>
+
+                    <!-- Tarjeta de Docentes -->
+                    <div class="dashboard-card teachers-card">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> Docentes del Departamento</h3>
+                        <div class="card-content">
+                            <div class="teacher-item">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>María González López</h4>
+                                    <p>Jefe de Departamento</p>
+                                </div>
+                            </div>
+                            <div class="teacher-item">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>Carlos Ramírez Méndez</h4>
+                                    <p>Docente de Matemáticas</p>
+                                </div>
+                            </div>
+                            <div class="teacher-item">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>Ana Torres Ruiz</h4>
+                                    <p>Docente de Ciencias</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Ver todos los docentes</button>
+                    </div>
+
+                    <!-- Tarjeta de Próximos Eventos -->
+                    <div class="dashboard-card events-card">
+                        <h3><i class="fas fa-calendar-plus"></i> Próximos Eventos</h3>
+                        <div class="card-content">
+                            <div class="event-item">
+                                <h4>Reunión de Profesores</h4>
+                                <p>10 Oct, 2026 • 3:00 PM</p>
+                                <span class="event-type">Reunión</span>
+                            </div>
+                            <div class="event-item">
+                                <h4>Entrega de Proyectos</h4>
+                                <p>15 Oct, 2026 • 11:59 PM</p>
+                                <span class="event-type">Entrega</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Ver calendario completo</button>
+                    </div>
+
+                </div>
+
+                <!-- Sección de Últimos Anuncios -->
+                <div class="dashboard-section">
+                    <h2><i class="fas fa-bullhorn"></i> Últimos Anuncios</h2>
+                    <div class="announcements-list">
+                        <div class="announcement-card important">
+                            <div class="announcement-header">
+                                <h3>Reunión General de Docentes</h3>
+                                <span class="priority high">Alta</span>
+                            </div>
+                            <p>Se convoca a reunión general de todos los docentes para revisión del avance académico y planificación de actividades extracurriculares.</p>
+                            <div class="announcement-footer">
+                                <span>Publicado por: Jefe de Departamento Académico</span>
+                                <span>Hoy • 08:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="announcement-card">
+                            <div class="announcement-header">
+                                <h3>Taller de Actualización Pedagógica</h3>
+                                <span class="priority media">Media</span>
+                            </div>
+                            <p>Invitación al taller de actualización en metodologías activas de aprendizaje, dirigido a todos los docentes de institución.</p>
+                            <div class="announcement-footer">
+                                <span>Publicado por: Servicios Escolares</span>
+                                <span>Ayer • 03:30 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-block">Ver todos los anuncios</button>
+                </div>
+
+                <!-- Sección de Archivos Recientes -->
+                <div class="dashboard-section">
+                    <h2><i class="fas fa-folder-open"></i> Archivos Recientes</h2>
+                    <div class="files-list">
+                        <div class="file-card">
+                            <div class="file-header">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>Calendario Escolar 2026-2027.pdf</h4>
+                                    <p>PDF • 2.4 MB</p>
+                                </div>
+                            </div>
+                            <div class="file-footer">
+                                <span>Departamento Académico</span>
+                                <span>Hoy • 07:15 AM</span>
+                            </div>
+                        </div>
+                        <div class="file-card">
+                            <div class="file-header">
+                                <i class="fas fa-file-excel"></i>
+                                <div>
+                                    <h4>Lista de Alumnos.xlsx</h4>
+                                    <p>XLSX • 1.8 MB</p>
+                                </div>
+                            </div>
+                            <div class="file-footer">
+                                <span>Control Escolar</span>
+                                <span>Ayer • 04:20 PM</span>
+                            </div>
+                        </div>
+                        <div class="file-card">
+                            <div class="file-header">
+                                <i class="fas fa-file-image"></i>
+                                <div>
+                                    <h4>Logo_OCID.png</h4>
+                                    <p>PNG • 850 KB</p>
+                                </div>
+                            </div>
+                            <div class="file-footer">
+                                <span>Vinculación</span>
+                                <span>2 días atrás • 10:05 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-block">Ver todos los archivos</button>
+                </div>
+
+                <!-- Accesos Rápidos -->
+                <div class="quick-actions">
+                    <h2>Accesos Rápidos</h2>
+                    <div class="actions-grid">
+                        <a href="#" class="action-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Crear Anuncio</span>
+                        </a>
+                        <a href="#" class="action-item">
+                            <i class="fas fa-upload"></i>
+                            <span>Subir Archivo</span>
+                        </a>
+                        <a href="#" class="action-item">
+                            <i class="fas fa-users-cog"></i>
+                            <span>Consultar Docentes</span>
+                        </a>
+                        <a href="#" class="action-item">
+                            <i class="fas fa-plus-square"></i>
+                            <span>Crear Evento</span>
+                        </a>
+                    </div>
+                </div>
+            </main>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content fade-in-up">
-            <h1>Plataforma Integral para la <br> Gestión Educativa Moderna</h1>
-            <p>Transforma la comunicación y organización de tu institución con nuestra solución especializada para las escuelas. Plataforma segura, intuitiva y diseñada específicamente para las necesidades de docentes y directivos.</p>
-            <div class="hero-buttons">
-                <a href="#features" class="btn btn-secondary">Explorar Funcionalidades</a>
-                <a href="#cta" class="btn btn-primary">Solicitar Acceso</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Propuesta de Valor -->
-    <section id="value" class="value-proposition">
-        <div class="container">
-            <div class="section-title fade-in-up">
-                <h2>¿Por qué elegir OCID?</h2>
-                <p>Una solución educativa que entiende las necesidades reales de las instituciones técnicas</p>
-            </div>
-
-            <div class="value-cards">
-                <div class="card fade-in-up delay-1">
-                    <div class="card-icon">
-                        <i class="fas fa-shield-alt"></i>
+        <!-- Modals (ventanas emergentes) -->
+        <div class="modal" id="loginModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
                     </div>
-                    <h3>Seguridad de Nivel Institucional</h3>
-                    <p>Protección avanzada de datos con encriptación, autenticación segura y respaldos automáticos. Cumplimos con los estándares más rigurosos de privacidad educativa.</p>
-                </div>
-
-                <div class="card fade-in-up delay-2">
-                    <div class="card-icon">
-                        <i class="fas fa-network-wired"></i>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
                     </div>
-                    <h3>Integración Sin Fronteras</h3>
-                    <p>Conéctate con sistemas existentes mediante API abiertas. Compatible con plataformas de gestión educativa, sistemas de notas y herramientas de comunicación institucional.</p>
-                </div>
-
-                <div class="card fade-in-up delay-3">
-                    <div class="card-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Analítica Educativa Avanzada</h3>
-                    <p>Toma decisiones basadas en datos con reportes detallados sobre rendimiento académico, asistencia, participación y tendencias institucionales en tiempo real.</p>
-                </div>
-
-                <div class="card fade-in-up delay-4">
-                    <div class="card-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Soporte Especializado</h3>
-                    <p>Equipo dedicado de expertos en tecnología educativa disponibles 24/7. Capacitación personalizada y asistencia técnica en español para toda tu institución.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Características Principales -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-title fade-in-up">
-                <h2>Funcionalidades Destacadas</h2>
-                <p>Herramientas poderosas diseñadas para mejorar cada aspecto de la gestión educativa</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-item fade-in-up delay-1">
-                    <div class="feature-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Comunicación Institucional</h3>
-                        <p>Mensajería interna, anuncios prioritarios y foros de discusión estructurados. Mantén a toda la comunidad informada y comprometida.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item fade-in-up delay-2">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Gestión Documental Inteligente</h3>
-                        <p>Almacenamiento seguro, búsqueda avanzada y control de versiones. Organiza planes de estudio, formatos y recursos con metadatos educativos.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item fade-in-up delay-3">
-                    <div class="feature-icon">
-                        <i class="fas fa-users-cog"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Administración de Recursos Humanos</h3>
-                        <p>Gestión completa de personal, horarios, evaluaciones y desarrollo profesional. Incluye seguimiento de capacitaciones y planificación de sucesorios.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item fade-in-up delay-4">
-                    <div class="feature-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Calendario Académico Dinámico</h3>
-                        <p>Planificación de eventos, seguimiento de deadlines y coordinación de actividades extracurriculares. Sincronización con calendarios personales y grupales.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item fade-in-up delay-5">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Evaluación y Retroalimentación</h3>
-                        <p>Creación de rúbricas, seguimiento de competencias y generación automática de reportes de progreso. Incluye autoevaluación y coevaluación estructurada.</p>
-                    </div>
-                </div>
-
-                <div class="feature-item fade-in-up delay-6">
-                    <div class="feature-icon">
-                        <i class="fas fa-wifi"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Acceso Universal y Multiplataforma</h3>
-                        <p>Disponible en web, iOS y Android. Diseño responsive que se adapta a cualquier dispositivo, desde smartphones hasta computadoras de escritorio.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Departamentos -->
-    <section id="departments" class="departments">
-        <div class="container">
-            <div class="section-title fade-in-up">
-                <h2>Especializado por Áreas Académicas</h2>
-                <p>Adaptado a las necesidades específicas de cada departamento y área funcional</p>
-            </div>
-
-            <div class="departments-grid">
-                <div class="dept-card fade-in-up delay-1">
-                    <div class="dept-icon">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <h3>Académico</h3>
-                    <p>Planeación didáctica, seguimiento de competencias, gestión de calificaciones y recursos educativos especializados.</p>
-                </div>
-
-                <div class="dept-card fade-in-up delay-2">
-                    <div class="dept-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3>Vinculación y Servicio Social</h3>
-                    <p>Gestión de convenios, prácticas profesionales, proyectos comunitarios y seguimiento de egresados.</p>
-                </div>
-
-                <div class="dept-card fade-in-up delay-3">
-                    <div class="dept-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Orientación y Tutoria</h3>
-                    <p>Seguimiento estudiantil, apoyo psicopedagógico, vocational y atención integral al desarrollo estudiantil.</p>
-                </div>
-
-                <div class="dept-card fade-in-up delay-4">
-                    <div class="dept-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3>Laboratorios y Talleres</h3>
-                    <p>Control de inventario, mantenimiento de equipos, seguimiento de prácticas y gestión de riesgos en áreas técnicas.</p>
-                </div>
-
-                <div class="dept-card fade-in-up delay-5">
-                    <div class="dept-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>Administración y Finanzas</h3>
-                    <p>Presupuestación, control de gastos, nómina, gestión de inventario y procesos administrativos institucionales.</p>
-                </div>
-
-                <div class="dept-card fade-in-up delay-6">
-                    <div class="dept-icon">
-                        <i class="fas fa-users-cog"></i>
-                    </div>
-                    <h3>Recursos Humanos y Capacitación</h3>
-                    <p>Reclutamiento, evaluación de desempeño, planes de desarrollo profesional y gestión de beneficios institucionales.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Estadísticas / Beneficios -->
-    <section id="stats" class="stats">
-        <div class="container">
-            <div class="section-title fade-in-up">
-                <h2>Resultados Comprobados</h2>
-                <p>Impacto medible en instituciones educativas que han implementado nuestra solución</p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-item fade-in-up delay-1">
-                    <span class="stat-number">45%</span>
-                    <span class="stat-label">Reducción en tiempo de tareas administrativas</span>
-                </div>
-
-                <div class="stat-item fade-in-up delay-2">
-                    <span class="stat-number">68%</span>
-                    <span class="stat-label">Mejora en comunicación entre docentes y directivos</span>
-                </div>
-
-                <div class="stat-item fade-in-up delay-3">
-                    <span class="stat-number">32+</span>
-                    <span class="stat-label">Instituciones educativas atendidas</span>
-                </div>
-
-                <div class="stat-item fade-in-up delay-4">
-                    <span class="stat-number">94%</span>
-                    <span class="stat-label">Satisfacción de usuarios en encuestas institucionales</span>
-                </div>
-
-                <div class="stat-item fade-in-up delay-5">
-                    <span class="stat-number">2.5x</span>
-                    <span class="stat-label">Incremento en participación en actividades académicas</span>
-                </div>
-
-                <div class="stat-item fade-in-up delay-6">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Compatibilidad con dispositivos móviles y tablets</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Llamado a la Acción -->
-    <section id="cta" class="cta-section">
-        <div class="container">
-            <div class="cta-content fade-in-up">
-                <h2>¿Listo para transformar tu institución?</h2>
-                <p>Únete a las instituciones educativas que ya están experimentando una mejor organización, comunicación más eficiente y resultados académicos superiores con OCID.</p>
-                <div class="cta-buttons">
-                    <a href="#" class="btn btn-secondary">Ver Demo en Vivo</a>
-                    <a href="index.html" class="btn btn-primary">Acceder a la Plataforma</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-school"></i>
-                    <span>OCID</span>
-                </div>
-                <p class="footer-description">
-                    Plataforma educativa integral diseñada para mejorar la gestión, comunicación y resultados académicos en instituciones técnicas. Solución segura, escalable y adaptada a las necesidades específicas del sector educativo.
-                </p>
-
-                <div>
-                    <h4>Plataforma</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Funcionalidades</a></li>
-                        <li><a href="#">Seguridad</a></li>
-                        <li><a href="#">Integraciones</a></li>
-                        <li><a href="#">Precios</a></li>
-                        <li><a href="#">Demo</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Institución</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Equipo</a></li>
-                        <li><a href="#">Blog Educativo</a></li>
-                        <li><a href="#">Testimonios</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Términos de Servicio</a></li>
-                        <li><a href="#">Política de Privacidad</a></li>
-                        <li><a href="#">Política de Cookies</a></li>
-                        <li><a href="#">Cumplimiento Educativo</a></li>
-                        <li><a href="#">Accessibilidad</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Conéctate</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-envelope"></i> info@ocid.edu.mx</a></li>
-                        <li><a href="#"><i class="fas fa-phone"></i> (834) 123 4567</a></li>
-                        <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div>
-                    © 2026 OCID. Todos los derechos reservados.
-                </div>
-                <div>
-                    Plataforma educativa para instituciones técnicas | Versión 2.1.0
-                </div>
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </form>
+                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
             </div>
         </div>
-    </footer>
 
-    <!-- JavaScript para menú móvil y efectos de scroll -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menú móvil
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
+        <div class="modal" id="registerModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerNombre">Nombre completo</label>
+                        <input type="text" id="registerNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRol">Rol</label>
+                        <select id="registerRol" required>
+                            <option value="">Seleccione su rol</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="jefe_departamento">Jefe de Departamento</option>
+                            <option value="docente">Docente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDepartamento">Departamento</label>
+                        <select id="registerDepartamento" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="servicios_escolares">Servicios Escolares</option>
+                            <option value="academico">Académico</option>
+                            <option value="vinculación">Vinculación</option>
+                            <option value="orientacion">Orientación</option>
+                            <option value="control_escolar">Control Escolar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
+                </form>
+                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
+            </div>
+        </div>
 
-            mobileMenuBtn.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                // Cambiar icono de menú
-                const icon = this.querySelector('i');
-                if (navLinks.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
+        <div class="modal" id="createAnnouncementModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Crear Nuevo Anuncio</h2>
+                <form id="announcementForm">
+                    <div class="form-group">
+                        <label for="announcementTitle">Título</label>
+                        <input type="text" id="announcementTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDescription">Descripción</label>
+                        <textarea id="announcementDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDepartment">Departamento</label>
+                        <select id="announcementDepartment" required>
+                            <option value="">Seleccione departamento</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementDate">Fecha de expiración (opcional)</label>
+                        <input type="date" id="announcementDate">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="announcementImportant">
+                            Marcar como importante
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="announcementPriority">Prioridad</label>
+                        <select id="announcementPriority">
+                            <option value="baja">Baja</option>
+                            <option value="media" selected>Media</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Crear Anuncio</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-            // Cerrar menú al hacer clic en un enlace
-            const navItems = document.querySelectorAll('.nav-links a');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    navLinks.classList.remove('active');
-                    const icon = mobileMenuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
-
-            // Efectos de scroll
-            const scrollSections = document.querySelectorAll('.scroll-section');
-
-            const checkScroll = () => {
-                const triggerBottom = window.innerHeight * 0.8;
-
-                scrollSections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    if (sectionTop < triggerBottom) {
-                        section.classList.add('visible');
-                    }
-                });
-            };
-
-            // Ejecutar al cargar y al hacer scroll
-            window.addEventListener('load', checkScroll);
-            window.addEventListener('scroll', checkScroll);
-
-            // Prevenir envío de formularios falsos
-            const forms = document.querySelectorAll('form[href="#"]');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('Esta función estará disponible en la versión completa de la plataforma.');
-                });
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
