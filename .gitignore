@@ -20,3 +20,7 @@ Thumbs.db
 #builds y cobertura
 dist/
 coverage/
+
+# base de datos
+database.sql
+OCID.session.sql
