@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head>      
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - CoorCBTIS 258</title>
+    <title>Iniciar Sesión - OCID</title>
     <!-- FontAwesome 6 CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Fonts: Inter -->
@@ -255,7 +255,7 @@
         <div class="login-header">
             <i class="fas fa-sign-in-alt"></i>
             <h1>Iniciar Sesión</h1>
-            <p>Accede a tu cuenta de CoorCBTIS 258</p>
+            <p>Accede a tu cuenta de OCID</p>
         </div>
 
         <div class="login-form">
@@ -331,35 +331,40 @@
                 loginBtn.innerHTML = '<span>Iniciando sesión...</span> <span class="loading"></span>';
                 loginBtn.disabled = true;
 
-                // Simulate API call (replace with actual fetch when backend is ready)
-                setTimeout(() => {
-                    // In a real app, this would be:
-                    // fetch('/api/auth/login', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({ correo: email, contrasena: password })
-                    // })
-
-                    // For demo purposes, simulate successful login
-                    const isValid = email === 'demo@coorcbtis258.edu.mx' && password === 'demo123';
-
-                    if (isValid) {
+                // Send request to backend
+                fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo: email, contrasena: password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Inicio de sesión exitoso') {
                         loginSuccessText.textContent = '¡Inicio de sesión exitoso! Redirigiendo...';
                         loginSuccess.style.display = 'block';
 
-                        // Redirect to dashboard after 1.5 seconds
+                        // Redirect to index.html after 1.5 seconds
                         setTimeout(() => {
                             window.location.href = 'index.html';
                         }, 1500);
                     } else {
-                        loginErrorText.textContent = 'Credenciales inválidas. Por favor intente nuevamente.';
+                        loginErrorText.textContent = data.message || 'Credenciales inválidas. Por favor intente nuevamente.';
                         loginError.style.display = 'block';
 
                         // Reset button state
                         loginBtn.innerHTML = 'Iniciar Sesión';
                         loginBtn.disabled = false;
                     }
-                }, 1500);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    loginErrorText.textContent = 'Error de conexión. Por favor intente nuevamente.';
+                    loginError.style.display = 'block';
+
+                    // Reset button state
+                    loginBtn.innerHTML = 'Iniciar Sesión';
+                    loginBtn.disabled = false;
+                });
             });
 
             // Handle Enter key submission
@@ -369,6 +374,7 @@
                 }
             });
         });
+    </script>
     </script>
 </body>
 </html>

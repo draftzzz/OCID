@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrarse - CoorCBTIS 258</title>
+    <title>Registrarse - OCID</title>
     <!-- FontAwesome 6 CDN for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Google Fonts: Inter -->
@@ -253,7 +253,7 @@
         <div class="register-header">
             <i class="fas fa-user-plus"></i>
             <h1>Crear Cuenta</h1>
-            <p>Únete a la comunidad de CoorCBTIS 258</p>
+            <p>Únete a la comunidad de OCID</p>
         </div>
 
         <div class="register-form">
@@ -327,7 +327,6 @@
             <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const registerForm = document.getElementById('registerForm');
@@ -383,19 +382,21 @@
                 registerBtn.innerHTML = '<span>Creando cuenta...</span> <span class="loading"></span>';
                 registerBtn.disabled = true;
 
-                // Simulate API call (replace with actual fetch when backend is ready)
-                setTimeout(() => {
-                    // In a real app, this would be:
-                    // fetch('/api/auth/registro', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({ nombre, correo: email, contrasena: password, rol, id_departamento: getDepartmentId(departamento) })
-                    // })
-
-                    // For demo purposes, simulate successful registration
-                    const isValid = email && password.length >= 6;
-
-                    if (isValid) {
+                // Send request to backend
+                fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        nombre, 
+                        correo: email, 
+                        contrasena: password, 
+                        rol, 
+                        id_departamento: getDepartmentId(departamento) 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Usuario registrado exitosamente') {
                         registerSuccessText.textContent = '¡Cuenta creada exitosamente! Redirigiendo al inicio de sesión...';
                         registerSuccess.style.display = 'block';
 
@@ -404,14 +405,23 @@
                             window.location.href = 'login.html';
                         }, 2000);
                     } else {
-                        registerErrorText.textContent = 'Error al crear la cuenta. Por favor intente nuevamente.';
+                        registerErrorText.textContent = data.message || 'Error al crear la cuenta. Por favor intente nuevamente.';
                         registerError.style.display = 'block';
 
                         // Reset button state
                         registerBtn.innerHTML = 'Registrarse';
                         registerBtn.disabled = false;
                     }
-                }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    registerErrorText.textContent = 'Error de conexión. Por favor intente nuevamente.';
+                    registerError.style.display = 'block';
+
+                    // Reset button state
+                    registerBtn.innerHTML = 'Registrarse';
+                    registerBtn.disabled = false;
+                });
             });
 
             // Helper function to get department ID (in a real app, this would come from backend)
@@ -429,6 +439,13 @@
             }
 
             // Handle Enter key submission
+            registerForm.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    registerBtn.click();
+                }
+            });
+        });
+    </script>
             registerForm.addEventListener('keyup', function(e) {
                 if (e.key === 'Enter') {
                     registerBtn.click();
