@@ -9,11 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'ocid',
-    password: 'admin',
-    port: 5432
+    connectionString: process.env.DATABASE_URL
 });
 
 app.post('/registro', async (req, res) => {
@@ -68,6 +64,12 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Servidor iniciado en http://localhost:3000');
+app.get('/health', (req, res) => {
+    res.json({ success: true, mensaje: 'OCID API funcionando' });
+});
+
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log('Servidor OCID iniciado en el puerto ' + PORT);
 });
