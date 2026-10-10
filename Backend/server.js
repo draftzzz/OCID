@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 
 const app = express();
@@ -11,39 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl: { rejectUnauthorized: false }
 });
 
-// Comprobar que el servidor funciona
-app.get('/health', (req, res) => {
-    res.json({
-        success: true,
-        mensaje: 'OCID API funcionando'
-    });
-});
-
-// Comprobar la conexión a Neon
-app.get('/db-test', async (req, res) => {
-    try {
-        await pool.query('SELECT 1');
-
-        res.json({
-            success: true,
-            mensaje: 'Conexión a Neon correcta'
-        });
-    } catch (error) {
-        console.error('Error de PostgreSQL:', error.message);
-
-        res.status(500).json({
-            success: false,
-            mensaje: 'No se pudo conectar a la base de datos'
-        });
-    }
-});
-
-// Registrar usuario
+// REGISTRO
 app.post('/registro', async (req, res) => {
     const { nombre, email, contrasena } = req.body;
 
@@ -53,45 +25,47 @@ app.post('/registro', async (req, res) => {
         typeof contrasena !== 'string' ||
         !nombre.trim() ||
         !email.trim() ||
-        !contrasena
+        contrasena.length < 8
     ) {
         return res.status(400).json({
             success: false,
-            error: 'Completa todos los campos'
+            error: 'Completa los campos. La contraseña debe tener al menos 8 caracteres.'
         });
     }
 
     try {
+        const hash = await bcrypt.hash(contrasena, 12);
+
         const result = await pool.query(
             `INSERT INTO usuarios (nombre, email, contrasena)
              VALUES ($1, $2, $3)
-             RETURNING id`,
-            [nombre.trim(), email.trim().toLowerCase(), contrasena]
+             RETURNING id_usuario, nombre, email, creado_en`,
+            [nombre.trim(), email.trim().toLowerCase(), hash]
         );
 
         res.status(201).json({
             success: true,
-            mensaje: 'Usuario registrado',
-            id: result.rows[0].id
+            mensaje: 'Usuario registrado correctamente',
+            usuario: result.rows[0]
         });
-    } catch (error) {
-        console.error('Error al registrar:', error.message);
+    } catch (e) {
+        console.error('Error al registrar:', e.message);
 
-        if (error.code === '23505') {
+        if (e.code === '23505') {
             return res.status(409).json({
                 success: false,
-                error: 'Ese correo ya está registrado'
+                error: 'Este correo ya está registrado'
             });
         }
 
         res.status(500).json({
             success: false,
-            error: 'Error al registrar. Comprueba la tabla usuarios.'
+            error: 'Error al registrar usuario'
         });
     }
 });
 
-// Iniciar sesión
+// INICIAR SESIÓN
 app.post('/api/auth/login', async (req, res) => {
     const { email, contrasena } = req.body;
 
@@ -103,19 +77,20 @@ app.post('/api/auth/login', async (req, res) => {
     ) {
         return res.status(400).json({
             success: false,
-            error: 'Completa el correo y la contraseña'
+            error: 'Ingresa tu correo y contraseña'
         });
     }
 
     try {
         const result = await pool.query(
-            `SELECT id, nombre, email
-             FROM usuarios
-             WHERE email = $1 AND contrasena = $2`,
-            [email.trim().toLowerCase(), contrasena]
+            `SELECT id_usuario, nombre, email, contrasena, creado_en
+             FROM usuarios WHERE email = $1`,
+            [email.trim().toLowerCase()]
         );
 
-        if (result.rows.length === 0) {
+        const u = result.rows[0];
+
+        if (!u || !(await bcrypt.compare(contrasena, u.contrasena))) {
             return res.status(401).json({
                 success: false,
                 error: 'Correo o contraseña incorrectos'
@@ -124,10 +99,15 @@ app.post('/api/auth/login', async (req, res) => {
 
         res.json({
             success: true,
-            usuario: result.rows[0]
+            usuario: {
+                id_usuario: u.id_usuario,
+                nombre: u.nombre,
+                email: u.email,
+                creado_en: u.creado_en
+            }
         });
-    } catch (error) {
-        console.error('Error al iniciar sesión:', error.message);
+    } catch (e) {
+        console.error('Error al iniciar sesión:', e.message);
 
         res.status(500).json({
             success: false,
@@ -139,5 +119,5 @@ app.post('/api/auth/login', async (req, res) => {
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log('Servidor OCID iniciado en el puerto ' + PORT);
+    console.log(`OCID API funcionando en el puerto ${PORT}`);
 });
