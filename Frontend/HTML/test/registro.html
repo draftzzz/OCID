@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - OCID</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+
+    <main class="contenedor_registro">
+        <header class="cabecera_registro">
+            <div class="icono_emblema">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <line x1="19" y1="8" x2="19" y2="14"></line>
+                    <line x1="22" y1="11" x2="16" y2="11"></line>
+                </svg>
+            </div>
+            <span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+            <h1 class="titulo_registro">Crear Cuenta</h1>
+            <p class="subtitulo_registro">Únete a la comunidad de OCID</p>
+        </header>
+
+        <section class="cuerpo_formulario">
+            <div id="mensaje_estado" class="mensaje_alerta"></div>
+
+            <form id="registro">
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="nombre">Nombre Completo</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </span>
+                        <input class="campo_texto" type="text" id="nombre" placeholder="Juan Pérez González" required>
+                    </div>
+                </div>
+
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="email">Correo Electrónico</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path></svg>
+                        </span>
+                        <input class="campo_texto" type="email" id="email" placeholder="correo@ejemplo.com" required>
+                    </div>
+                </div>
+
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="contrasena">Contraseña</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </span>
+                        <input class="campo_texto" type="password" id="contrasena" placeholder="••••••••" minlength="6" required>
+                        <button type="button" class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña">
+                            <svg id="icono_ojo" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="boton_enviar" id="registerBtn">
+                    <span>Registrarse</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+            </form>
+        </section>
+
+        <footer class="pie_formulario">
+            <p>¿Ya tienes una cuenta? <a class="enlace_login" href="login.html">Inicia sesión aquí</a></p>
+        </footer>
+    </main>
+
+    <footer class="pie_global">
+        OCID • Organización y Comunicación Interna para Docentes
+    </footer>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        // Alternar visualización de clave
+        $('boton_clave').onclick = () => {
+            const c = $('contrasena');
+            c.type = c.type === 'password' ? 'text' : 'password';
+        };
+
+        // Envío mínimo y funcional directo al backend
+        $('registro').onsubmit = async e => {
+            e.preventDefault();
+            const btn = $('registerBtn');
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('https://ocid.onrender.com/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: $('nombre').value,
+                        email: $('email').value,
+                        contrasena: $('contrasena').value
+                    })
+                });
+                const d = await res.json();
+                
+                if (res.ok && d.success) {
+                    alert('¡Registro exitoso!');
+                    location.href = 'login.html';
+                } else {
+                    alert(d.error || 'Error al registrar');
+                }
+            } catch (err) {
+                alert('Error de conexión con el servidor');
+            } finally {
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

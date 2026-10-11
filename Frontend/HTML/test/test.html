@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>OCID - Organización y Comunicación Interna para Docentes</title>
+    <!-- Fuente institucional -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="test.css" />
+</head>
+
+<body>
+    <!-- 1. Barra Gubernamental e Institucional Superior -->
+    <aside class="barra_superior" id="barra_superior">
+        <div class="texto_superior">
+            <span><strong>OCID</strong> • Plataforma Institucional Docente</span>
+            <span>|</span>
+            <span>Coordinación Académica Digital</span>
+        </div>
+        <div class="enlaces_soporte">
+            <span class="enlace_soporte_item">
+                <i data-lucide="mail" style="width: 14px; height: 14px;"></i> soporte@ocid.edu
+            </span>
+            <span class="enlace_soporte_item">
+                <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i> Portal Seguro Certificado
+            </span>
+        </div>
+    </aside>
+    <!-- 2. Cabecera y Navegación Principal -->
+    <header class="cabecera_principal" id="cabecera_principal">
+        <div class="contenedor_navegacion">
+            <a class="bloque_logotipo" href="#" id="enlace_inicio">
+                <div class="isotipo_ocid">
+                    <i data-lucide="building" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="separador_marca"></div>
+                <div class="textos_marca">
+                    <span class="siglas_marca">OCID</span>
+                    <span class="lema_marca">Organización y Comunicación Interna para Docentes</span>
+                </div>
+            </a>
+            <nav class="menu_navegacion" id="navegacion_enlaces">
+                <a class="enlace_menu" href="#como_funciona">¿Cómo Funciona?</a>
+                <a class="enlace_menu" href="#modulos_sistema">Módulos</a>
+                <a class="enlace_menu" href="#roles_permisos">Roles y Permisos</a>
+                <a class="enlace_menu" href="#contacto_soporte">Contacto</a>
+            </nav>
+            <div class="grupo_acciones" id="zona_acceso_rapido">
+                <button class="boton_secundario" id="boton_ver_guia" onclick="desplazar_a_seccion('como_funciona')">
+                    <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+                    Ver Guía
+                </button>
+                <button class="boton_ingresar" id="boton_acceder" onclick="redirigir_inicio_sesion()">
+                    <i data-lucide="log-in" style="width: 16px; height: 16px;"></i>
+                    Acceder al Sistema
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- 3. Sección Hero: Propuesta de Valor Institucional -->
+    <section class="seccion_hero" id="seccion_hero">
+        <div class="contenedor_hero">
+            <div class="bloque_texto_hero">
+                <div class="etiqueta_institucional">
+                    <i data-lucide="shield" style="width: 15px; height: 15px; color: var(--azul_medio);"></i>
+                    SISTEMA OFICIAL OCID • GESTIÓN DOCENTE
+                </div>
+                <h1 class="titulo_principal">
+                    Organización y Comunicación Docente en <span>un solo lugar</span>.
+                </h1>
+                <p class="descripcion_principal">
+                    Plataforma web centralizada para profesores, coordinadores de área y directivos institucionales.
+                    Consulta avisos inmediatos, gestiona planeaciones y descarga formatos oficiales de forma segura,
+                    estructurada y transparente.
+                </p>
+                <div class="acciones_hero">
+                    <button class="boton_accion_primario" onclick="redirigir_inicio_sesion()">
+                        <i data-lucide="arrow-right-circle" style="width: 20px; height: 20px;"></i>
+                        Iniciar Sesión Docente
+                    </button>
+                    <button class="boton_secundario" onclick="desplazar_a_seccion('modulos_sistema')">
+                        <i data-lucide="layout-grid" style="width: 18px; height: 18px;"></i>
+                        Explorar Funcionalidades
+                    </button>
+                </div>
+                <div class="tarjetas_confianza">
+                    <div class="elemento_confianza">
+                        <span class="icono_chequeo"><i data-lucide="check"
+                                style="width: 14px; height: 14px;"></i></span>
+                        <span>Sesiones Seguras sin JWT</span>
+                    </div>
+                    <div class="elemento_confianza">
+                        <span class="icono_chequeo"><i data-lucide="check"
+                                style="width: 14px; height: 14px;"></i></span>
+                        <span>Diseño 100% Adaptable</span>
+                    </div>
+                    <div class="elemento_confianza">
+                        <span class="icono_chequeo"><i data-lucide="check"
+                                style="width: 14px; height: 14px;"></i></span>
+                        <span>Respaldado en PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta Gráfica Demostrativa Limpia de OCID -->
+            <div class="bloque_visual_hero">
+                <div class="tarjeta_vista_previa" id="tarjeta_demostracion">
+                    <div class="cabecera_tarjeta_demo">
+                        <div class="puntos_control">
+                            <span class="punto"></span>
+                            <span class="punto"></span>
+                            <span class="punto"></span>
+                        </div>
+                        <span>Consola Institucional OCID</span>
+                        <i data-lucide="lock" style="width: 14px; height: 14px;"></i>
+                    </div>
+                    <div class="pantalla_demo_interior">
+                        <div class="demo_insignia_modulo">
+                            <div class="demo_icono_caja">
+                                <i data-lucide="file-check-2" style="width: 22px; height: 22px;"></i>
+                            </div>
+                            <div class="demo_texto_caja">
+                                <h4>Entrega de Planeaciones Curriculares</h4>
+                                <p>Ciclo Lectivo Ordinario en Curso</p>
+                            </div>
+                        </div>
+                        <div class="demo_barra_progreso">
+                            <div class="demo_barra_relleno"></div>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--texto_apagado);">
+                            <span>Avance Departamental</span>
+                            <strong style="color: var(--azul_institucional);">78% Completado</strong>
+                        </div>
+                    </div>
+                    <div class="cuerpo_tarjeta_demo">
+                        <div class="indicador_estado">
+                            <span><strong>Estado del Servidor:</strong> PostgreSQL Activo</span>
+                            <span class="estado_activo">
+                                <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i> En línea
+                            </span>
+                        </div>
+                        <p class="texto_demo_descripcion">
+                            Optimización del flujo administrativo, entrega puntual de minutas y comunicación directa
+                            entre áreas colegiadas sin intermediarios.
+                        </p>
+                        <div class="etiquetas_resumen">
+                            <span class="etiqueta_resumen_item">Seguridad HTTP-Only</span>
+                            <span class="etiqueta_resumen_item">Módulos Escolares</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 4. Sección Explicativa: ¿Cómo Funciona la Plataforma Escolar? -->
+    <section class="seccion_explicativa" id="como_funciona">
+        <div class="bloque_encabezado">
+            <span class="insignia_seccion">Paso a Paso</span>
+            <h2 class="titulo_seccion">¿Cómo funciona la plataforma escolar?</h2>
+            <p class="subtitulo_seccion">
+                Un flujo ágil y directo pensado para optimizar el tiempo administrativo de la plantilla académica
+                institucional.
+            </p>
+        </div>
+        <div class="rejilla_pasos">
+            <!-- Paso 1 -->
+            <article class="tarjeta_paso" id="paso_autenticacion">
+                <div class="numero_paso">1</div>
+                <h3 class="titulo_paso">Acceso Seguro por Rol</h3>
+                <p class="texto_paso">
+                    El docente ingresa con su identificador oficial o correo escolar. El servidor valida las
+                    credenciales con hash seguro y genera una sesión HTTP-only protegida contra accesos indebidos y
+                    libre de JWT.
+                </p>
+            </article>
+            <!-- Paso 2 -->
+            <article class="tarjeta_paso" id="paso_comunicacion">
+                <div class="numero_paso">2</div>
+                <h3 class="titulo_paso">Revisión de Avisos y Fechas</h3>
+                <p class="texto_paso">
+                    Visualiza comunicados clasificados por urgencia (Normal, Importante, Urgente) emitidos por Dirección
+                    y Jefaturas, con confirmación de lectura y descargas directas de minutas y circulares.
+                </p>
+            </article>
+            <!-- Paso 3 -->
+            <article class="tarjeta_paso" id="paso_documentacion">
+                <div class="numero_paso">3</div>
+                <h3 class="titulo_paso">Gestión y Repositorio Digital</h3>
+                <p class="texto_paso">
+                    Descarga plantillas oficiales de planeación curricular, formatos de evaluación y sube las actas
+                    correspondientes a tu departamento sin traslados físicos ni duplicidad documental.
+                </p>
+            </article>
+        </div>
+    </section>
+    <!-- 5. Sección de Módulos del Sistema -->
+    <section class="seccion_modulos" id="modulos_sistema">
+        <div class="contenedor_modulos">
+            <div class="bloque_encabezado">
+                <span class="insignia_seccion">Herramientas</span>
+                <h2 class="titulo_seccion">Módulos diseñados para tu labor docente</h2>
+                <p class="subtitulo_seccion">
+                    Todo el ecosistema de gestión y comunicación estructurado en módulos claros, robustos y fáciles de
+                    operar.
+                </p>
+            </div>
+            <div class="rejilla_modulos">
+                <!-- Módulo 1 -->
+                <div class="tarjeta_modulo" id="modulo_avisos">
+                    <div class="icono_modulo">
+                        <i data-lucide="bell" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h4 class="titulo_modulo">Avisos y Circulares</h4>
+                    <p class="texto_modulo">Publicaciones oficiales con fecha límite, filtros avanzados de búsqueda y
+                        prioridad visual asignada.</p>
+                </div>
+                <!-- Módulo 2 -->
+                <div class="tarjeta_modulo" id="modulo_formatos">
+                    <div class="icono_modulo">
+                        <i data-lucide="folder-down" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h4 class="titulo_modulo">Formatos Compartidos</h4>
+                    <p class="texto_modulo">Repositorio centralizado con soporte para plantillas y formatos
+                        institucionales en PDF, Word y Excel.</p>
+                </div>
+                <!-- Módulo 3 -->
+                <div class="tarjeta_modulo" id="modulo_calendario">
+                    <div class="icono_modulo">
+                        <i data-lucide="calendar" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h4 class="titulo_modulo">Calendario Escolar</h4>
+                    <p class="texto_modulo">Agenda colegiada con juntas académicas, cierres de periodos evaluativos y
+                        fechas clave del semestre.</p>
+                </div>
+                <!-- Módulo 4 -->
+                <div class="tarjeta_modulo" id="modulo_departamentos">
+                    <div class="icono_modulo">
+                        <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h4 class="titulo_modulo">Departamentos</h4>
+                    <p class="texto_modulo">Espacios colaborativos dedicados a cada academia, jefatura de departamento y
+                        áreas de dirección.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 6. Sección de Roles y Permisos -->
+    <section class="seccion_roles" id="roles_permisos">
+        <div class="bloque_encabezado">
+            <span class="insignia_seccion">Seguridad y Control</span>
+            <h2 class="titulo_seccion">Perfiles adaptados a cada función</h2>
+            <p class="subtitulo_seccion">
+                Validación estricta desde el backend para asegurar la integridad de la información institucional.
+            </p>
+        </div>
+        <div class="rejilla_roles">
+            <!-- Rol 1: Docentes -->
+            <div class="tarjeta_rol" id="rol_docente">
+                <div class="encabezado_rol">
+                    <div class="icono_rol">
+                        <i data-lucide="graduation-cap" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h3 class="titulo_rol">Docentes</h3>
+                </div>
+                <ul class="lista_permisos">
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Consulta de comunicados, circulares y avisos urgentes</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Descarga de formatos, planeaciones e instrumentos de evaluación</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Revisión de calendario institucional y cronograma de exámenes</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Rol 2: Jefes de Depto. -->
+            <div class="tarjeta_rol" id="rol_jefe_depto">
+                <div class="encabezado_rol">
+                    <div class="icono_rol">
+                        <i data-lucide="briefcase" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h3 class="titulo_rol">Jefes de Depto.</h3>
+                </div>
+                <ul class="lista_permisos">
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Publicación de avisos específicos a su academia respectiva</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Subida y administración de actas y minutas colegiadas</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Coordinación de fechas límites y recepción de evidencias</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Rol 3: Administradores -->
+            <div class="tarjeta_rol" id="rol_administrador">
+                <div class="encabezado_rol">
+                    <div class="icono_rol">
+                        <i data-lucide="shield" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h3 class="titulo_rol">Administradores</h3>
+                </div>
+                <ul class="lista_permisos">
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Alta, edición y revocación de cuentas docentes y directivas</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Configuración general de departamentos y periodos escolares</span>
+                    </li>
+                    <li class="elemento_permiso">
+                        <i class="icono_permiso" data-lucide="check" style="width: 16px; height: 16px;"></i>
+                        <span>Control integral del repositorio y respaldos en base de datos</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- 7. Pie de Página Institucional -->
+    <footer class="pie_pagina" id="contacto_soporte">
+        <div class="contenedor_pie">
+            <div class="columna_pie">
+                <h4>OCID</h4>
+                <p>
+                    Organización y Comunicación Interna para Docentes. Sistema integral diseñado para centralizar la
+                    información escolar, agilizar la toma de decisiones y fortalecer la labor académica de la
+                    institución.
+                </p>
+            </div>
+            <div class="columna_pie">
+                <h4>Navegación Rápida</h4>
+                <ul class="enlaces_pie">
+                    <li><a class="enlace_pie_item" href="#como_funciona">¿Cómo Funciona?</a></li>
+                    <li><a class="enlace_pie_item" href="#modulos_sistema">Módulos del Sistema</a></li>
+                    <li><a class="enlace_pie_item" href="#roles_permisos">Roles y Privilegios</a></li>
+                    <li><a class="enlace_pie_item" href="#" onclick="redirigir_inicio_sesion()">Acceso a la Intranet</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="columna_pie">
+                <h4>Soporte y Contacto</h4>
+                <p>Correo de atención: soporte@ocid.edu</p>
+                <p>Horario de servicio técnico: 08:00 a 18:00 hrs</p>
+                <p style="margin-top: 10px;">Gestión de incidencias y credenciales disponible a través del administrador
+                    de campus.</p>
+            </div>
+        </div>
+        <div class="barra_derechos">
+            <p>© 2025 OCID - Organización y Comunicación Interna para Docentes. Plataforma Institucional. Todos los
+                derechos reservados.</p>
+        </div>
+    </footer>
+    <!-- Lógica JavaScript en español con nomenclatura obligatoria de guiones bajos (_) -->
+    <script>
+        // Inicializar los iconos de Lucide
+        lucide.createIcons();
+
+        /**
+         * Función para desplazar suavemente la vista hacia una sección identificada en el documento
+         * @param {string} identificador_seccion - ID del elemento destino
+         */
+        function desplazar_a_seccion(identificador_seccion) {
+            const elemento_destino = document.getElementById(identificador_seccion);
+            if (elemento_destino) {
+                elemento_destino.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        /**
+         * Función para gestionar la redirección al módulo seguro de inicio de sesión
+         */
+        function redirigir_inicio_sesion() {
+            // Simula el acceso al módulo protegido con sesión HTTP-only
+            alert("Redirigiendo a la pantalla de Acceso Institucional OCID...");
+            window.location.href = "login.html"; // Redirección a la página de inicio de sesión
+        }
+
+        // Registro de confirmación de carga de la plataforma en la consola
+        console.log("Plataforma OCID - Organización y Comunicación Interna para Docentes inicializada correctamente.");
+    </script>
+</body>
+
+</html>

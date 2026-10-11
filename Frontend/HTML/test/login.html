@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - OCID</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <main class="contenedor_login">
+        <header class="cabecera_login">
+            <div class="icono_emblema">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+            </div>
+            <span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+            <h1 class="titulo_login">Iniciar Sesión</h1>
+            <p class="subtitulo_login">Accede a tu cuenta de OCID</p>
+        </header>
+
+        <section class="cuerpo_formulario">
+            <form id="loginForm">
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="loginEmail">Correo Electrónico</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+                            </svg>
+                        </span>
+                        <input class="campo_texto" type="email" id="loginEmail" placeholder="correo@ejemplo.com"
+                            required>
+                    </div>
+                </div>
+
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="loginPassword">Contraseña</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </span>
+                        <input class="campo_texto" type="password" id="loginPassword" placeholder="Contraseña" required>
+                        <button type="button" class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="boton_enviar" id="loginBtn">
+                    <span>Iniciar Sesión</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </form>
+        </section>
+
+        <footer class="pie_formulario">
+            <p>¿No tienes una cuenta? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
+        </footer>
+    </main>
+
+    <footer class="pie_global">
+        OCID • Organización y Comunicación Interna para Docentes
+    </footer>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        // Ver / ocultar contraseña
+        $('boton_clave').onclick = () => {
+            const p = $('loginPassword');
+            p.type = p.type === 'password' ? 'text' : 'password';
+        };
+
+        // Autenticación mínima conectada a la API de Render
+        $('loginForm').onsubmit = async e => {
+            e.preventDefault();
+            const btn = $('loginBtn');
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('https://ocid.onrender.com/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: $('loginEmail').value,
+                        contrasena: $('loginPassword').value
+                    })
+                });
+                const d = await res.json();
+
+                if (res.ok && d.success) {
+                    localStorage.setItem('id', d.usuario.id);
+                    localStorage.setItem('usuario', d.usuario.nombre);
+                    alert(`¡Bienvenido, ${d.usuario.nombre}!`);
+                    location.href = 'test.html';
+                } else {
+                    alert(d.error || 'Correo o contraseña incorrectos');
+                }
+            } catch (err) {
+                alert('Error al conectar con el servidor');
+            } finally {
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+
+</html>
