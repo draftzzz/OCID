@@ -1,0 +1,1 @@
+-- sql para insertar tablas y campos --
