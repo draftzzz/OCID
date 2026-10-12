@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OCID</title>
+</head>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8faff;
+    color: #0f172a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+}
+
+.contenedor_login {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px -5px rgba(23, 54, 93, 0.08), 0 8px 10px -6px rgba(23, 54, 93, 0.04);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.cabecera_login {
+    text-align: center;
+    padding: 36px 32px 20px;
+}
+
+.icono_emblema {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    background-color: #eff6ff;
+    color: #17365d;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.insignia_oficial {
+    display: inline-block;
+    background-color: #eff6ff;
+    color: #17365d;
+    font-size: 11.52px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 5.6px 13.6px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    border: 1px solid #bfdbfe;
+}
+
+.titulo_login {
+    font-size: 25.6px;
+    font-weight: 800;
+    color: #17365d;
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+}
+
+.subtitulo_login {
+    font-size: 14.4px;
+    color: #475569;
+}
+
+.cuerpo_formulario {
+    padding: 0 32px 24px;
+}
+
+.mensaje_alerta {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 9.6px;
+    font-size: 13.44px;
+    margin-bottom: 18.4px;
+    font-weight: 500;
+}
+
+.mensaje_alerta.error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.mensaje_alerta.exito {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.grupo_campo {
+    margin-bottom: 18.4px;
+}
+
+.etiqueta_campo {
+    display: block;
+    font-size: 13.28px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 7.2px;
+}
+
+.contenedor_entrada {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icono_campo {
+    position: absolute;
+    left: 15.2px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.campo_texto {
+    width: 100%;
+    padding: 12.48px 41.6px 12.48px 41.6px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10.4px;
+    font-size: 14.72px;
+    color: #0f172a;
+    background-color: #fafbfc;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.campo_texto:focus {
+    border-color: #17365d;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(23, 54, 93, 0.12);
+}
+
+.boton_ver_clave {
+    position: absolute;
+    right: 13.6px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.boton_ver_clave:hover {
+    color: #17365d;
+}
+
+.boton_enviar {
+    width: 100%;
+    padding: 13.6px;
+    background-color: #17365d;
+    color: #ffffff;
+    border: none;
+    border-radius: 10.4px;
+    font-size: 15.2px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.boton_enviar:hover {
+    background-color: #0f2440;
+}
+
+.boton_enviar:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.pie_formulario {
+    padding: 20px 32px 32px;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+    background-color: #fafbfc;
+}
+
+.pie_formulario p {
+    font-size: 13.76px;
+    color: #475569;
+}
+
+.enlace_registro {
+    color: #17365d;
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.enlace_registro:hover {
+    text-decoration: underline;
+}
+
+.pie_global {
+    margin-top: 24px;
+    font-size: 12.48px;
+    color: #94a3b8;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .contenedor_login {
+        border-radius: 16px;
+    }
+
+    .cabecera_login {
+        padding: 28px 20px 16px;
+    }
+
+    .cuerpo_formulario {
+        padding: 0 20px 20px;
+    }
+
+    .pie_formulario {
+        padding: 18.4px 20px 28px;
+    }
+}
+</style>
+
+<body>
+    <div class="contenedor-principal">
+        <div class="cabecera">
+            <!-- Icono de entrar -->
+            <div class="icono_emblema">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+            </div>
+            <!-- Icono de entrar -->
+            <span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+            <h1>Iniciar Sesión</h1>
+            <p class="acceder">Accede a tu cuenta de OCID</p>
+        </div>
+        <div class="formulario">
+            <div id="error-correo" class="error"></div>
+            <form id="login">
+                <div class="campos">
+                    <label for="correo">Correo Electrónico</label>
+                    <div class="contenedor_entrada">
+                        <!-- icono arroba -->
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+                            </svg>
+                        </span>
+                        <!-- icono arroba -->
+                        <input class="email" type="email" id="loginEmail" placeholder="correo@ejemplo.com" required>
+                    </div>
+                </div>
+
+                <div class="campos">
+                    <label for="contrasena">Contraseña</label>
+                    <div class="contenedor_entrada">
+                        <!-- icono candado -->
+                        <span class="icono_campo">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </span>
+                        <!-- icono candado -->
+                        <input class="password" type="password" id="loginPassword" placeholder="Contraseña" required>
+                        <button type="button" class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña">
+                            <!-- ojo -->
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <!-- ojo -->
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" class="boton_enviar" id="loginBtn">
+                <span>Iniciar Sesión</span>
+                <!-- flecha -->
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+                <!-- flecha -->
+            </button>
+        </div>
+    </div>
+    <footer class="pie_formulario">
+        <p>¿No tienes una cuenta? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
+    </footer>
+    </main>
+    <footer class="pie_global">
+        OCID • Organización y Comunicación Interna para Docentes
+    </footer>
+</body>
+</html>
