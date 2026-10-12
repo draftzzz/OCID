@@ -16,9 +16,6 @@ app.post('/usuarios', async (req, res) => {
     
     // Inserta los datos en la base de datos de Neon
     await pool.query('INSERT INTO usuarios(nombre, correo, password) VALUES($1, $2, $3)', [nombre, correo, password]);
-    
-    // El servidor responde enviando al usuario directamente a la página de login
-    res.redirect('https://ocid-iota.vercel.app/login.html'); 
 });
 
 app.listen(process.env.PORT || 3000);
