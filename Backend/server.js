@@ -10,7 +10,7 @@ app.use(cors(), express.json(), express.urlencoded({ extended: true }));
 // Registro: Solo guarda silenciosamente (Sin contenido)
 app.post('/registro', async (req, res) => {
     try {
-        await sql`INSERT INTO usuarios (nombre, correo, contrasena) VALUES (${req.body.nombre}, ${req.body.correo}, ${req.body.contrasena})`;
+        await sql`INSERT INTO usuarios (nombre, correo, password) VALUES (${req.body.nombre}, ${req.body.correo}, ${req.body.password})`;
         res.redirect('/login.html'); // Si se guarda, redirige al login
     } catch {
         // Si falla (correo duplicado o error), devuelve el HTML con el div visible
