@@ -107,19 +107,25 @@
 
         $('registro').onsubmit = async e => {
             e.preventDefault();
-            $('mensaje_estado').style.display = 'none';
-            $('registerBtn').disabled = true;
+            const a = $('mensaje_estado'), b = $('registerBtn');
+            a.style.display = 'none'; b.disabled = true;
 
             try {
-                const res = await fetch('https://onrender.com/registro', {
+                const res = await fetch('https://ocid.onrender.com/registro', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nombre: $('nombre').value.trim(), correo: $('correo').value.trim(), contrasena: $('password').value })
                 });
-                res.ok ? location.href = 'login.html' : $('mensaje_estado').style.display = 'block';
-            } catch { $('mensaje_estado').style.display = 'block'; }
-            finally { $('registerBtn').disabled = false; }
+
+                if (res.ok) return location.href = 'login.html';
+
+                a.className = 'mensaje_alerta error';
+                a.textContent = 'Este correo electrónico ya se encuentra registrado';
+                a.style.display = 'block';
+            } catch (err) { console.error(err); }
+            finally { b.disabled = false; }
         };
+
     </script>
 </body>
 
