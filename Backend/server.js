@@ -5,23 +5,25 @@ const { neon } = require('@neondatabase/serverless');
 const app = express();
 const sql = neon(process.env.DATABASE_URL);
 
-app.use(cors(), express.json(), express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Registro: Solo guarda silenciosamente (Sin contenido)
+// Registro: Columnas 'correo' y 'password'
 app.post('/registro', async (req, res) => {
     try {
         await sql`INSERT INTO usuarios (nombre, correo, password) VALUES (${req.body.nombre}, ${req.body.correo}, ${req.body.password})`;
-        res.redirect('/login.html'); // Si se guarda, redirige al login
+        res.redirect('/login.html'); 
     } catch {
-        // Si falla (correo duplicado o error), devuelve el HTML con el div visible
-        res.send('<div>Este correo ya existe</div><a href="javascript:history.back()">Volver</a>');
+        res.send('<div>Este correo ya existe</div><br><a href="javascript:history.back()">Volver</a>');
     }
 });
 
-// Login: Simplificado
+// Login: Columnas 'correo' y 'password'
 app.post('/api/auth/login', (req, res) => {
-    sql`SELECT 1 FROM usuarios WHERE correo=${req.body.correo} AND contrasena=${req.body.contrasena}`
-        .then(([u]) => res.sendStatus(u ? 200 : 401)).catch(() => res.sendStatus(500));
+    sql`SELECT 1 FROM usuarios WHERE correo=${req.body.correo} AND password=${req.body.password}`
+        .then(([u]) => res.sendStatus(u ? 200 : 401))
+        .catch(() => res.sendStatus(500));
 });
 
 app.listen(process.env.PORT || 10000, '0.0.0.0');
