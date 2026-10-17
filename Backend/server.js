@@ -244,6 +244,14 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    mensaje: 'OCID está funcionando',
+    version: '2'
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor en línea en http://localhost:${PORT}`);
