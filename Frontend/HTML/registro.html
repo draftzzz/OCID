@@ -114,7 +114,7 @@
             btn.disabled = true;
 
             try {
-                const res = await fetch('/registro', {
+                const res = await fetch('https://ocid.onrender.com/registro', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
