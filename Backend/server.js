@@ -137,7 +137,7 @@ app.get('/anuncios', async (req, res) => {
 });
 
 // Crear un nuevo anuncio real visible para todos
-app.post('https://ocid.onrender.com/api/anuncios', async (req, res) => {
+app.post('/anuncios', async (req, res) => {
   const { titulo, contenido, prioridad, autor_id, departamento_id } = req.body;
 
   if (!titulo || !contenido) {
@@ -192,7 +192,7 @@ app.get('/notificaciones', async (req, res) => {
 // ==========================================
 
 // Registro desde frontend público
-app.post('https://ocid.onrender.com/api/registro', async (req, res) => {
+app.post('/registro', async (req, res) => {
   const { nombre, correo, password } = req.body;
 
   if (!nombre || !correo || !password) {
@@ -218,7 +218,7 @@ app.post('https://ocid.onrender.com/api/registro', async (req, res) => {
 });
 
 // Login
-app.post('https://ocid.onrender.com/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { correo, password } = req.body;
 
   if (!correo || !password) {

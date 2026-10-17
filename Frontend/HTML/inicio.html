@@ -429,7 +429,7 @@
     // 1. CARGAR USUARIOS REALES DE PSQL
     async function cargarUsuarios() {
       try {
-        const res = await fetch('https://ocid.onrender.com/api/usuarios');
+        const res = await fetch('https://ocid.onrender.com/usuarios');
         const data = await res.json();
         const tbody = $('tabla_usuarios_body');
 
@@ -465,7 +465,7 @@
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/api/usuarios', {
+        const res = await fetch('https://ocid.onrender.com/usuarios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -488,7 +488,7 @@
     // 2. CARGAR Y REGISTRAR ANUNCIOS REALES
     async function cargarAnuncios() {
       try {
-        const res = await fetch('https://ocid.onrender.com/api/anuncios');
+        const res = await fetch('https://ocid.onrender.com/anuncios');
         const data = await res.json();
         const tbody = $('tabla_anuncios_body');
 
@@ -523,7 +523,7 @@
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/api/anuncios', {
+        const res = await fetch('https://ocid.onrender.com/anuncios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -546,7 +546,7 @@
     // 3. CARGAR DEPARTAMENTOS
     async function cargarDepartamentos() {
       try {
-        const res = await fetch('https://ocid.onrender.com/api/departamentos');
+        const res = await fetch('https://ocid.onrender.com/departamentos');
         const data = await res.json();
         const tbody = $('tabla_deptos_body');
 
