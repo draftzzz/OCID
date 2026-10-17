@@ -117,7 +117,7 @@ app.get('/api/departamentos', async (req, res) => {
 // ==========================================
 
 // Obtener todos los anuncios emitidos
-app.get('/api/anuncios', async (req, res) => {
+app.get('https://ocid.onrender.com/anuncios', async (req, res) => {
   try {
     const query = `
       SELECT a.id, a.titulo, a.contenido, a.prioridad, a.fecha,
@@ -137,7 +137,7 @@ app.get('/api/anuncios', async (req, res) => {
 });
 
 // Crear un nuevo anuncio real visible para todos
-app.post('/api/anuncios', async (req, res) => {
+app.post('https://ocid.onrender.com/anuncios', async (req, res) => {
   const { titulo, contenido, prioridad, autor_id, departamento_id } = req.body;
 
   if (!titulo || !contenido) {
