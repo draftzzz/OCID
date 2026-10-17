@@ -96,7 +96,7 @@
             btn.disabled = true;
 
             try {
-                const res = await fetch('/login', {
+                const res = await fetch('https://ocid.onrender.com/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -109,7 +109,7 @@
 
                 if (res.ok && data.success) {
                     localStorage.setItem('usuario_ocid', JSON.stringify(data.usuario));
-                    location.href = 'admin.html';
+                    location.href = 'inicio.html';
                 } else {
                     alerta.className = 'mensaje_alerta error';
                     alerta.textContent = data.error || 'Credenciales no válidas. Revisa tu correo y contraseña.';
