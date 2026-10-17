@@ -60,7 +60,7 @@ app.get('/usuarios', async (req, res) => {
 });
 
 // Registrar un usuario real en la base de datos
-app.post('/ap/usuarios', async (req, res) => {
+app.post('/usuarios', async (req, res) => {
   const { nombre, correo, password, rol, departamento_id } = req.body;
 
   if (!nombre || !correo || !password) {
