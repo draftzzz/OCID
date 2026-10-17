@@ -4,169 +4,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrativo - OCID</title>
+  <title>OCID | Panel administrativo</title>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      background-color: #f1f5f9;
+      background: #f1f5f9;
       color: #1e293b;
       min-height: 100vh;
       display: flex;
     }
 
     .barra_lateral {
-      width: 260px;
-      background-color: #0f2440;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
+      width: 245px;
       min-height: 100vh;
+      flex-shrink: 0;
+      background: #0f2440;
+      color: white;
     }
 
     .cabecera_lateral {
       padding: 24px 20px;
-      border-bottom: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid #334155;
     }
 
     .titulo_logo {
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 6px;
     }
 
     .subtitulo_logo {
-      font-size: 11px;
-      color: #94a3b8;
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.5;
     }
 
     .menu_navegacion {
-      padding: 20px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-grow: 1;
+      padding: 18px 10px;
     }
 
     .item_menu {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      color: #cbd5e1;
-      border: none;
-      background: transparent;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
+      align-items: center;
       width: 100%;
+      padding: 13px;
+      margin-bottom: 7px;
+      border: none;
+      border-radius: 7px;
+      background: transparent;
+      color: #cbd5e1;
       text-align: left;
+      cursor: pointer;
+      font-size: 14px;
     }
 
+    .item_menu:hover,
     .item_menu.activo {
-      background-color: #17365d;
-      color: #fff;
-      font-weight: 700;
+      background: #17365d;
+      color: white;
     }
 
     .contenedor_principal {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      flex: 1;
       min-width: 0;
     }
 
     .barra_superior {
-      background-color: #fff;
-      min-height: 80px;
+      min-height: 85px;
+      padding: 18px 28px;
+      background: white;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      padding: 16px 32px;
+      align-items: center;
+      gap: 15px;
     }
 
     .titulo_saludo {
-      font-size: 19px;
-      font-weight: 700;
+      font-size: 20px;
       color: #17365d;
     }
 
     .usuario_saludo {
-      margin-top: 5px;
-      font-size: 13px;
+      margin-top: 7px;
       color: #64748b;
-    }
-
-    .boton_guardar {
-      background-color: #17365d;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
       font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .boton_guardar:hover {
-      background-color: #0f2440;
     }
 
     .cuerpo_panel {
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+      padding: 25px;
     }
 
-    .caja_formulario, .caja_vista {
-      background-color: #fff;
+    .caja_formulario,
+    .caja_vista {
+      background: white;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 16px;
-      overflow-x: auto;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+      min-width: 0;
     }
 
     .titulo_form {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 16px;
       color: #17365d;
-      margin-bottom: 14px;
+      font-weight: bold;
+      margin-bottom: 16px;
     }
 
     .fila_formulario {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 12px;
       align-items: end;
     }
 
+    .etiqueta {
+      display: block;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
     .campo_input {
+      width: 100%;
+      padding: 10px;
       border: 1px solid #cbd5e1;
-      padding: 9px 12px;
       border-radius: 6px;
       font-size: 13px;
-      width: 100%;
+      background: white;
       outline: none;
     }
 
-    .etiqueta {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      color: #64748b;
-      margin-bottom: 5px;
+    .campo_input:focus {
+      border-color: #17365d;
+    }
+
+    textarea.campo_input {
+      resize: vertical;
+      min-height: 40px;
+    }
+
+    .boton_guardar {
+      border: none;
+      border-radius: 6px;
+      background: #17365d;
+      color: white;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .boton_guardar:hover {
+      background: #0f2440;
+    }
+
+    .boton_eliminar {
+      border: none;
+      border-radius: 5px;
+      background: #dc2626;
+      color: white;
+      padding: 7px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .boton_eliminar:hover {
+      background: #991b1b;
     }
 
     .cabecera_vista {
@@ -179,63 +193,125 @@
 
     .titulo_vista {
       font-size: 18px;
-      font-weight: 700;
       color: #17365d;
+    }
+
+    .tabla_contenedor {
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
       text-align: left;
-      min-width: 600px;
+      font-size: 13px;
     }
 
     th {
-      background-color: #f8fafc;
+      background: #f8fafc;
       color: #475569;
-      font-weight: 700;
-      padding: 12px 14px;
+      padding: 12px;
       border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
     }
 
     td {
-      padding: 12px 14px;
-      border-bottom: 1px solid #f1f5f9;
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      overflow-wrap: anywhere;
     }
 
     .badge_tag {
-      background-color: #eff6ff;
+      display: inline-block;
+      background: #eff6ff;
       color: #1d4ed8;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 5px;
       font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* ANUNCIOS: DOS POR FILA */
+    .lista_anuncios {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+
+    .tarjeta_anuncio {
+      min-width: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      padding: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .encabezado_anuncios {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tarjeta_anuncio h3 {
+      color: #17365d;
+      font-size: 15px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .contenido_anuncio {
+      margin: 9px 0 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #475569;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .info_anuncio {
+      color: #64748b;
+      font-size: 11px;
+      line-height: 1.5;
+      margin-top: 5px;
     }
 
     .alerta_mensaje {
       display: none;
-      padding: 10px 14px;
+      padding: 12px;
+      margin-bottom: 15px;
       border-radius: 6px;
       font-size: 13px;
-      margin-bottom: 12px;
+      overflow-wrap: anywhere;
     }
 
     .alerta_exito {
-      background-color: #ecfdf5;
+      display: block;
       color: #065f46;
+      background: #ecfdf5;
       border: 1px solid #a7f3d0;
     }
 
     .alerta_error {
-      background-color: #fef2f2;
+      display: block;
       color: #991b1b;
+      background: #fef2f2;
       border: 1px solid #fecaca;
     }
 
-    @media (max-width: 800px) {
+    .texto_vacio {
+      color: #64748b;
+      font-size: 13px;
+      padding: 10px 0;
+    }
+
+    @media (max-width: 850px) {
       body {
-        flex-direction: column;
+        display: block;
       }
 
       .barra_lateral {
@@ -244,7 +320,14 @@
       }
 
       .menu_navegacion {
+        display: flex;
+        gap: 6px;
         padding: 10px;
+      }
+
+      .item_menu {
+        margin: 0;
+        gap: 5px;
       }
 
       .barra_superior {
@@ -252,11 +335,29 @@
       }
 
       .cuerpo_panel {
-        padding: 16px;
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .lista_anuncios {
+        grid-template-columns: 1fr;
       }
 
-      .fila_formulario {
-        grid-template-columns: 1fr;
+      .menu_navegacion {
+        flex-wrap: wrap;
+      }
+
+      .item_menu {
+        flex: 1 1 130px;
+      }
+
+      .titulo_saludo {
+        font-size: 17px;
+      }
+
+      .barra_superior {
+        align-items: flex-start;
       }
     }
   </style>
@@ -267,21 +368,26 @@
   <aside class="barra_lateral">
     <div class="cabecera_lateral">
       <div class="titulo_logo">OCID</div>
-      <div class="subtitulo_logo">Organización y Comunicación Interna para Docentes</div>
+      <div class="subtitulo_logo">
+        Organización y Comunicación Interna para Docentes
+      </div>
     </div>
 
     <nav class="menu_navegacion">
-      <button class="item_menu activo" onclick="mostrarSeccion('usuarios', this)">
+      <button class="item_menu activo"
+        onclick="mostrarSeccion('usuarios', this)">
         <span>👥 Usuarios</span>
         <span id="conteo_usr">0</span>
       </button>
 
-      <button class="item_menu" onclick="mostrarSeccion('anuncios', this)">
+      <button class="item_menu"
+        onclick="mostrarSeccion('anuncios', this)">
         <span>📢 Anuncios</span>
         <span id="conteo_anu">0</span>
       </button>
 
-      <button class="item_menu" onclick="mostrarSeccion('departamentos', this)">
+      <button class="item_menu"
+        onclick="mostrarSeccion('departamentos', this)">
         <span>🏢 Departamentos</span>
         <span id="conteo_dep">0</span>
       </button>
@@ -294,39 +400,44 @@
       <div>
         <h1 class="titulo_saludo">Panel administrativo OCID</h1>
         <p class="usuario_saludo">
-          Usuario conectado: <strong id="nombreUsuario">Cargando...</strong>
+          Usuario conectado:
+          <strong id="nombreUsuario">Cargando...</strong>
         </p>
       </div>
 
-      <button type="button" class="boton_guardar" onclick="cerrarSesion()">
+      <button class="boton_guardar" onclick="cerrarSesion()">
         Cerrar sesión
       </button>
     </header>
 
     <div class="cuerpo_panel">
+
       <div id="aviso_notificacion" class="alerta_mensaje"></div>
 
       <!-- USUARIOS -->
       <section id="modulo_usuarios">
 
         <div class="caja_formulario">
-          <div class="titulo_form">➕ Registrar nuevo usuario</div>
+          <div class="titulo_form">➕ Registrar usuario</div>
 
           <form id="form_nuevo_usuario" onsubmit="registrarUsuario(event)">
             <div class="fila_formulario">
+
               <div>
-                <label class="etiqueta" for="usr_nombre">Nombre completo</label>
-                <input class="campo_input" type="text" id="usr_nombre" required>
+                <label class="etiqueta" for="usr_nombre">Nombre</label>
+                <input class="campo_input" id="usr_nombre" required>
               </div>
 
               <div>
-                <label class="etiqueta" for="usr_correo">Correo electrónico</label>
-                <input class="campo_input" type="email" id="usr_correo" required>
+                <label class="etiqueta" for="usr_correo">Correo</label>
+                <input class="campo_input" id="usr_correo"
+                  type="email" required>
               </div>
 
               <div>
-                <label class="etiqueta" for="usr_pass">Contraseña inicial</label>
-                <input class="campo_input" type="password" id="usr_pass" required>
+                <label class="etiqueta" for="usr_pass">Contraseña</label>
+                <input class="campo_input" id="usr_pass"
+                  type="password" required>
               </div>
 
               <div>
@@ -338,7 +449,9 @@
                 </select>
               </div>
 
-              <button type="submit" class="boton_guardar">Guardar usuario</button>
+              <button class="boton_guardar" type="submit">
+                Guardar usuario
+              </button>
             </div>
           </form>
         </div>
@@ -346,23 +459,29 @@
         <div class="caja_vista">
           <div class="cabecera_vista">
             <h2 class="titulo_vista">Usuarios registrados</h2>
-            <button class="boton_guardar" onclick="cargarUsuarios()">Refrescar</button>
+            <button class="boton_guardar" onclick="cargarUsuarios()">
+              Refrescar
+            </button>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Rol</th>
-                <th>Departamento</th>
-              </tr>
-            </thead>
-            <tbody id="tabla_usuarios_body">
-              <tr><td colspan="5">Consultando usuarios...</td></tr>
-            </tbody>
-          </table>
+          <div class="tabla_contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Departamento</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabla_usuarios_body">
+                <tr><td colspan="6">Cargando usuarios...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -370,18 +489,20 @@
       <section id="modulo_anuncios" style="display:none;">
 
         <div class="caja_formulario">
-          <div class="titulo_form">📢 Publicar nuevo aviso</div>
+          <div class="titulo_form">📢 Publicar anuncio</div>
 
           <form id="form_nuevo_anuncio" onsubmit="publicarAnuncio(event)">
             <div class="fila_formulario">
+
               <div>
-                <label class="etiqueta" for="anu_titulo">Título del aviso</label>
-                <input class="campo_input" type="text" id="anu_titulo" required>
+                <label class="etiqueta" for="anu_titulo">Título</label>
+                <input class="campo_input" id="anu_titulo" required>
               </div>
 
               <div>
                 <label class="etiqueta" for="anu_contenido">Contenido</label>
-                <input class="campo_input" type="text" id="anu_contenido" required>
+                <textarea class="campo_input" id="anu_contenido"
+                  rows="2" required></textarea>
               </div>
 
               <div>
@@ -393,32 +514,24 @@
                 </select>
               </div>
 
-              <button type="submit" class="boton_guardar">Publicar aviso</button>
+              <button class="boton_guardar" type="submit">
+                Publicar anuncio
+              </button>
             </div>
           </form>
         </div>
 
         <div class="caja_vista">
           <div class="cabecera_vista">
-            <h2 class="titulo_vista">Avisos publicados</h2>
-            <button class="boton_guardar" onclick="cargarAnuncios()">Refrescar</button>
+            <h2 class="titulo_vista">Anuncios publicados</h2>
+            <button class="boton_guardar" onclick="cargarAnuncios()">
+              Refrescar
+            </button>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Contenido</th>
-                <th>Prioridad</th>
-                <th>Autor</th>
-                <th>Fecha</th>
-              </tr>
-            </thead>
-            <tbody id="tabla_anuncios_body">
-              <tr><td colspan="6">Consultando anuncios...</td></tr>
-            </tbody>
-          </table>
+          <div id="lista_anuncios" class="lista_anuncios">
+            <p class="texto_vacio">Cargando anuncios...</p>
+          </div>
         </div>
       </section>
 
@@ -426,32 +539,39 @@
       <section id="modulo_departamentos" style="display:none;">
         <div class="caja_vista">
           <div class="cabecera_vista">
-            <h2 class="titulo_vista">Departamentos de la institución</h2>
-            <button class="boton_guardar" onclick="cargarDepartamentos()">Refrescar</button>
+            <h2 class="titulo_vista">Departamentos</h2>
+            <button class="boton_guardar"
+              onclick="cargarDepartamentos()">
+              Refrescar
+            </button>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Jefe a cargo</th>
-              </tr>
-            </thead>
-            <tbody id="tabla_deptos_body">
-              <tr><td colspan="4">Consultando departamentos...</td></tr>
-            </tbody>
-          </table>
+          <div class="tabla_contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Jefe</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabla_deptos_body">
+                <tr><td colspan="4">Cargando departamentos...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
+
     </div>
   </main>
 
   <script>
     const $ = id => document.getElementById(id);
+    const API = 'https://ocid.onrender.com';
 
-    // Recuperar usuario guardado desde login.html
     let usuario = null;
 
     try {
@@ -460,11 +580,11 @@
       localStorage.removeItem('usuario_ocid');
     }
 
-    // Evitar entrar si no hay usuario guardado
     if (!usuario || !usuario.id) {
       window.location.replace('login.html');
     } else {
-      $('nombreUsuario').textContent = usuario.nombre || usuario.correo || 'Usuario';
+      $('nombreUsuario').textContent =
+        usuario.nombre || usuario.correo || 'Usuario';
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -475,54 +595,96 @@
       cargarDepartamentos();
     });
 
-    function mostrarMensaje(texto, esError = false) {
-      const box = $('aviso_notificacion');
-      box.textContent = texto;
-      box.className = 'alerta_mensaje ' +
-        (esError ? 'alerta_error' : 'alerta_exito');
-      box.style.display = 'block';
-
-      setTimeout(() => {
-        box.style.display = 'none';
-      }, 4000);
+    function escaparHTML(valor) {
+      return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[caracter]);
     }
 
-    // CARGAR USUARIOS
+    async function leerRespuesta(res) {
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Ocurrió un error en la solicitud.');
+      }
+
+      return data;
+    }
+
+    function mostrarMensaje(texto, esError = false) {
+      const aviso = $('aviso_notificacion');
+
+      aviso.textContent = texto;
+      aviso.className = 'alerta_mensaje ' +
+        (esError ? 'alerta_error' : 'alerta_exito');
+
+      aviso.style.display = 'block';
+    }
+
+    function mostrarSeccion(seccion, boton) {
+      $('modulo_usuarios').style.display =
+        seccion === 'usuarios' ? 'block' : 'none';
+
+      $('modulo_anuncios').style.display =
+        seccion === 'anuncios' ? 'block' : 'none';
+
+      $('modulo_departamentos').style.display =
+        seccion === 'departamentos' ? 'block' : 'none';
+
+      document.querySelectorAll('.item_menu').forEach(elemento => {
+        elemento.classList.remove('activo');
+      });
+
+      if (boton) boton.classList.add('activo');
+    }
+
     async function cargarUsuarios() {
+      const tbody = $('tabla_usuarios_body');
+
       try {
-        const res = await fetch('https://ocid.onrender.com/usuarios');
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(data.error || 'Error al cargar usuarios');
-
-        const tbody = $('tabla_usuarios_body');
-
-        if (!data.length) {
-          tbody.innerHTML = '<tr><td colspan="5">No hay usuarios registrados.</td></tr>';
-          $('conteo_usr').textContent = '0';
-          return;
-        }
+        const res = await fetch(API + '/usuarios');
+        const data = await leerRespuesta(res);
 
         $('conteo_usr').textContent = data.length;
 
+        if (!data.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="6">No hay usuarios registrados.</td></tr>';
+          return;
+        }
+
         tbody.innerHTML = data.map(u => `
           <tr>
-            <td>#${u.id}</td>
+            <td>#${Number(u.id)}</td>
             <td>${escaparHTML(u.nombre)}</td>
             <td>${escaparHTML(u.correo)}</td>
-            <td><span class="badge_tag">${escaparHTML(u.rol || 'Docente')}</span></td>
+            <td>
+              <span class="badge_tag">
+                ${escaparHTML(u.rol || 'Docente')}
+              </span>
+            </td>
             <td>${escaparHTML(u.departamento_nombre || 'General')}</td>
+            <td>
+              <button class="boton_eliminar"
+                onclick="eliminarUsuario(${Number(u.id)})">
+                Eliminar
+              </button>
+            </td>
           </tr>
         `).join('');
-      } catch (err) {
-        $('tabla_usuarios_body').innerHTML =
-          `<tr><td colspan="5">Error al cargar usuarios: ${escaparHTML(err.message)}</td></tr>`;
+
+      } catch (error) {
+        tbody.innerHTML =
+          `<tr><td colspan="6">${escaparHTML(error.message)}</td></tr>`;
       }
     }
 
-    // REGISTRAR USUARIO
-    async function registrarUsuario(e) {
-      e.preventDefault();
+    async function registrarUsuario(evento) {
+      evento.preventDefault();
 
       const payload = {
         nombre: $('usr_nombre').value.trim(),
@@ -532,63 +694,106 @@
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/usuarios', {
+        const res = await fetch(API + '/usuarios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        const data = await res.json();
+        const data = await leerRespuesta(res);
 
-        if (res.ok && data.success) {
-          mostrarMensaje('Usuario guardado correctamente.');
+        if (data.success) {
           $('form_nuevo_usuario').reset();
-          cargarUsuarios();
+          mostrarMensaje('Usuario registrado correctamente.');
+          await cargarUsuarios();
         } else {
-          mostrarMensaje(data.error || 'Error al guardar usuario.', true);
+          mostrarMensaje(data.error || 'No se pudo registrar.', true);
         }
-      } catch (err) {
-        mostrarMensaje('No se pudo conectar con el servidor.', true);
+
+      } catch (error) {
+        mostrarMensaje(error.message, true);
       }
     }
 
-    // CARGAR ANUNCIOS
-    async function cargarAnuncios() {
+    async function eliminarUsuario(id) {
+      if (Number(id) === Number(usuario.id)) {
+        mostrarMensaje('No puedes eliminar el usuario de tu sesión actual.', true);
+        return;
+      }
+
+      if (!confirm('¿Seguro que quieres eliminar este usuario?')) return;
+
       try {
-        const res = await fetch('https://ocid.onrender.com/anuncios');
-        const data = await res.json();
+        const res = await fetch(API + '/usuarios/' + Number(id), {
+          method: 'DELETE'
+        });
 
-        if (!res.ok) throw new Error(data.error || 'Error al cargar anuncios');
+        const data = await leerRespuesta(res);
 
-        const tbody = $('tabla_anuncios_body');
-
-        if (!data.length) {
-          tbody.innerHTML = '<tr><td colspan="6">No hay avisos publicados.</td></tr>';
-          $('conteo_anu').textContent = '0';
-          return;
+        if (!data.success) {
+          throw new Error(data.error || 'No se pudo eliminar el usuario.');
         }
+
+        mostrarMensaje('Usuario eliminado correctamente.');
+        await cargarUsuarios();
+
+      } catch (error) {
+        mostrarMensaje(error.message, true);
+      }
+    }
+
+    async function cargarAnuncios() {
+      const contenedor = $('lista_anuncios');
+
+      try {
+        const res = await fetch(API + '/anuncios');
+        const data = await leerRespuesta(res);
 
         $('conteo_anu').textContent = data.length;
 
-        tbody.innerHTML = data.map(a => `
-          <tr>
-            <td>#${a.id}</td>
-            <td>${escaparHTML(a.titulo)}</td>
-            <td>${escaparHTML(a.contenido)}</td>
-            <td><span class="badge_tag">${escaparHTML(a.prioridad || 'Informativo')}</span></td>
-            <td>${escaparHTML(a.autor_nombre || 'Administración')}</td>
-            <td>${a.fecha ? new Date(a.fecha).toLocaleString() : ''}</td>
-          </tr>
+        if (!data.length) {
+          contenedor.innerHTML =
+            '<p class="texto_vacio">No hay anuncios publicados.</p>';
+          return;
+        }
+
+        contenedor.innerHTML = data.map(a => `
+          <article class="tarjeta_anuncio">
+            <div class="encabezado_anuncios">
+              <span class="badge_tag">
+                ${escaparHTML(a.prioridad || 'Informativo')}
+              </span>
+
+              <button class="boton_eliminar"
+                onclick="eliminarAnuncio(${Number(a.id)})">
+                Eliminar
+              </button>
+            </div>
+
+            <h3>${escaparHTML(a.titulo)}</h3>
+
+            <div class="contenido_anuncio">${escaparHTML(a.contenido)}</div>
+
+            <div class="info_anuncio">
+              Autor: ${escaparHTML(a.autor_nombre || 'Administración')}
+            </div>
+
+            <div class="info_anuncio">
+              ${a.fecha
+                ? escaparHTML(new Date(a.fecha).toLocaleString())
+                : ''}
+            </div>
+          </article>
         `).join('');
-      } catch (err) {
-        $('tabla_anuncios_body').innerHTML =
-          `<tr><td colspan="6">Error al cargar anuncios: ${escaparHTML(err.message)}</td></tr>`;
+
+      } catch (error) {
+        contenedor.innerHTML =
+          `<p class="texto_vacio">${escaparHTML(error.message)}</p>`;
       }
     }
 
-    // PUBLICAR ANUNCIO CON EL ID DEL USUARIO
-    async function publicarAnuncio(e) {
-      e.preventDefault();
+    async function publicarAnuncio(evento) {
+      evento.preventDefault();
 
       let usuarioActual;
 
@@ -599,9 +804,8 @@
       }
 
       if (!usuarioActual || !usuarioActual.id) {
-        mostrarMensaje('Tu sesión no está disponible. Inicia sesión nuevamente.', true);
-        localStorage.removeItem('usuario_ocid');
-        window.location.href = 'login.html';
+        mostrarMensaje('Inicia sesión nuevamente para publicar.', true);
+        window.location.replace('login.html');
         return;
       }
 
@@ -609,90 +813,87 @@
         titulo: $('anu_titulo').value.trim(),
         contenido: $('anu_contenido').value.trim(),
         prioridad: $('anu_prioridad').value,
-        autor_id: usuarioActual.id,
+        autor_id: Number(usuarioActual.id),
         departamento_id: usuarioActual.departamento_id || null
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/anuncios', {
+        const res = await fetch(API + '/anuncios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        const data = await res.json();
+        const data = await leerRespuesta(res);
 
-        if (res.ok && data.success) {
-          mostrarMensaje('Aviso publicado correctamente.');
-          $('form_nuevo_anuncio').reset();
-          await cargarAnuncios();
-        } else {
-          mostrarMensaje(data.error || 'No se pudo publicar el aviso.', true);
+        if (!data.success) {
+          throw new Error(data.error || 'No se pudo publicar el anuncio.');
         }
-      } catch (err) {
-        mostrarMensaje('Error de conexión al guardar el aviso.', true);
-        console.error(err);
+
+        $('form_nuevo_anuncio').reset();
+        mostrarMensaje('Anuncio publicado correctamente.');
+        await cargarAnuncios();
+
+      } catch (error) {
+        mostrarMensaje(error.message, true);
       }
     }
 
-    // CARGAR DEPARTAMENTOS
-    async function cargarDepartamentos() {
+    async function eliminarAnuncio(id) {
+      if (!confirm('¿Seguro que quieres eliminar este anuncio?')) return;
+
       try {
-        const res = await fetch('https://ocid.onrender.com/departamentos');
-        const data = await res.json();
+        const res = await fetch(API + '/anuncios/' + Number(id), {
+          method: 'DELETE'
+        });
 
-        if (!res.ok) throw new Error(data.error || 'Error al cargar departamentos');
+        const data = await leerRespuesta(res);
 
-        const tbody = $('tabla_deptos_body');
-
-        if (!data.length) {
-          tbody.innerHTML = '<tr><td colspan="4">No hay departamentos registrados.</td></tr>';
-          $('conteo_dep').textContent = '0';
-          return;
+        if (!data.success) {
+          throw new Error(data.error || 'No se pudo eliminar el anuncio.');
         }
+
+        mostrarMensaje('Anuncio eliminado correctamente.');
+        await cargarAnuncios();
+
+      } catch (error) {
+        mostrarMensaje(error.message, true);
+      }
+    }
+
+    async function cargarDepartamentos() {
+      const tbody = $('tabla_deptos_body');
+
+      try {
+        const res = await fetch(API + '/departamentos');
+        const data = await leerRespuesta(res);
 
         $('conteo_dep').textContent = data.length;
 
+        if (!data.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="4">No hay departamentos registrados.</td></tr>';
+          return;
+        }
+
         tbody.innerHTML = data.map(d => `
           <tr>
-            <td>#${d.id}</td>
+            <td>#${Number(d.id)}</td>
             <td>${escaparHTML(d.nombre)}</td>
             <td>${escaparHTML(d.descripcion || 'Sin descripción')}</td>
             <td>${escaparHTML(d.nombre_jefe || 'Sin jefe asignado')}</td>
           </tr>
         `).join('');
-      } catch (err) {
-        $('tabla_deptos_body').innerHTML =
-          `<tr><td colspan="4">Error al cargar departamentos: ${escaparHTML(err.message)}</td></tr>`;
+
+      } catch (error) {
+        tbody.innerHTML =
+          `<tr><td colspan="4">${escaparHTML(error.message)}</td></tr>`;
       }
     }
 
-    // CAMBIAR SECCIONES
-    function mostrarSeccion(sec, btn) {
-      $('modulo_usuarios').style.display = sec === 'usuarios' ? 'block' : 'none';
-      $('modulo_anuncios').style.display = sec === 'anuncios' ? 'block' : 'none';
-      $('modulo_departamentos').style.display = sec === 'departamentos' ? 'block' : 'none';
-
-      document.querySelectorAll('.item_menu').forEach(b => b.classList.remove('activo'));
-
-      if (btn) btn.classList.add('activo');
-    }
-
-    // CERRAR SESIÓN
     function cerrarSesion() {
       localStorage.removeItem('usuario_ocid');
       window.location.replace('login.html');
-    }
-
-    // Evitar insertar contenido recibido de la base de datos como HTML ejecutable
-    function escaparHTML(valor) {
-      return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      })[caracter]);
     }
   </script>
 

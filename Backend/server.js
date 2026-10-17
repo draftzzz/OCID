@@ -1,258 +1,448 @@
-// server.js - Backend Express + PostgreSQL (psql)
-// Conexión real a base de datos sin datos falsos
-// ==========================================
+
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
+app.use(cors({
+  origin: [
+    'https://ocid-iota.vercel.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:5500',
+    'http://localhost:5500'
+  ],
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-// Conexión PostgreSQL (pon tu DATABASE_URL en tu archivo .env o usa esta)
+app.use(express.json());
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: { rejectUnauthorized: false }
 });
 
-pool.on('error', (err) => {
-  console.error('Error inesperado en PostgreSQL:', err.message);
+// COMPROBAR SERVIDOR
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    mensaje: 'OCID API funcionando'
+  });
 });
 
-// Probar conexión a Postgres al arrancar
-pool.connect((err, client, release) => {
-  if (err) {
-    console.error('❌ Error crítico al conectar a PostgreSQL:', err.message);
-  } else {
-    console.log('✅ Conectado exitosamente a PostgreSQL (Base de datos real)');
-    release();
-  }
-});
-
-// ==========================================
-// 1. ENDPOINTS DE USUARIOS (REGISTRO Y LISTA)
-// ==========================================
-
-// Obtener todos los usuarios reales de la tabla
-app.get('/usuarios', async (req, res) => {
+// COMPROBAR BASE DE DATOS
+app.get('/db-test', async (req, res) => {
   try {
-    const query = `
-      SELECT u.id, u.nombre, u.correo, u.rol, u.departamento_id,
-             COALESCE(d.nombre, 'Sin Asignar') as departamento_nombre
-      FROM usuarios u
-      LEFT JOIN departamentos d ON u.departamento_id = d.id
-      ORDER BY u.id DESC
-    `;
-    const resultado = await pool.query(query);
-    res.json(resultado.rows);
-  } catch (err) {
-    console.error('Error al consultar usuarios en psql:', err.message);
-    res.status(500).json({ error: 'Error al consultar la base de datos' });
+    await pool.query('SELECT 1');
+
+    res.json({
+      success: true,
+      mensaje: 'Conexión a Neon correcta'
+    });
+  } catch (error) {
+    console.error('Error de base de datos:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo conectar con la base de datos'
+    });
   }
 });
 
-// Registrar un usuario real en la base de datos
-app.post('/usuarios', async (req, res) => {
-  const { nombre, correo, password, rol, departamento_id } = req.body;
-
-  if (!nombre || !correo || !password) {
-    return res.status(400).json({ error: 'Nombre, correo y contraseña son obligatorios' });
-  }
-
-  try {
-    const insertQuery = `
-      INSERT INTO usuarios (nombre, correo, password, rol, departamento_id)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING id, nombre, correo, rol, departamento_id
-    `;
-    const resultado = await pool.query(insertQuery, [
-      nombre.trim(),
-      correo.trim().toLowerCase(),
-      password,
-      rol || 'Docente',
-      departamento_id ? parseInt(departamento_id) : null,
-    ]);
-
-    res.status(201).json({ success: true, usuario: resultado.rows[0] });
-  } catch (err) {
-    if (err.code === '23505') {
-      return res.status(409).json({ error: 'Este correo electrónico ya existe en la base de datos' });
-    }
-    console.error('Error al insertar usuario:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ==========================================
-// 2. ENDPOINTS DE DEPARTAMENTOS
-// ==========================================
-
-app.get('/departamentos', async (req, res) => {
-  try {
-    const query = `
-      SELECT d.id, d.nombre, d.descripcion, d.jefe_id,
-             COALESCE(u.nombre, 'Sin jefe asignado') as nombre_jefe
-      FROM departamentos d
-      LEFT JOIN usuarios u ON d.jefe_id = u.id
-      ORDER BY d.id ASC
-    `;
-    const resultado = await pool.query(query);
-    res.json(resultado.rows);
-  } catch (err) {
-    console.error('Error al consultar departamentos:', err.message);
-    res.status(500).json({ error: 'Error al consultar departamentos' });
-  }
-});
-
-// ==========================================
-// 3. ENDPOINTS DE ANUNCIOS (PUBLICAR Y VER)
-// ==========================================
-
-// Obtener todos los anuncios emitidos
-app.get('/anuncios', async (req, res) => {
-  try {
-    const query = `
-      SELECT a.id, a.titulo, a.contenido, a.prioridad, a.fecha,
-             u.nombre as autor_nombre,
-             COALESCE(d.nombre, 'General') as departamento_nombre
-      FROM anuncios a
-      LEFT JOIN usuarios u ON a.autor_id = u.id
-      LEFT JOIN departamentos d ON a.departamento_id = d.id
-      ORDER BY a.id DESC
-    `;
-    const resultado = await pool.query(query);
-    res.json(resultado.rows);
-  } catch (err) {
-    console.error('Error al consultar anuncios:', err.message);
-    res.status(500).json({ error: 'Error al consultar anuncios' });
-  }
-});
-
-// Crear un nuevo anuncio real visible para todos
-app.post('/anuncios', async (req, res) => {
-  const { titulo, contenido, prioridad, autor_id, departamento_id } = req.body;
-
-  if (!titulo || !contenido) {
-    return res.status(400).json({ error: 'Título y contenido son obligatorios' });
-  }
-
-  try {
-    const insertQuery = `
-      INSERT INTO anuncios (titulo, contenido, prioridad, autor_id, departamento_id, fecha)
-      VALUES ($1, $2, $3, $4, $5, NOW())
-      RETURNING *
-    `;
-    const resultado = await pool.query(insertQuery, [
-      titulo.trim(),
-      contenido.trim(),
-      prioridad || 'Informativo',
-      autor_id ? parseInt(autor_id) : null,
-      departamento_id ? parseInt(departamento_id) : null,
-    ]);
-
-    res.status(201).json({ success: true, anuncio: resultado.rows[0] });
-  } catch (err) {
-    console.error('Error al insertar anuncio:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ==========================================
-// 4. ENDPOINTS DE ARCHIVOS Y NOTIFICACIONES
-// ==========================================
-
-app.get('/archivos', async (req, res) => {
-  try {
-    const resultado = await pool.query('SELECT * FROM archivos ORDER BY id DESC');
-    res.json(resultado.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/notificaciones', async (req, res) => {
-  try {
-    const resultado = await pool.query('SELECT * FROM notificaciones ORDER BY id DESC');
-    res.json(resultado.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ==========================================
-// 5. RUTAS DE AUTENTICACIÓN
-// ==========================================
-
-// Registro desde frontend público
-app.post('/registro', async (req, res) => {
-  const { nombre, correo, password } = req.body;
-
-  if (!nombre || !correo || !password) {
-    return res.status(400).json({ success: false, error: 'Todos los campos son obligatorios' });
-  }
-
-  try {
-    const resultado = await pool.query(
-      `INSERT INTO usuarios (nombre, correo, password, rol)
-       VALUES ($1, $2, $3, 'Docente')
-       RETURNING id, nombre, correo, rol`,
-      [nombre.trim(), correo.trim().toLowerCase(), password]
-    );
-
-    return res.status(201).json({ success: true, usuario: resultado.rows[0] });
-  } catch (err) {
-    if (err.code === '23505') {
-      return res.status(409).json({ success: false, error: 'Este correo electrónico ya se encuentra registrado' });
-    }
-    console.error('Error en /registro:', err.message);
-    return res.status(500).json({ success: false, error: 'Error en la base de datos' });
-  }
-});
-
-// Login
+// INICIAR SESIÓN
 app.post('/login', async (req, res) => {
   const { correo, password } = req.body;
 
   if (!correo || !password) {
-    return res.status(400).json({ success: false, error: 'Debe ingresar correo y contraseña' });
+    return res.status(400).json({
+      success: false,
+      error: 'Correo y contraseña son obligatorios'
+    });
   }
 
   try {
     const resultado = await pool.query(
       `SELECT id, nombre, correo, rol, departamento_id
        FROM usuarios
-       WHERE LOWER(correo) = LOWER($1) AND password = $2`,
+       WHERE correo = $1 AND password = $2
+       LIMIT 1`,
       [correo.trim(), password]
     );
 
-    if (resultado.rows.length === 0) {
-      return res.status(401).json({ success: false, error: 'Credenciales inválidas' });
+    if (resultado.rowCount === 0) {
+      return res.status(401).json({
+        success: false,
+        error: 'Correo o contraseña incorrectos'
+      });
     }
 
-    return res.json({ success: true, usuario: resultado.rows[0] });
-  } catch (err) {
-    console.error('Error en /login:', err.message);
-    return res.status(500).json({ success: false, error: 'Error en el servidor al autenticar' });
+    res.json({
+      success: true,
+      usuario: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error en login:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'Error al iniciar sesión'
+    });
   }
 });
 
-app.get('/health', (req, res) => {
-  res.json({
-    success: true,
-    mensaje: 'OCID está funcionando',
-    version: '2'
+// OBTENER USUARIOS
+app.get('/usuarios', async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT
+         u.id,
+         u.nombre,
+         u.correo,
+         u.rol,
+         u.departamento_id,
+         d.nombre AS departamento_nombre
+       FROM usuarios u
+       LEFT JOIN departamentos d
+         ON d.id = u.departamento_id
+       ORDER BY u.id DESC`
+    );
+
+    res.json(resultado.rows);
+
+  } catch (error) {
+    console.error('Error al consultar usuarios:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudieron cargar los usuarios'
+    });
+  }
+});
+
+// REGISTRAR USUARIO
+app.post('/usuarios', async (req, res) => {
+  const { nombre, correo, password, rol } = req.body;
+
+  if (!nombre || !correo || !password) {
+    return res.status(400).json({
+      success: false,
+      error: 'Nombre, correo y contraseña son obligatorios'
+    });
+  }
+
+  try {
+    const existente = await pool.query(
+      'SELECT id FROM usuarios WHERE correo = $1 LIMIT 1',
+      [correo.trim()]
+    );
+
+    if (existente.rowCount > 0) {
+      return res.status(409).json({
+        success: false,
+        error: 'Ese correo ya está registrado'
+      });
+    }
+
+    const resultado = await pool.query(
+      `INSERT INTO usuarios (nombre, correo, password, rol)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, nombre, correo, rol, departamento_id`,
+      [
+        nombre.trim(),
+        correo.trim(),
+        password,
+        rol || 'Docente'
+      ]
+    );
+
+    res.status(201).json({
+      success: true,
+      usuario: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error al registrar usuario:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo registrar el usuario. Revisa las columnas de la tabla.'
+    });
+  }
+});
+
+// ELIMINAR USUARIO
+app.delete('/usuarios/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'ID de usuario inválido'
+    });
+  }
+
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const usuarioExiste = await client.query(
+      'SELECT id FROM usuarios WHERE id = $1 FOR UPDATE',
+      [id]
+    );
+
+    if (usuarioExiste.rowCount === 0) {
+      await client.query('ROLLBACK');
+
+      return res.status(404).json({
+        success: false,
+        error: 'El usuario no existe'
+      });
+    }
+
+    const anuncios = await client.query(
+      'SELECT id FROM anuncios WHERE autor_id = $1 LIMIT 1',
+      [id]
+    );
+
+    if (anuncios.rowCount > 0) {
+      await client.query('ROLLBACK');
+
+      return res.status(409).json({
+        success: false,
+        error: 'Este usuario tiene anuncios publicados. Elimina primero sus anuncios.'
+      });
+    }
+
+    const departamentos = await client.query(
+      'SELECT id FROM departamentos WHERE jefe_id = $1 LIMIT 1',
+      [id]
+    );
+
+    if (departamentos.rowCount > 0) {
+      await client.query('ROLLBACK');
+
+      return res.status(409).json({
+        success: false,
+        error: 'Este usuario es jefe de un departamento. Cambia primero el jefe asignado.'
+      });
+    }
+
+    await client.query(
+      'DELETE FROM usuarios WHERE id = $1',
+      [id]
+    );
+
+    await client.query('COMMIT');
+
+    res.json({ success: true });
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+
+    console.error('Error al eliminar usuario:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo eliminar el usuario'
+    });
+  } finally {
+    client.release();
+  }
+});
+
+// OBTENER ANUNCIOS
+app.get('/anuncios', async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT
+         a.id,
+         a.titulo,
+         a.contenido,
+         a.prioridad,
+         a.fecha,
+         a.autor_id,
+         a.departamento_id,
+         u.nombre AS autor_nombre
+       FROM anuncios a
+       LEFT JOIN usuarios u
+         ON u.id = a.autor_id
+       ORDER BY a.fecha DESC, a.id DESC`
+    );
+
+    res.json(resultado.rows);
+
+  } catch (error) {
+    console.error('Error al consultar anuncios:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudieron cargar los anuncios'
+    });
+  }
+});
+
+// PUBLICAR ANUNCIO
+app.post('/anuncios', async (req, res) => {
+  const {
+    titulo,
+    contenido,
+    prioridad,
+    autor_id,
+    departamento_id
+  } = req.body;
+
+  if (!titulo || !contenido) {
+    return res.status(400).json({
+      success: false,
+      error: 'El título y el contenido son obligatorios'
+    });
+  }
+
+  const autorId = Number(autor_id);
+
+  if (!Number.isInteger(autorId) || autorId <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'El autor del anuncio no es válido. Inicia sesión nuevamente.'
+    });
+  }
+
+  try {
+    const usuarioExiste = await pool.query(
+      'SELECT id FROM usuarios WHERE id = $1',
+      [autorId]
+    );
+
+    if (usuarioExiste.rowCount === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'El usuario autor ya no existe. Inicia sesión nuevamente.'
+      });
+    }
+
+    let departamentoId = null;
+
+    if (departamento_id !== null &&
+        departamento_id !== undefined &&
+        departamento_id !== '') {
+      departamentoId = Number(departamento_id);
+
+      if (!Number.isInteger(departamentoId) || departamentoId <= 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'El departamento no es válido'
+        });
+      }
+    }
+
+    const resultado = await pool.query(
+      `INSERT INTO anuncios
+         (titulo, contenido, prioridad, autor_id, departamento_id, fecha)
+       VALUES ($1, $2, $3, $4, $5, NOW())
+       RETURNING *`,
+      [
+        titulo.trim(),
+        contenido.trim(),
+        prioridad || 'Informativo',
+        autorId,
+        departamentoId
+      ]
+    );
+
+    res.status(201).json({
+      success: true,
+      anuncio: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error al publicar anuncio:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo publicar el anuncio'
+    });
+  }
+});
+
+// ELIMINAR ANUNCIO
+app.delete('/anuncios/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'ID de anuncio inválido'
+    });
+  }
+
+  try {
+    const resultado = await pool.query(
+      'DELETE FROM anuncios WHERE id = $1 RETURNING id',
+      [id]
+    );
+
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'El anuncio no existe'
+      });
+    }
+
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error('Error al eliminar anuncio:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo eliminar el anuncio'
+    });
+  }
+});
+
+// OBTENER DEPARTAMENTOS
+app.get('/departamentos', async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT
+         d.id,
+         d.nombre,
+         d.descripcion,
+         d.jefe_id,
+         u.nombre AS nombre_jefe
+       FROM departamentos d
+       LEFT JOIN usuarios u
+         ON u.id = d.jefe_id
+       ORDER BY d.id`
+    );
+
+    res.json(resultado.rows);
+
+  } catch (error) {
+    console.error('Error al consultar departamentos:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudieron cargar los departamentos'
+    });
+  }
+});
+
+// ERRORES DE RUTAS NO EXISTENTES
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'Ruta no encontrada'
   });
 });
 
-// Iniciar servidor
+// INICIAR SERVIDOR
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor en línea en http://localhost:${PORT}`);
+  console.log(`Servidor OCID funcionando en el puerto ${PORT}`);
 });

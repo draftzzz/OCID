@@ -1,1 +1,1 @@
-delete from usuarios where id = 4W;
+select * from anuncios
