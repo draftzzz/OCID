@@ -42,7 +42,7 @@ pool.connect((err, client, release) => {
 // ==========================================
 
 // Obtener todos los usuarios reales de la tabla
-app.get('/api/usuarios', async (req, res) => {
+app.get('https://ocid.onrender.com/usuarios', async (req, res) => {
   try {
     const query = `
       SELECT u.id, u.nombre, u.correo, u.rol, u.departamento_id,
@@ -60,7 +60,7 @@ app.get('/api/usuarios', async (req, res) => {
 });
 
 // Registrar un usuario real en la base de datos
-app.post('/api/usuarios', async (req, res) => {
+app.post('https://ocid.onrender.com/usuarios', async (req, res) => {
   const { nombre, correo, password, rol, departamento_id } = req.body;
 
   if (!nombre || !correo || !password) {
@@ -95,7 +95,7 @@ app.post('/api/usuarios', async (req, res) => {
 // 2. ENDPOINTS DE DEPARTAMENTOS
 // ==========================================
 
-app.get('/api/departamentos', async (req, res) => {
+app.get('https://ocid.onrender.com/departamentos', async (req, res) => {
   try {
     const query = `
       SELECT d.id, d.nombre, d.descripcion, d.jefe_id,
@@ -169,7 +169,7 @@ app.post('https://ocid.onrender.com/anuncios', async (req, res) => {
 // 4. ENDPOINTS DE ARCHIVOS Y NOTIFICACIONES
 // ==========================================
 
-app.get('/api/archivos', async (req, res) => {
+app.get('https://ocid.onrender.com/archivos', async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM archivos ORDER BY id DESC');
     res.json(resultado.rows);
@@ -178,7 +178,7 @@ app.get('/api/archivos', async (req, res) => {
   }
 });
 
-app.get('/api/notificaciones', async (req, res) => {
+app.get('https://ocid.onrender.com/notificaciones', async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM notificaciones ORDER BY id DESC');
     res.json(resultado.rows);
@@ -192,7 +192,7 @@ app.get('/api/notificaciones', async (req, res) => {
 // ==========================================
 
 // Registro desde frontend público
-app.post('/registro', async (req, res) => {
+app.post('https://ocid.onrender.com/registro', async (req, res) => {
   const { nombre, correo, password } = req.body;
 
   if (!nombre || !correo || !password) {
@@ -218,7 +218,7 @@ app.post('/registro', async (req, res) => {
 });
 
 // Login
-app.post('/login', async (req, res) => {
+app.post('https://ocid.onrender.com/login', async (req, res) => {
   const { correo, password } = req.body;
 
   if (!correo || !password) {
