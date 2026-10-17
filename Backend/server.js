@@ -189,9 +189,9 @@ app.get('/api/notificaciones', async (req, res) => {
 
 // Registro desde frontend público
 app.post('/registro', async (req, res) => {
-  const { nombre, email, contrasena } = req.body;
+  const { nombre, correo, password } = req.body;
 
-  if (!nombre || !email || !contrasena) {
+  if (!nombre || !correo || !password) {
     return res.status(400).json({ success: false, error: 'Todos los campos son obligatorios' });
   }
 
@@ -200,7 +200,7 @@ app.post('/registro', async (req, res) => {
       `INSERT INTO usuarios (nombre, correo, password, rol)
        VALUES ($1, $2, $3, 'Docente')
        RETURNING id, nombre, correo, rol`,
-      [nombre.trim(), email.trim().toLowerCase(), contrasena]
+      [nombre.trim(), correo.trim().toLowerCase(), password]
     );
 
     return res.status(201).json({ success: true, usuario: resultado.rows[0] });
@@ -215,9 +215,9 @@ app.post('/registro', async (req, res) => {
 
 // Login
 app.post('/login', async (req, res) => {
-  const { email, contrasena } = req.body;
+  const { correo, password } = req.body;
 
-  if (!email || !contrasena) {
+  if (!correo || !password) {
     return res.status(400).json({ success: false, error: 'Debe ingresar correo y contraseña' });
   }
 
@@ -226,7 +226,7 @@ app.post('/login', async (req, res) => {
       `SELECT id, nombre, correo, rol, departamento_id
        FROM usuarios
        WHERE LOWER(correo) = LOWER($1) AND password = $2`,
-      [email.trim(), contrasena]
+      [correo.trim(), password]
     );
 
     if (resultado.rows.length === 0) {

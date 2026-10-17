@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="grupo_campo">
-                    <label class="etiqueta_campo" for="email">Correo Electrónico</label>
+                    <label class="etiqueta_campo" for="correo">Correo Electrónico</label>
                     <div class="contenedor_entrada">
                         <span class="icono_campo">
                             <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
@@ -53,12 +53,12 @@
                                 <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
                             </svg>
                         </span>
-                        <input class="campo_texto" id="email" placeholder="correo@ejemplo.com" required=""
+                        <input class="campo_texto" id="correo" placeholder="correo@ejemplo.com" required=""
                             type="email" />
                     </div>
                 </div>
                 <div class="grupo_campo">
-                    <label class="etiqueta_campo" for="contrasena">Contraseña</label>
+                    <label class="etiqueta_campo" for="password">Contraseña</label>
                     <div class="contenedor_entrada">
                         <span class="icono_campo">
                             <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
@@ -67,7 +67,7 @@
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
                         </span>
-                        <input class="campo_texto" id="contrasena" minlength="6" placeholder="••••••••" required=""
+                        <input class="campo_texto" id="password" minlength="6" placeholder="••••••••" required=""
                             type="password" />
                         <button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
                             <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
@@ -99,7 +99,7 @@
 
         // Alternar visualización de clave
         $('boton_clave').onclick = () => {
-            const c = $('contrasena');
+            const c = $('password');
             c.type = c.type === 'password' ? 'text' : 'password';
         };
 
@@ -119,8 +119,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         nombre: $('nombre').value.trim(),
-                        email: $('email').value.trim(),
-                        contrasena: $('contrasena').value
+                        correo: $('correo').value.trim(),
+                        password: $('password').value
                     })
                 });
 
@@ -144,7 +144,7 @@
                     res.status === 409 ||
                     res.status === 500 ||
                     mensajeError.includes('correo') ||
-                    mensajeError.includes('email') ||
+                    mensajeError.includes('correo') ||
                     mensajeError.includes('registrado') ||
                     mensajeError.includes('existe') ||
                     mensajeError.includes('duplicate') ||
