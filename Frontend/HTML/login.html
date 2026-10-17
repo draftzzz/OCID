@@ -1,155 +1,121 @@
 <!DOCTYPE html>
+
 <html lang="es-MX">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - OCID</title>
-    <link rel="stylesheet" href="css/Login.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Iniciar Sesión - OCID</title>
+<link href="css/login.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="contenedor_login">
-
-        <div class="titulo">
-            <div class="icono_emblema">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                    <polyline points="10 17 15 12 10 7"></polyline>
-                    <line x1="15" y1="12" x2="3" y2="12"></line>
-                </svg>
-            </div>
-            <span>PORTAL DOCENTE OFICIAL</span>
-            <h1>Iniciar Sesión</h1>
-            <p>Accede a tu cuenta de OCID</p>
-        </div>
-        
-        <!-- cabecera form -->
-        <section class="formulario">
-            <!-- Div para mensajes de alerta sin popups del navegador -->
-            <div id="mensaje_alerta" class="mensaje_alerta" role="alert"></div>
-
-            <form id="loginForm">
-
-                <div class="campos">
-                    <label for="loginEmail">Correo Electrónico</label>
-
-                    <div class="contenedor_input">
-
-                        <span class="icono_campo">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="4"></circle>
-                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
-                            </svg>
-                        </span>
-
-                        <input type="email" id="loginEmail" placeholder="correo@ejemplo.com" required>
-                    </div>
-
-                </div>
-
-                <div class="campos">
-                    <label class="etiqueta_campo" for="loginPassword">Contraseña</label>
-
-                    <div class="contenedor_input">
-
-                        <span class="icono_campo">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                        </span>
-
-                        <input type="password" id="loginPassword" placeholder="Contraseña" required>
-
-                        <button type="button" id="boton_clave" title="Mostrar contraseña">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                        </button>
-                        
-                    </div>
-                </div>
-
-                <button type="submit" class="enviar" id="loginBtn">
-                    <span>Iniciar Sesión</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </button>
-
-            </form>
-        </section>
-
-        <div class="crear_cuenta">
-            <p>¿No tienes una cuenta? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
-        </div>
-    </div>
-
-    <div class="ocid">
+<main class="contenedor_login">
+<header class="cabecera_login">
+<div class="icono_emblema">
+<svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+</div>
+<span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+<h1 class="titulo_login">Acceso Institucional</h1>
+<p class="subtitulo_login">Ingresa tus credenciales para continuar</p>
+</header>
+<section class="cuerpo_formulario">
+<!-- Contenedor integrado para avisos sin alert() -->
+<div class="mensaje_alerta" id="mensaje_estado" role="alert"></div>
+<form id="formulario_login">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="email">Correo Institucional</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="4"></circle>
+<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+</svg>
+</span>
+<input class="campo_texto" id="email" placeholder="correo@instituto.edu.mx" required="" type="email"/>
+</div>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="contrasena">Contraseña</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+</span>
+<input class="campo_texto" id="contrasena" placeholder="••••••••" required="" type="password"/>
+<button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+</button>
+</div>
+</div>
+<button class="boton_enviar" id="loginBtn" type="submit">
+<span>Iniciar Sesión</span>
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+<polyline points="10 17 15 12 10 7"></polyline>
+<line x1="15" x2="3" y1="12" y2="12"></line>
+</svg>
+</button>
+</form>
+</section>
+<footer class="pie_formulario">
+<p>¿No tienes una cuenta aún? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
+</footer>
+</main>
+<footer class="pie_global">
         OCID • Organización y Comunicación Interna para Docentes
-    </div>
-
-    <script>
+    </footer>
+<script>
         const $ = id => document.getElementById(id);
 
-        // Ver / ocultar contraseña
+        // Mostrar / ocultar contraseña
         $('boton_clave').onclick = () => {
-            const p = $('loginPassword');
-            p.type = p.type === 'password' ? 'text' : 'password';
+            const c = $('contrasena');
+            c.type = c.type === 'password' ? 'text' : 'password';
         };
 
-        // Mostrar mensaje dentro del formulario (sin alert de navegador)
-        const mostrarMensaje = (texto, tipo = 'error') => {
-            const alerta = $('mensaje_alerta');
-            alerta.className = `mensaje_alerta ${tipo}`;
-            alerta.textContent = texto;
-            alerta.style.display = 'block';
-        };
-
-        const ocultarMensaje = () => {
-            const alerta = $('mensaje_alerta');
-            alerta.style.display = 'none';
-        };
-
-        // Envío y autenticación
-        $('loginForm').onsubmit = async e => {
+        // Procesar login
+        $('formulario_login').onsubmit = async e => {
             e.preventDefault();
-            ocultarMensaje();
+            const alerta = $('mensaje_estado');
+            alerta.style.display = 'none';
 
             const btn = $('loginBtn');
             btn.disabled = true;
 
             try {
-                const res = await fetch('https://ocid.onrender.com/api/auth/login', {
+                const res = await fetch('/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        email: $('loginEmail').value,
-                        contrasena: $('loginPassword').value
+                        email: $('email').value.trim(),
+                        contrasena: $('contrasena').value
                     })
                 });
-                const d = await res.json();
 
-                if (res.ok && d.success) {
-                    // Guarda datos y redirige directamente sin alert
-                    localStorage.setItem('id', d.usuario.id);
-                    localStorage.setItem('usuario', d.usuario.nombre);
-                    location.href = 'inicio.html';
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    localStorage.setItem('usuario_ocid', JSON.stringify(data.usuario));
+                    location.href = 'admin.html';
                 } else {
-                    mostrarMensaje(d.error || 'Correo o contraseña incorrectos', 'error');
+                    alerta.className = 'mensaje_alerta error';
+                    alerta.textContent = data.error || 'Credenciales no válidas. Revisa tu correo y contraseña.';
+                    alerta.style.display = 'block';
                 }
             } catch (err) {
-                mostrarMensaje('Error al conectar con el servidor', 'error');
+                alerta.className = 'mensaje_alerta error';
+                alerta.textContent = 'No se pudo conectar con el servidor';
+                alerta.style.display = 'block';
             } finally {
                 btn.disabled = false;
             }
         };
     </script>
 </body>
-
 </html>

@@ -1,124 +1,1284 @@
 <!DOCTYPE html>
-<html lang="es-MX">
 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - OCID</title>
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_41 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_41" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_41');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  ================================================================================
+PROYECTO COMPLETO: OCID - SISTEMA ESCOLAR (EXPRESS + POSTGRESQL)
+================================================================================
+Tablas de PostgreSQL soportadas:
+1. usuarios (id, nombre, correo, password, rol, departamento_id)
+2. departamentos (id, nombre, descripcion, jefe_id)
+3. anuncios (id, titulo, contenido, prioridad, autor_id, departamento_id, fecha)
+4. archivos (id, nombre, ruta, tipo, autor_id, departamento_id, anuncio_id, fecha)
+5. notificaciones (id, usuario_id, anuncio_id, leida, fecha)
+
+Estructura de carpetas recomendada:
+├── server.js
+├── package.json
+└── public/
+    ├── admin.html
+    ├── login.html
+    ├── registro.html
+    └── css/
+        ├── login.css
+        └── registro.css
+
+================================================================================
+ARCHIVO 1: package.json
+================================================================================
+{
+  "name": "ocid-plataforma-escolar",
+  "version": "1.0.0",
+  "description": "Plataforma de comunicación y gestión escolar OCID con PostgreSQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  }
+}
+
+
+================================================================================
+ARCHIVO 2: server.js
+================================================================================
+// ==========================================
+// server.js - Backend Express + PostgreSQL (psql)
+// Conexión real a base de datos sin datos falsos
+// ==========================================
+
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Conexión PostgreSQL (pon tu DATABASE_URL en tu archivo .env o usa esta)
+const pool = new Pool({
+  connectionString:
+    process.env.DATABASE_URL ||
+    'postgresql://postgres:postgres@localhost:5432/ocid_db',
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
+// Probar conexión a Postgres al arrancar
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error('❌ Error crítico al conectar a PostgreSQL:', err.message);
+  } else {
+    console.log('✅ Conectado exitosamente a PostgreSQL (Base de datos real)');
+    release();
+  }
+});
+
+// ==========================================
+// 1. ENDPOINTS DE USUARIOS (REGISTRO Y LISTA)
+// ==========================================
+
+// Obtener todos los usuarios reales de la tabla
+app.get('/api/usuarios', async (req, res) => {
+  try {
+    const query = `
+      SELECT u.id, u.nombre, u.correo, u.rol, u.departamento_id,
+             COALESCE(d.nombre, 'Sin Asignar') as departamento_nombre
+      FROM usuarios u
+      LEFT JOIN departamentos d ON u.departamento_id = d.id
+      ORDER BY u.id DESC
+    `;
+    const resultado = await pool.query(query);
+    res.json(resultado.rows);
+  } catch (err) {
+    console.error('Error al consultar usuarios en psql:', err.message);
+    res.status(500).json({ error: 'Error al consultar la base de datos' });
+  }
+});
+
+// Registrar un usuario real en la base de datos
+app.post('/api/usuarios', async (req, res) => {
+  const { nombre, correo, password, rol, departamento_id } = req.body;
+
+  if (!nombre || !correo || !password) {
+    return res.status(400).json({ error: 'Nombre, correo y contraseña son obligatorios' });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO usuarios (nombre, correo, password, rol, departamento_id)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, nombre, correo, rol, departamento_id
+    `;
+    const resultado = await pool.query(insertQuery, [
+      nombre.trim(),
+      correo.trim().toLowerCase(),
+      password,
+      rol || 'Docente',
+      departamento_id ? parseInt(departamento_id) : null,
+    ]);
+
+    res.status(201).json({ success: true, usuario: resultado.rows[0] });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(409).json({ error: 'Este correo electrónico ya existe en la base de datos' });
+    }
+    console.error('Error al insertar usuario:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ==========================================
+// 2. ENDPOINTS DE DEPARTAMENTOS
+// ==========================================
+
+app.get('/api/departamentos', async (req, res) => {
+  try {
+    const query = `
+      SELECT d.id, d.nombre, d.descripcion, d.jefe_id,
+             COALESCE(u.nombre, 'Sin jefe asignado') as nombre_jefe
+      FROM departamentos d
+      LEFT JOIN usuarios u ON d.jefe_id = u.id
+      ORDER BY d.id ASC
+    `;
+    const resultado = await pool.query(query);
+    res.json(resultado.rows);
+  } catch (err) {
+    console.error('Error al consultar departamentos:', err.message);
+    res.status(500).json({ error: 'Error al consultar departamentos' });
+  }
+});
+
+// ==========================================
+// 3. ENDPOINTS DE ANUNCIOS (PUBLICAR Y VER)
+// ==========================================
+
+// Obtener todos los anuncios emitidos
+app.get('/api/anuncios', async (req, res) => {
+  try {
+    const query = `
+      SELECT a.id, a.titulo, a.contenido, a.prioridad, a.fecha,
+             u.nombre as autor_nombre,
+             COALESCE(d.nombre, 'General') as departamento_nombre
+      FROM anuncios a
+      LEFT JOIN usuarios u ON a.autor_id = u.id
+      LEFT JOIN departamentos d ON a.departamento_id = d.id
+      ORDER BY a.id DESC
+    `;
+    const resultado = await pool.query(query);
+    res.json(resultado.rows);
+  } catch (err) {
+    console.error('Error al consultar anuncios:', err.message);
+    res.status(500).json({ error: 'Error al consultar anuncios' });
+  }
+});
+
+// Crear un nuevo anuncio real visible para todos
+app.post('/api/anuncios', async (req, res) => {
+  const { titulo, contenido, prioridad, autor_id, departamento_id } = req.body;
+
+  if (!titulo || !contenido) {
+    return res.status(400).json({ error: 'Título y contenido son obligatorios' });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO anuncios (titulo, contenido, prioridad, autor_id, departamento_id, fecha)
+      VALUES ($1, $2, $3, $4, $5, NOW())
+      RETURNING *
+    `;
+    const resultado = await pool.query(insertQuery, [
+      titulo.trim(),
+      contenido.trim(),
+      prioridad || 'Informativo',
+      autor_id ? parseInt(autor_id) : null,
+      departamento_id ? parseInt(departamento_id) : null,
+    ]);
+
+    res.status(201).json({ success: true, anuncio: resultado.rows[0] });
+  } catch (err) {
+    console.error('Error al insertar anuncio:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ==========================================
+// 4. ENDPOINTS DE ARCHIVOS Y NOTIFICACIONES
+// ==========================================
+
+app.get('/api/archivos', async (req, res) => {
+  try {
+    const resultado = await pool.query('SELECT * FROM archivos ORDER BY id DESC');
+    res.json(resultado.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/notificaciones', async (req, res) => {
+  try {
+    const resultado = await pool.query('SELECT * FROM notificaciones ORDER BY id DESC');
+    res.json(resultado.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ==========================================
+// 5. RUTAS DE AUTENTICACIÓN
+// ==========================================
+
+// Registro desde frontend público
+app.post('/registro', async (req, res) => {
+  const { nombre, email, contrasena } = req.body;
+
+  if (!nombre || !email || !contrasena) {
+    return res.status(400).json({ success: false, error: 'Todos los campos son obligatorios' });
+  }
+
+  try {
+    const resultado = await pool.query(
+      `INSERT INTO usuarios (nombre, correo, password, rol)
+       VALUES ($1, $2, $3, 'Docente')
+       RETURNING id, nombre, correo, rol`,
+      [nombre.trim(), email.trim().toLowerCase(), contrasena]
+    );
+
+    return res.status(201).json({ success: true, usuario: resultado.rows[0] });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(409).json({ success: false, error: 'Este correo electrónico ya se encuentra registrado' });
+    }
+    console.error('Error en /registro:', err.message);
+    return res.status(500).json({ success: false, error: 'Error en la base de datos' });
+  }
+});
+
+// Login
+app.post('/login', async (req, res) => {
+  const { email, contrasena } = req.body;
+
+  if (!email || !contrasena) {
+    return res.status(400).json({ success: false, error: 'Debe ingresar correo y contraseña' });
+  }
+
+  try {
+    const resultado = await pool.query(
+      `SELECT id, nombre, correo, rol, departamento_id
+       FROM usuarios
+       WHERE LOWER(correo) = LOWER($1) AND password = $2`,
+      [email.trim(), contrasena]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(401).json({ success: false, error: 'Credenciales inválidas' });
+    }
+
+    return res.json({ success: true, usuario: resultado.rows[0] });
+  } catch (err) {
+    console.error('Error en /login:', err.message);
+    return res.status(500).json({ success: false, error: 'Error en el servidor al autenticar' });
+  }
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor en línea en http://localhost:${PORT}`);
+});
+
+
+================================================================================
+ARCHIVO 3: public/admin.html
+================================================================================
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrativo - Datos Reales PostgreSQL</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .barra_lateral {
+      width: 260px;
+      background-color: #0f2440;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      min-height: 100vh;
+    }
+
+    .cabecera_lateral {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .titulo_logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .subtitulo_logo {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .menu_navegacion {
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .item_menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      color: #cbd5e1;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .item_menu.activo {
+      background-color: #17365d;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .contenedor_principal {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .barra_superior {
+      background-color: #ffffff;
+      height: 70px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0px 32px;
+    }
+
+    .titulo_saludo {
+      font-size: 19px;
+      font-weight: 700;
+      color: #17365d;
+    }
+
+    .badge_conexion {
+      background-color: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .cuerpo_panel {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* FORMULARIO DE REGISTRO REAL */
+    .caja_formulario {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .titulo_form {
+      font-size: 15px;
+      font-weight: 700;
+      color: #17365d;
+      margin-bottom: 14px;
+    }
+
+    .fila_formulario {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .campo_input {
+      border: 1px solid #cbd5e1;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+    }
+
+    .boton_guardar {
+      background-color: #17365d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      height: 38px;
+    }
+
+    .boton_guardar:hover {
+      background-color: #0f2440;
+    }
+
+    .caja_vista {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .cabecera_vista {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .titulo_vista {
+      font-size: 18px;
+      font-weight: 700;
+      color: #17365d;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .badge_tag {
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .alerta_mensaje {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .alerta_exito {
+      background-color: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .alerta_error {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA LATERAL -->
+  <aside class="barra_lateral">
+    <div class="cabecera_lateral">
+      <div class="titulo_logo">OCID</div>
+      <div class="subtitulo_logo">PostgreSQL en Tiempo Real</div>
+    </div>
+
+    <nav class="menu_navegacion">
+      <button class="item_menu activo" onclick="mostrarSeccion('usuarios', this)">
+        <span>👥 Usuarios</span>
+        <span id="conteo_usr" style="font-size: 11px;">0</span>
+      </button>
+      <button class="item_menu" onclick="mostrarSeccion('anuncios', this)">
+        <span>📢 Anuncios</span>
+        <span id="conteo_anu" style="font-size: 11px;">0</span>
+      </button>
+      <button class="item_menu" onclick="mostrarSeccion('departamentos', this)">
+        <span>🏢 Departamentos</span>
+        <span id="conteo_dep" style="font-size: 11px;">0</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <main class="contenedor_principal">
+    <header class="barra_superior">
+      <h1 class="titulo_saludo">Gestión y Sincronización Directa de PostgreSQL</h1>
+      <div class="badge_conexion">🟢 Datos Reales de la BD</div>
+    </header>
+
+    <div class="cuerpo_panel">
+      <div id="aviso_notificacion" class="alerta_mensaje"></div>
+
+      <!-- SECCIÓN 1: USUARIOS REALES -->
+      <section id="modulo_usuarios">
+        <!-- FORMULARIO PARA REGISTRAR EN PSQL -->
+        <div class="caja_formulario">
+          <div class="titulo_form">➕ Registrar Nuevo Usuario en PostgreSQL</div>
+          <form id="form_nuevo_usuario" onsubmit="registrarUsuario(event)">
+            <div class="fila_formulario">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Nombre completo</label>
+                <input class="campo_input" type="text" id="usr_nombre" placeholder="Ej: Roberto Salazar" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Correo electrónico</label>
+                <input class="campo_input" type="email" id="usr_correo" placeholder="correo@instituto.edu.mx" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contraseña inicial</label>
+                <input class="campo_input" type="password" id="usr_pass" placeholder="••••••••" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Rol</label>
+                <select class="campo_input" id="usr_rol">
+                  <option value="Docente">Docente</option>
+                  <option value="Jefe de Depto">Jefe de Depto</option>
+                  <option value="Administrador">Administrador</option>
+                </select>
+              </div>
+              <button type="submit" class="boton_guardar">Guardar en BD</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TABLA EN VIVO -->
+        <div class="caja_vista">
+          <div class="cabecera_vista">
+            <h2 class="titulo_vista">Usuarios Registrados en PostgreSQL</h2>
+            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;" onclick="cargarUsuarios()">Refrescar</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Departamento</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_usuarios_body">
+              <tr><td colspan="5" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: ANUNCIOS REALES -->
+      <section id="modulo_anuncios" style="display: none;">
+        <!-- FORMULARIO PARA CREAR ANUNCIO EN PSQL -->
+        <div class="caja_formulario">
+          <div class="titulo_form">📢 Publicar Nuevo Aviso en PostgreSQL</div>
+          <form id="form_nuevo_anuncio" onsubmit="publicarAnuncio(event)">
+            <div class="fila_formulario" style="grid-template-columns: 1fr 2fr 140px 140px;">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Título del aviso</label>
+                <input class="campo_input" type="text" id="anu_titulo" placeholder="Ej: Entrega de calificaciones" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contenido</label>
+                <input class="campo_input" type="text" id="anu_contenido" placeholder="Instrucciones o detalles del aviso" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Prioridad</label>
+                <select class="campo_input" id="anu_prioridad">
+                  <option value="Informativo">Informativo</option>
+                  <option value="Alta">Alta</option>
+                  <option value="Urgente">Urgente</option>
+                </select>
+              </div>
+              <button type="submit" class="boton_guardar">Publicar Aviso</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="caja_vista">
+          <div class="cabecera_vista">
+            <h2 class="titulo_vista">Avisos Activos en PostgreSQL</h2>
+            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;" onclick="cargarAnuncios()">Refrescar</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Contenido</th>
+                <th>Prioridad</th>
+                <th>Autor</th>
+                <th>Fecha de Creación</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_anuncios_body">
+              <tr><td colspan="6" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: DEPARTAMENTOS -->
+      <section id="modulo_departamentos" style="display: none;">
+        <div class="caja_vista">
+          <h2 class="titulo_vista" style="margin-bottom: 16px;">Departamentos de la Institución</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Jefe a Cargo</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_deptos_body">
+              <tr><td colspan="4" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    // Carga inicial directa de PostgreSQL
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarUsuarios();
+      cargarAnuncios();
+      cargarDepartamentos();
+    });
+
+    function mostrarMensaje(texto, esError = false) {
+      const box = $('aviso_notificacion');
+      box.textContent = texto;
+      box.className = 'alerta_mensaje ' + (esError ? 'alerta_error' : 'alerta_exito');
+      box.style.display = 'block';
+      setTimeout(() => { box.style.display = 'none'; }, 4000);
+    }
+
+    // 1. CARGAR USUARIOS REALES DE PSQL
+    async function cargarUsuarios() {
+      try {
+        const res = await fetch('/api/usuarios');
+        const data = await res.json();
+        const tbody = $('tabla_usuarios_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No hay usuarios aún en PostgreSQL. Usa el formulario de arriba para agregar uno.</td></tr>';
+          $('conteo_usr').textContent = '0';
+          return;
+        }
+
+        $('conteo_usr').textContent = data.length;
+        tbody.innerHTML = data.map(u => `
+          <tr>
+            <td><strong>#${u.id}</strong></td>
+            <td><strong style="color: #17365d;">${u.nombre}</strong></td>
+            <td>${u.correo}</td>
+            <td><span class="badge_tag">${u.rol || 'Docente'}</span></td>
+            <td>${u.departamento_nombre || 'General'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        $('tabla_usuarios_body').innerHTML = `<tr><td colspan="5" style="color: #ef4444; text-align: center;">Error al conectar con PostgreSQL: ${err.message}</td></tr>`;
+      }
+    }
+
+    // REGISTRAR USUARIO REAL EN POSTGRESQL
+    async function registrarUsuario(e) {
+      e.preventDefault();
+      const payload = {
+        nombre: $('usr_nombre').value,
+        correo: $('usr_correo').value,
+        password: $('usr_pass').value,
+        rol: $('usr_rol').value
+      };
+
+      try {
+        const res = await fetch('/api/usuarios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          mostrarMensaje(`✅ Usuario "${payload.nombre}" guardado en PostgreSQL correctamente.`);
+          $('form_nuevo_usuario').reset();
+          cargarUsuarios(); // Se recarga en vivo de la BD
+        } else {
+          mostrarMensaje(data.error || 'Error al guardar en PostgreSQL', true);
+        }
+      } catch (err) {
+        mostrarMensaje('No se pudo conectar al servidor.', true);
+      }
+    }
+
+    // 2. CARGAR Y REGISTRAR ANUNCIOS REALES
+    async function cargarAnuncios() {
+      try {
+        const res = await fetch('/api/anuncios');
+        const data = await res.json();
+        const tbody = $('tabla_anuncios_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No hay avisos publicados en PostgreSQL.</td></tr>';
+          $('conteo_anu').textContent = '0';
+          return;
+        }
+
+        $('conteo_anu').textContent = data.length;
+        tbody.innerHTML = data.map(a => `
+          <tr>
+            <td><strong>#${a.id}</strong></td>
+            <td><strong style="color: #17365d;">${a.titulo}</strong></td>
+            <td>${a.contenido}</td>
+            <td><span class="badge_tag">${a.prioridad}</span></td>
+            <td>${a.autor_nombre || 'Administración'}</td>
+            <td style="color: #64748b; font-size: 11px;">${new Date(a.fecha).toLocaleString()}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        $('tabla_anuncios_body').innerHTML = `<tr><td colspan="6" style="color: #ef4444; text-align: center;">Error al leer avisos: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function publicarAnuncio(e) {
+      e.preventDefault();
+      const payload = {
+        titulo: $('anu_titulo').value,
+        contenido: $('anu_contenido').value,
+        prioridad: $('anu_prioridad').value
+      };
+
+      try {
+        const res = await fetch('/api/anuncios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          mostrarMensaje('✅ Aviso publicado en PostgreSQL y visible para todos.');
+          $('form_nuevo_anuncio').reset();
+          cargarAnuncios();
+        } else {
+          mostrarMensaje(data.error || 'Error al publicar aviso', true);
+        }
+      } catch (err) {
+        mostrarMensaje('Error de red al guardar aviso', true);
+      }
+    }
+
+    // 3. CARGAR DEPARTAMENTOS
+    async function cargarDepartamentos() {
+      try {
+        const res = await fetch('/api/departamentos');
+        const data = await res.json();
+        const tbody = $('tabla_deptos_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px;">No hay departamentos en la base de datos.</td></tr>';
+          $('conteo_dep').textContent = '0';
+          return;
+        }
+
+        $('conteo_dep').textContent = data.length;
+        tbody.innerHTML = data.map(d => `
+          <tr>
+            <td><strong>#${d.id}</strong></td>
+            <td><strong style="color: #17365d;">${d.nombre}</strong></td>
+            <td>${d.descripcion || 'Sin descripción'}</td>
+            <td>${d.nombre_jefe}</td>
+          </tr>
+        `).join('');
+      } catch (_) {}
+    }
+
+    function mostrarSeccion(sec, btn) {
+      $('modulo_usuarios').style.display = sec === 'usuarios' ? 'block' : 'none';
+      $('modulo_anuncios').style.display = sec === 'anuncios' ? 'block' : 'none';
+      $('modulo_departamentos').style.display = sec === 'departamentos' ? 'block' : 'none';
+
+      document.querySelectorAll('.item_menu').forEach(b => b.classList.remove('activo'));
+      if (btn) btn.classList.add('activo');
+    }
+  </script>
+
+
+
+
+================================================================================
+ARCHIVO 4: public/login.html
+================================================================================
+<!DOCTYPE html>
+
+<html lang="es-MX">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Iniciar Sesión - OCID</title>
+<link href="css/login.css" rel="stylesheet"/>
+</head>
+<body>
+<main class="contenedor_login">
+<header class="cabecera_login">
+<div class="icono_emblema">
+<svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+</div>
+<span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+<h1 class="titulo_login">Acceso Institucional</h1>
+<p class="subtitulo_login">Ingresa tus credenciales para continuar</p>
+</header>
+<section class="cuerpo_formulario">
+<!-- Contenedor integrado para avisos sin alert() -->
+<div class="mensaje_alerta" id="mensaje_estado" role="alert"></div>
+<form id="formulario_login">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="email">Correo Institucional</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="4"></circle>
+<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+</svg>
+</span>
+<input class="campo_texto" id="email" placeholder="correo@instituto.edu.mx" required="" type="email"/>
+</div>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="contrasena">Contraseña</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+</span>
+<input class="campo_texto" id="contrasena" placeholder="••••••••" required="" type="password"/>
+<button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+</button>
+</div>
+</div>
+<button class="boton_enviar" id="loginBtn" type="submit">
+<span>Iniciar Sesión</span>
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+<polyline points="10 17 15 12 10 7"></polyline>
+<line x1="15" x2="3" y1="12" y2="12"></line>
+</svg>
+</button>
+</form>
+</section>
+<footer class="pie_formulario">
+<p>¿No tienes una cuenta aún? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
+</footer>
+</main>
+<footer class="pie_global">
+        OCID • Organización y Comunicación Interna para Docentes
+    </footer>
+<script>
+        const $ = id => document.getElementById(id);
+
+        // Mostrar / ocultar contraseña
+        $('boton_clave').onclick = () => {
+            const c = $('contrasena');
+            c.type = c.type === 'password' ? 'text' : 'password';
+        };
+
+        // Procesar login
+        $('formulario_login').onsubmit = async e => {
+            e.preventDefault();
+            const alerta = $('mensaje_estado');
+            alerta.style.display = 'none';
+
+            const btn = $('loginBtn');
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: $('email').value.trim(),
+                        contrasena: $('contrasena').value
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    localStorage.setItem('usuario_ocid', JSON.stringify(data.usuario));
+                    location.href = 'admin.html';
+                } else {
+                    alerta.className = 'mensaje_alerta error';
+                    alerta.textContent = data.error || 'Credenciales no válidas. Revisa tu correo y contraseña.';
+                    alerta.style.display = 'block';
+                }
+            } catch (err) {
+                alerta.className = 'mensaje_alerta error';
+                alerta.textContent = 'No se pudo conectar con el servidor';
+                alerta.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
+
+
+================================================================================
+ARCHIVO 5: public/registro.html
+================================================================================
+<!DOCTYPE html>
+
+<html lang="es-MX">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registro - OCID</title>
+<link href="css/registro.css" rel="stylesheet"/>
+</head>
+<body>
+<main class="contenedor_registro">
+<header class="cabecera_registro">
+<div class="icono_emblema">
+<svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+<line x1="19" x2="19" y1="8" y2="14"></line>
+<line x1="22" x2="16" y1="11" y2="11"></line>
+</svg>
+</div>
+<span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+<h1 class="titulo_registro">Crear Cuenta</h1>
+<p class="subtitulo_registro">Únete a la comunidad de OCID</p>
+</header>
+<section class="cuerpo_formulario">
+<!-- Contenedor integrado para avisos sin alert() -->
+<div class="mensaje_alerta" id="mensaje_estado" role="alert"></div>
+<form id="registro">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="nombre">Nombre Completo</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+<circle cx="12" cy="7" r="4"></circle>
+</svg>
+</span>
+<input class="campo_texto" id="nombre" placeholder="Juan Pérez González" required="" type="text"/>
+</div>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="email">Correo Electrónico</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="4"></circle>
+<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+</svg>
+</span>
+<input class="campo_texto" id="email" placeholder="correo@ejemplo.com" required="" type="email"/>
+</div>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="contrasena">Contraseña</label>
+<div class="contenedor_entrada">
+<span class="icono_campo">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+</span>
+<input class="campo_texto" id="contrasena" minlength="6" placeholder="••••••••" required="" type="password"/>
+<button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+</button>
+</div>
+</div>
+<button class="boton_enviar" id="registerBtn" type="submit">
+<span>Registrarse</span>
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+<line x1="5" x2="19" y1="12" y2="12"></line>
+<polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+</button>
+</form>
+</section>
+<footer class="pie_formulario">
+<p>¿Ya tienes una cuenta? <a class="enlace_login" href="login.html">Inicia sesión aquí</a></p>
+</footer>
+</main>
+<footer class="pie_global">
+        OCID • Organización y Comunicación Interna para Docentes
+    </footer>
+<script>
+        const $ = id => document.getElementById(id);
+
+        // Alternar visualización de clave
+        $('boton_clave').onclick = () => {
+            const c = $('contrasena');
+            c.type = c.type === 'password' ? 'text' : 'password';
+        };
+
+        // Envío con validación de correo registrado y silencio en fallos de red
+        $('registro').onsubmit = async e => {
+            e.preventDefault();
+            
+            const alerta = $('mensaje_estado');
+            alerta.style.display = 'none';
+
+            const btn = $('registerBtn');
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: $('nombre').value.trim(),
+                        email: $('email').value.trim(),
+                        contrasena: $('contrasena').value
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json().catch(() => ({ success: true }));
+                    if (data.success !== false) {
+                        location.href = 'login.html';
+                        return;
+                    }
+                }
+
+                const respuestaTexto = await res.text();
+                let mensajeError = respuestaTexto.toLowerCase();
+
+                try {
+                    const d = JSON.parse(respuestaTexto);
+                    mensajeError = ((d.error || d.message || '') + ' ' + respuestaTexto).toLowerCase();
+                } catch (_) {}
+
+                const esCorreoDuplicado = 
+                    res.status === 409 || 
+                    res.status === 500 ||
+                    mensajeError.includes('correo') || 
+                    mensajeError.includes('email') || 
+                    mensajeError.includes('registrado') || 
+                    mensajeError.includes('existe') || 
+                    mensajeError.includes('duplicate') || 
+                    mensajeError.includes('unique') || 
+                    mensajeError.includes('dup_entry');
+
+                if (esCorreoDuplicado) {
+                    alerta.className = 'mensaje_alerta error';
+                    alerta.textContent = 'Este correo electrónico ya se encuentra registrado';
+                    alerta.style.display = 'block';
+                }
+            } catch (err) {
+                // Silencio ante fallos de conexión a BD
+            } finally {
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
+
+
+================================================================================
+ARCHIVO 6: public/css/login.css
+================================================================================
 * {
+    margin: 0px;
+    padding: 0px;
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: #f8faff;
-    color: #0f172a;
+    background-color: #f8f9ff;
+    color: #1e293b;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 24px 16px;
+    justify-content: center;
+    padding: 16px;
 }
 
 .contenedor_login {
     background-color: #ffffff;
     width: 100%;
     max-width: 440px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px -5px rgba(23, 54, 93, 0.08), 0 8px 10px -6px rgba(23, 54, 93, 0.04);
+    border-radius: 12px;
+    box-shadow: 0px 4px 16px rgba(23, 54, 93, 0.08);
     border: 1px solid #e2e8f0;
     overflow: hidden;
 }
 
 .cabecera_login {
+    background-color: #17365d;
+    color: #ffffff;
+    padding: 32px 24px;
     text-align: center;
-    padding: 36px 32px 20px;
 }
 
 .icono_emblema {
-    width: 56px;
-    height: 56px;
-    margin: 0 auto 16px;
-    background-color: #eff6ff;
-    color: #17365d;
-    border-radius: 14px;
+    width: 52px;
+    height: 52px;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0px auto 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .insignia_oficial {
     display: inline-block;
-    background-color: #eff6ff;
-    color: #17365d;
-    font-size: 11.52px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.8px;
-    padding: 5.6px 13.6px;
-    border-radius: 9999px;
-    margin-bottom: 12px;
-    border: 1px solid #bfdbfe;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
 }
 
 .titulo_login {
-    font-size: 25.6px;
-    font-weight: 800;
-    color: #17365d;
-    letter-spacing: -0.4px;
+    font-size: 22px;
+    font-weight: 700;
     margin-bottom: 4px;
 }
 
 .subtitulo_login {
-    font-size: 14.4px;
-    color: #475569;
+    font-size: 13px;
+    color: #cbd5e1;
 }
 
 .cuerpo_formulario {
-    padding: 0 32px 24px;
+    padding: 28px 24px;
 }
 
 .mensaje_alerta {
     display: none;
-    padding: 12px 16px;
-    border-radius: 9.6px;
-    font-size: 13.44px;
-    margin-bottom: 18.4px;
-    font-weight: 500;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    text-align: center;
 }
 
 .mensaje_alerta.error {
-    display: flex;
-    align-items: center;
-    gap: 8px;
     background-color: #fef2f2;
-    color: #b91c1c;
+    color: #ef4444;
     border: 1px solid #fecaca;
 }
 
-.mensaje_alerta.exito {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #f0fdf4;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-}
-
 .grupo_campo {
-    margin-bottom: 18.4px;
+    margin-bottom: 18px;
 }
 
 .etiqueta_campo {
     display: block;
-    font-size: 13.28px;
+    font-size: 13px;
     font-weight: 600;
-    color: #0f172a;
-    margin-bottom: 7.2px;
+    color: #334155;
+    margin-bottom: 6px;
 }
 
 .contenedor_entrada {
@@ -129,7 +1289,7 @@ body {
 
 .icono_campo {
     position: absolute;
-    left: 15.2px;
+    left: 12px;
     color: #94a3b8;
     display: flex;
     align-items: center;
@@ -138,30 +1298,28 @@ body {
 
 .campo_texto {
     width: 100%;
-    padding: 12.48px 41.6px 12.48px 41.6px;
-    border: 1.5px solid #cbd5e1;
-    border-radius: 10.4px;
-    font-size: 14.72px;
-    color: #0f172a;
-    background-color: #fafbfc;
-    transition: all 0.2s ease;
+    height: 44px;
+    padding: 0px 40px 0px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1e293b;
     outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .campo_texto:focus {
     border-color: #17365d;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(23, 54, 93, 0.12);
+    box-shadow: 0px 0px 0px 3px rgba(23, 54, 93, 0.12);
 }
 
 .boton_ver_clave {
     position: absolute;
-    right: 13.6px;
+    right: 12px;
     background: none;
     border: none;
     color: #94a3b8;
     cursor: pointer;
-    padding: 4px;
     display: flex;
     align-items: center;
 }
@@ -172,12 +1330,12 @@ body {
 
 .boton_enviar {
     width: 100%;
-    padding: 13.6px;
+    height: 46px;
     background-color: #17365d;
     color: #ffffff;
     border: none;
-    border-radius: 10.4px;
-    font-size: 15.2px;
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -185,6 +1343,7 @@ body {
     justify-content: center;
     gap: 8px;
     transition: background-color 0.2s;
+    margin-top: 10px;
 }
 
 .boton_enviar:hover {
@@ -192,27 +1351,23 @@ body {
 }
 
 .boton_enviar:disabled {
-    opacity: 0.7;
+    background-color: #94a3b8;
     cursor: not-allowed;
 }
 
 .pie_formulario {
-    padding: 20px 32px 32px;
-    border-top: 1px solid #f1f5f9;
+    padding: 16px 24px;
+    background-color: #f8f9ff;
+    border-top: 1px solid #e2e8f0;
     text-align: center;
-    background-color: #fafbfc;
-}
-
-.pie_formulario p {
-    font-size: 13.76px;
-    color: #475569;
+    font-size: 13px;
+    color: #64748b;
 }
 
 .enlace_registro {
     color: #17365d;
-    text-decoration: none;
     font-weight: 700;
-    margin-left: 4px;
+    text-decoration: none;
 }
 
 .enlace_registro:hover {
@@ -221,112 +1376,219 @@ body {
 
 .pie_global {
     margin-top: 24px;
-    font-size: 12.48px;
+    font-size: 12px;
     color: #94a3b8;
     text-align: center;
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 16px 12px;
-    }
 
-    .contenedor_login {
-        border-radius: 16px;
-    }
-
-    .cabecera_login {
-        padding: 28px 20px 16px;
-    }
-
-    .cuerpo_formulario {
-        padding: 0 20px 20px;
-    }
-
-    .pie_formulario {
-        padding: 18.4px 20px 28px;
-    }
+================================================================================
+ARCHIVO 7: public/css/registro.css
+================================================================================
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-</style>
 
-<body>
-    <div class="contenedor-principal">
-        <div class="cabecera">
-            <!-- Icono de entrar -->
-            <div class="icono_emblema">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                    <polyline points="10 17 15 12 10 7"></polyline>
-                    <line x1="15" y1="12" x2="3" y2="12"></line>
-                </svg>
-            </div>
-            <!-- Icono de entrar -->
-            <span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
-            <h1>Iniciar Sesión</h1>
-            <p class="acceder">Accede a tu cuenta de OCID</p>
-        </div>
-        <div class="formulario">
-            <div id="error-correo" class="error"></div>
-            <form id="login">
-                <div class="campos">
-                    <label for="correo">Correo Electrónico</label>
-                    <div class="contenedor_entrada">
-                        <!-- icono arroba -->
-                        <span class="icono_campo">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="4"></circle>
-                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
-                            </svg>
-                        </span>
-                        <!-- icono arroba -->
-                        <input class="email" type="email" id="loginEmail" placeholder="correo@ejemplo.com" required>
-                    </div>
-                </div>
+body {
+    background-color: #f8f9ff;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
 
-                <div class="campos">
-                    <label for="contrasena">Contraseña</label>
-                    <div class="contenedor_entrada">
-                        <!-- icono candado -->
-                        <span class="icono_campo">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                        </span>
-                        <!-- icono candado -->
-                        <input class="password" type="password" id="loginPassword" placeholder="Contraseña" required>
-                        <button type="button" class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña">
-                            <!-- ojo -->
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                            <!-- ojo -->
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <button type="submit" class="boton_enviar" id="loginBtn">
-                <span>Iniciar Sesión</span>
-                <!-- flecha -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-                <!-- flecha -->
-            </button>
-        </div>
-    </div>
-    <footer class="pie_formulario">
-        <p>¿No tienes una cuenta? <a class="enlace_registro" href="registro.html">Regístrate aquí</a></p>
-    </footer>
-    </main>
-    <footer class="pie_global">
-        OCID • Organización y Comunicación Interna para Docentes
-    </footer>
+.contenedor_registro {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 440px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 16px rgba(23, 54, 93, 0.08);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.cabecera_registro {
+    background-color: #17365d;
+    color: #ffffff;
+    padding: 30px 24px;
+    text-align: center;
+}
+
+.icono_emblema {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.insignia_oficial {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.titulo_registro {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitulo_registro {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+.cuerpo_formulario {
+    padding: 24px;
+}
+
+.mensaje_alerta {
+    display: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.mensaje_alerta.error {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+}
+
+.grupo_campo {
+    margin-bottom: 16px;
+}
+
+.etiqueta_campo {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.contenedor_entrada {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icono_campo {
+    position: absolute;
+    left: 12px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.campo_texto {
+    width: 100%;
+    height: 44px;
+    padding: 0px 40px 0px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo_texto:focus {
+    border-color: #17365d;
+    box-shadow: 0px 0px 0px 3px rgba(23, 54, 93, 0.12);
+}
+
+.boton_ver_clave {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.boton_ver_clave:hover {
+    color: #17365d;
+}
+
+.boton_enviar {
+    width: 100%;
+    height: 46px;
+    background-color: #17365d;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.boton_enviar:hover {
+    background-color: #0f2440;
+}
+
+.boton_enviar:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.pie_formulario {
+    padding: 16px 24px;
+    background-color: #f8f9ff;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.enlace_login {
+    color: #17365d;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.enlace_login:hover {
+    text-decoration: underline;
+}
+
+.pie_global {
+    margin-top: 24px;
+    font-size: 12px;
+    color: #94a3b8;
+    text-align: center;
+}
+
+})();
+
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_41 -->
 </body>
 </html>

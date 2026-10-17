@@ -1,373 +1,579 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
+
 <head>
-    <meta charset="UTF-8">
-    <title>OCID - Plataforma de Coordinación y Comunicación Escolar</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrativo - Datos Reales PostgreSQL</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .barra_lateral {
+      width: 260px;
+      background-color: #0f2440;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      min-height: 100vh;
+    }
+
+    .cabecera_lateral {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .titulo_logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .subtitulo_logo {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .menu_navegacion {
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .item_menu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      color: #cbd5e1;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .item_menu.activo {
+      background-color: #17365d;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .contenedor_principal {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .barra_superior {
+      background-color: #ffffff;
+      height: 70px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0px 32px;
+    }
+
+    .titulo_saludo {
+      font-size: 19px;
+      font-weight: 700;
+      color: #17365d;
+    }
+
+    .badge_conexion {
+      background-color: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .cuerpo_panel {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* FORMULARIO DE REGISTRO REAL */
+    .caja_formulario {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+
+    .titulo_form {
+      font-size: 15px;
+      font-weight: 700;
+      color: #17365d;
+      margin-bottom: 14px;
+    }
+
+    .fila_formulario {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .campo_input {
+      border: 1px solid #cbd5e1;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+    }
+
+    .boton_guardar {
+      background-color: #17365d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      height: 38px;
+    }
+
+    .boton_guardar:hover {
+      background-color: #0f2440;
+    }
+
+    .caja_vista {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .cabecera_vista {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .titulo_vista {
+      font-size: 18px;
+      font-weight: 700;
+      color: #17365d;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .badge_tag {
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .alerta_mensaje {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .alerta_exito {
+      background-color: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .alerta_error {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="app">
-        <!-- Barra Lateral -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>OCID</h2>
-                <p>Plataforma Escolar</p>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#" class="nav-item active"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
-                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
-                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
-                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
-                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
-                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
-                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
-                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
-                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
-                </ul>
-            </nav>
-        </aside>
 
-        <!-- Contenido Principal -->
-        <main class="main-content">
-            <!-- Barra Superior -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <h1>OCID</h1>
-                </div>
-                <div class="topbar-center">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar anuncios, archivos, docentes...">
-                    </div>
-                </div>
-                <div class="topbar-right">
-                    <div class="topbar-user">
-                        <div class="user-info">
-                            <img src="https://via.placeholder.com/40" alt="Usuario">
-                            <span>Docente Ejemplo</span>
-                        </div>
-                        <div class="user-menu">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge">3</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Panel Principal -->
-            <div class="dashboard">
-                <div class="dashboard-header">
-                    <h2>Dashboard</h2>
-                    <p>¡Hola, docente!</p>
-                </div>
-
-                <div class="dashboard-grid">
-                    <!-- Tarjeta de Bienvenida -->
-                    <div class="dashboard-card welcome-card">
-                        <h3>Bienvenido a OCID</h3>
-                        <p>Departamento: <strong>Académico</strong></p>
-                        <p>Último acceso: Hoy, 08:30 AM</p>
-                    </div>
-
-                    <!-- Tarjeta de Anuncios -->
-                    <div class="dashboard-card announcements-card">
-                        <h3><i class="fas fa-bell"></i> Anuncios Nuevos</h3>
-                        <div class="card-content">
-                            <div class="announcement-item">
-                                <h4>Reunión de Departamento</h4>
-                                <p>Se informa que hoy habrá reunión de departamento a las 3:00 PM en la sala de juntas.</p>
-                                <span class="announcement-date">Hoy</span>
-                            </div>
-                            <div class="announcement-item">
-                                <h4>Entrega de Calificaciones</h4>
-                                <p>Recuerde entregar las calificaciones del parcial antes del viernes.</p>
-                                <span class="announcement-date">Mañana</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Ver todos los anuncios</button>
-                    </div>
-
-                    <!-- Tarjeta de Archivos -->
-                    <div class="dashboard-card files-card">
-                        <h3><i class="fas fa-file-alt"></i> Archivos Disponibles</h3>
-                        <div class="card-content">
-                            <div class="file-item">
-                                <i class="fas fa-file-pdf"></i>
-                                <div>
-                                    <h4>Plan de Estudios.pdf</h4>
-                                    <p>Actualizado marzo 2026</p>
-                                </div>
-                            </div>
-                            <div class="file-item">
-                                <i class="fas fa-file-word"></i>
-                                <div>
-                                    <h4>Formato de Solicitud.docx</h4>
-                                    <p>Para trámites escolares</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Ver todos los archivos</button>
-                    </div>
-
-                    <!-- Tarjeta de Docentes -->
-                    <div class="dashboard-card teachers-card">
-                        <h3><i class="fas fa-chalkboard-teacher"></i> Docentes del Departamento</h3>
-                        <div class="card-content">
-                            <div class="teacher-item">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>María González López</h4>
-                                    <p>Jefe de Departamento</p>
-                                </div>
-                            </div>
-                            <div class="teacher-item">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>Carlos Ramírez Méndez</h4>
-                                    <p>Docente de Matemáticas</p>
-                                </div>
-                            </div>
-                            <div class="teacher-item">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>Ana Torres Ruiz</h4>
-                                    <p>Docente de Ciencias</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Ver todos los docentes</button>
-                    </div>
-
-                    <!-- Tarjeta de Próximos Eventos -->
-                    <div class="dashboard-card events-card">
-                        <h3><i class="fas fa-calendar-plus"></i> Próximos Eventos</h3>
-                        <div class="card-content">
-                            <div class="event-item">
-                                <h4>Reunión de Profesores</h4>
-                                <p>10 Oct, 2026 • 3:00 PM</p>
-                                <span class="event-type">Reunión</span>
-                            </div>
-                            <div class="event-item">
-                                <h4>Entrega de Proyectos</h4>
-                                <p>15 Oct, 2026 • 11:59 PM</p>
-                                <span class="event-type">Entrega</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-sm btn-primary">Ver calendario completo</button>
-                    </div>
-
-                </div>
-
-                <!-- Sección de Últimos Anuncios -->
-                <div class="dashboard-section">
-                    <h2><i class="fas fa-bullhorn"></i> Últimos Anuncios</h2>
-                    <div class="announcements-list">
-                        <div class="announcement-card important">
-                            <div class="announcement-header">
-                                <h3>Reunión General de Docentes</h3>
-                                <span class="priority high">Alta</span>
-                            </div>
-                            <p>Se convoca a reunión general de todos los docentes para revisión del avance académico y planificación de actividades extracurriculares.</p>
-                            <div class="announcement-footer">
-                                <span>Publicado por: Jefe de Departamento Académico</span>
-                                <span>Hoy • 08:00 AM</span>
-                            </div>
-                        </div>
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <h3>Taller de Actualización Pedagógica</h3>
-                                <span class="priority media">Media</span>
-                            </div>
-                            <p>Invitación al taller de actualización en metodologías activas de aprendizaje, dirigido a todos los docentes de institución.</p>
-                            <div class="announcement-footer">
-                                <span>Publicado por: Servicios Escolares</span>
-                                <span>Ayer • 03:30 PM</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-block">Ver todos los anuncios</button>
-                </div>
-
-                <!-- Sección de Archivos Recientes -->
-                <div class="dashboard-section">
-                    <h2><i class="fas fa-folder-open"></i> Archivos Recientes</h2>
-                    <div class="files-list">
-                        <div class="file-card">
-                            <div class="file-header">
-                                <i class="fas fa-file-pdf"></i>
-                                <div>
-                                    <h4>Calendario Escolar 2026-2027.pdf</h4>
-                                    <p>PDF • 2.4 MB</p>
-                                </div>
-                            </div>
-                            <div class="file-footer">
-                                <span>Departamento Académico</span>
-                                <span>Hoy • 07:15 AM</span>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-header">
-                                <i class="fas fa-file-excel"></i>
-                                <div>
-                                    <h4>Lista de Alumnos.xlsx</h4>
-                                    <p>XLSX • 1.8 MB</p>
-                                </div>
-                            </div>
-                            <div class="file-footer">
-                                <span>Control Escolar</span>
-                                <span>Ayer • 04:20 PM</span>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-header">
-                                <i class="fas fa-file-image"></i>
-                                <div>
-                                    <h4>Logo_OCID.png</h4>
-                                    <p>PNG • 850 KB</p>
-                                </div>
-                            </div>
-                            <div class="file-footer">
-                                <span>Vinculación</span>
-                                <span>2 días atrás • 10:05 AM</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-block">Ver todos los archivos</button>
-                </div>
-
-                <!-- Accesos Rápidos -->
-                <div class="quick-actions">
-                    <h2>Accesos Rápidos</h2>
-                    <div class="actions-grid">
-                        <a href="#" class="action-item">
-                            <i class="fas fa-plus-circle"></i>
-                            <span>Crear Anuncio</span>
-                        </a>
-                        <a href="#" class="action-item">
-                            <i class="fas fa-upload"></i>
-                            <span>Subir Archivo</span>
-                        </a>
-                        <a href="#" class="action-item">
-                            <i class="fas fa-users-cog"></i>
-                            <span>Consultar Docentes</span>
-                        </a>
-                        <a href="#" class="action-item">
-                            <i class="fas fa-plus-square"></i>
-                            <span>Crear Evento</span>
-                        </a>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Modals (ventanas emergentes) -->
-        <div class="modal" id="loginModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-                </form>
-                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="registerModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Registrarse</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="registerNombre">Nombre completo</label>
-                        <input type="text" id="registerNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerRol">Rol</label>
-                        <select id="registerRol" required>
-                            <option value="">Seleccione su rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="jefe_departamento">Jefe de Departamento</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerDepartamento">Departamento</label>
-                        <select id="registerDepartamento" required>
-                            <option value="">Seleccione su departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
-                </form>
-                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="createAnnouncementModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Crear Nuevo Anuncio</h2>
-                <form id="announcementForm">
-                    <div class="form-group">
-                        <label for="announcementTitle">Título</label>
-                        <input type="text" id="announcementTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDescription">Descripción</label>
-                        <textarea id="announcementDescription" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDepartment">Departamento</label>
-                        <select id="announcementDepartment" required>
-                            <option value="">Seleccione departamento</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDate">Fecha de expiración (opcional)</label>
-                        <input type="date" id="announcementDate">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="announcementImportant">
-                            Marcar como importante
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementPriority">Prioridad</label>
-                        <select id="announcementPriority">
-                            <option value="baja">Baja</option>
-                            <option value="media" selected>Media</option>
-                            <option value="alta">Alta</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Crear Anuncio</button>
-                </form>
-            </div>
-        </div>
+  <!-- BARRA LATERAL -->
+  <aside class="barra_lateral">
+    <div class="cabecera_lateral">
+      <div class="titulo_logo">OCID</div>
+      <div class="subtitulo_logo">PostgreSQL en Tiempo Real</div>
     </div>
 
-    <script src="js/main.js"></script>
-</body>
-</html>
+    <nav class="menu_navegacion">
+      <button class="item_menu activo" onclick="mostrarSeccion('usuarios', this)">
+        <span>👥 Usuarios</span>
+        <span id="conteo_usr" style="font-size: 11px;">0</span>
+      </button>
+      <button class="item_menu" onclick="mostrarSeccion('anuncios', this)">
+        <span>📢 Anuncios</span>
+        <span id="conteo_anu" style="font-size: 11px;">0</span>
+      </button>
+      <button class="item_menu" onclick="mostrarSeccion('departamentos', this)">
+        <span>🏢 Departamentos</span>
+        <span id="conteo_dep" style="font-size: 11px;">0</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <main class="contenedor_principal">
+    <header class="barra_superior">
+      <h1 class="titulo_saludo">Gestión y Sincronización Directa de PostgreSQL</h1>
+      <div class="badge_conexion">🟢 Datos Reales de la BD</div>
+    </header>
+
+    <div class="cuerpo_panel">
+      <div id="aviso_notificacion" class="alerta_mensaje"></div>
+
+      <!-- SECCIÓN 1: USUARIOS REALES -->
+      <section id="modulo_usuarios">
+        <!-- FORMULARIO PARA REGISTRAR EN PSQL -->
+        <div class="caja_formulario">
+          <div class="titulo_form">➕ Registrar Nuevo Usuario en PostgreSQL</div>
+          <form id="form_nuevo_usuario" onsubmit="registrarUsuario(event)">
+            <div class="fila_formulario">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Nombre completo</label>
+                <input class="campo_input" type="text" id="usr_nombre" placeholder="Ej: Roberto Salazar" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Correo electrónico</label>
+                <input class="campo_input" type="email" id="usr_correo" placeholder="correo@instituto.edu.mx" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contraseña inicial</label>
+                <input class="campo_input" type="password" id="usr_pass" placeholder="••••••••" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Rol</label>
+                <select class="campo_input" id="usr_rol">
+                  <option value="Docente">Docente</option>
+                  <option value="Jefe de Depto">Jefe de Depto</option>
+                  <option value="Administrador">Administrador</option>
+                </select>
+              </div>
+              <button type="submit" class="boton_guardar">Guardar en BD</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TABLA EN VIVO -->
+        <div class="caja_vista">
+          <div class="cabecera_vista">
+            <h2 class="titulo_vista">Usuarios Registrados en PostgreSQL</h2>
+            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;"
+              onclick="cargarUsuarios()">Refrescar</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Departamento</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_usuarios_body">
+              <tr>
+                <td colspan="5" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: ANUNCIOS REALES -->
+      <section id="modulo_anuncios" style="display: none;">
+        <!-- FORMULARIO PARA CREAR ANUNCIO EN PSQL -->
+        <div class="caja_formulario">
+          <div class="titulo_form">📢 Publicar Nuevo Aviso en PostgreSQL</div>
+          <form id="form_nuevo_anuncio" onsubmit="publicarAnuncio(event)">
+            <div class="fila_formulario" style="grid-template-columns: 1fr 2fr 140px 140px;">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Título del aviso</label>
+                <input class="campo_input" type="text" id="anu_titulo" placeholder="Ej: Entrega de calificaciones"
+                  required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contenido</label>
+                <input class="campo_input" type="text" id="anu_contenido"
+                  placeholder="Instrucciones o detalles del aviso" required>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Prioridad</label>
+                <select class="campo_input" id="anu_prioridad">
+                  <option value="Informativo">Informativo</option>
+                  <option value="Alta">Alta</option>
+                  <option value="Urgente">Urgente</option>
+                </select>
+              </div>
+              <button type="submit" class="boton_guardar">Publicar Aviso</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="caja_vista">
+          <div class="cabecera_vista">
+            <h2 class="titulo_vista">Avisos Activos en PostgreSQL</h2>
+            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;"
+              onclick="cargarAnuncios()">Refrescar</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Contenido</th>
+                <th>Prioridad</th>
+                <th>Autor</th>
+                <th>Fecha de Creación</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_anuncios_body">
+              <tr>
+                <td colspan="6" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: DEPARTAMENTOS -->
+      <section id="modulo_departamentos" style="display: none;">
+        <div class="caja_vista">
+          <h2 class="titulo_vista" style="margin-bottom: 16px;">Departamentos de la Institución</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Jefe a Cargo</th>
+              </tr>
+            </thead>
+            <tbody id="tabla_deptos_body">
+              <tr>
+                <td colspan="4" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    // Carga inicial directa de PostgreSQL
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarUsuarios();
+      cargarAnuncios();
+      cargarDepartamentos();
+    });
+
+    function mostrarMensaje(texto, esError = false) {
+      const box = $('aviso_notificacion');
+      box.textContent = texto;
+      box.className = 'alerta_mensaje ' + (esError ? 'alerta_error' : 'alerta_exito');
+      box.style.display = 'block';
+      setTimeout(() => { box.style.display = 'none'; }, 4000);
+    }
+
+    // 1. CARGAR USUARIOS REALES DE PSQL
+    async function cargarUsuarios() {
+      try {
+        const res = await fetch('/api/usuarios');
+        const data = await res.json();
+        const tbody = $('tabla_usuarios_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No hay usuarios aún en PostgreSQL. Usa el formulario de arriba para agregar uno.</td></tr>';
+          $('conteo_usr').textContent = '0';
+          return;
+        }
+
+        $('conteo_usr').textContent = data.length;
+        tbody.innerHTML = data.map(u => `
+          <tr>
+            <td><strong>#${u.id}</strong></td>
+            <td><strong style="color: #17365d;">${u.nombre}</strong></td>
+            <td>${u.correo}</td>
+            <td><span class="badge_tag">${u.rol || 'Docente'}</span></td>
+            <td>${u.departamento_nombre || 'General'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        $('tabla_usuarios_body').innerHTML = `<tr><td colspan="5" style="color: #ef4444; text-align: center;">Error al conectar con PostgreSQL: ${err.message}</td></tr>`;
+      }
+    }
+
+    // REGISTRAR USUARIO REAL EN POSTGRESQL
+    async function registrarUsuario(e) {
+      e.preventDefault();
+      const payload = {
+        nombre: $('usr_nombre').value,
+        correo: $('usr_correo').value,
+        password: $('usr_pass').value,
+        rol: $('usr_rol').value
+      };
+
+      try {
+        const res = await fetch('/api/usuarios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          mostrarMensaje(`✅ Usuario "${payload.nombre}" guardado en PostgreSQL correctamente.`);
+          $('form_nuevo_usuario').reset();
+          cargarUsuarios(); // Se recarga en vivo de la BD
+        } else {
+          mostrarMensaje(data.error || 'Error al guardar en PostgreSQL', true);
+        }
+      } catch (err) {
+        mostrarMensaje('No se pudo conectar al servidor.', true);
+      }
+    }
+
+    // 2. CARGAR Y REGISTRAR ANUNCIOS REALES
+    async function cargarAnuncios() {
+      try {
+        const res = await fetch('/api/anuncios');
+        const data = await res.json();
+        const tbody = $('tabla_anuncios_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No hay avisos publicados en PostgreSQL.</td></tr>';
+          $('conteo_anu').textContent = '0';
+          return;
+        }
+
+        $('conteo_anu').textContent = data.length;
+        tbody.innerHTML = data.map(a => `
+          <tr>
+            <td><strong>#${a.id}</strong></td>
+            <td><strong style="color: #17365d;">${a.titulo}</strong></td>
+            <td>${a.contenido}</td>
+            <td><span class="badge_tag">${a.prioridad}</span></td>
+            <td>${a.autor_nombre || 'Administración'}</td>
+            <td style="color: #64748b; font-size: 11px;">${new Date(a.fecha).toLocaleString()}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        $('tabla_anuncios_body').innerHTML = `<tr><td colspan="6" style="color: #ef4444; text-align: center;">Error al leer avisos: ${err.message}</td></tr>`;
+      }
+    }
+
+    async function publicarAnuncio(e) {
+      e.preventDefault();
+      const payload = {
+        titulo: $('anu_titulo').value,
+        contenido: $('anu_contenido').value,
+        prioridad: $('anu_prioridad').value
+      };
+
+      try {
+        const res = await fetch('/api/anuncios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          mostrarMensaje('✅ Aviso publicado en PostgreSQL y visible para todos.');
+          $('form_nuevo_anuncio').reset();
+          cargarAnuncios();
+        } else {
+          mostrarMensaje(data.error || 'Error al publicar aviso', true);
+        }
+      } catch (err) {
+        mostrarMensaje('Error de red al guardar aviso', true);
+      }
+    }
+
+    // 3. CARGAR DEPARTAMENTOS
+    async function cargarDepartamentos() {
+      try {
+        const res = await fetch('/api/departamentos');
+        const data = await res.json();
+        const tbody = $('tabla_deptos_body');
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px;">No hay departamentos en la base de datos.</td></tr>';
+          $('conteo_dep').textContent = '0';
+          return;
+        }
+
+        $('conteo_dep').textContent = data.length;
+        tbody.innerHTML = data.map(d => `
+          <tr>
+            <td><strong>#${d.id}</strong></td>
+            <td><strong style="color: #17365d;">${d.nombre}</strong></td>
+            <td>${d.descripcion || 'Sin descripción'}</td>
+            <td>${d.nombre_jefe}</td>
+          </tr>
+        `).join('');
+      } catch (_) { }
+    }
+
+    function mostrarSeccion(sec, btn) {
+      $('modulo_usuarios').style.display = sec === 'usuarios' ? 'block' : 'none';
+      $('modulo_anuncios').style.display = sec === 'anuncios' ? 'block' : 'none';
+      $('modulo_departamentos').style.display = sec === 'departamentos' ? 'block' : 'none';
+
+      document.querySelectorAll('.item_menu').forEach(b => b.classList.remove('activo'));
+      if (btn) btn.classList.add('activo');
+    }
+  </script>
