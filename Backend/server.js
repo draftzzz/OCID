@@ -42,7 +42,7 @@ pool.connect((err, client, release) => {
 // ==========================================
 
 // Obtener todos los usuarios reales de la tabla
-app.get('https://ocid.onrender.com/api/usuarios', async (req, res) => {
+app.get('/usuarios', async (req, res) => {
   try {
     const query = `
       SELECT u.id, u.nombre, u.correo, u.rol, u.departamento_id,
@@ -60,7 +60,7 @@ app.get('https://ocid.onrender.com/api/usuarios', async (req, res) => {
 });
 
 // Registrar un usuario real en la base de datos
-app.post('https://ocid.onrender.com/api/usuarios', async (req, res) => {
+app.post('/ap/usuarios', async (req, res) => {
   const { nombre, correo, password, rol, departamento_id } = req.body;
 
   if (!nombre || !correo || !password) {
@@ -95,7 +95,7 @@ app.post('https://ocid.onrender.com/api/usuarios', async (req, res) => {
 // 2. ENDPOINTS DE DEPARTAMENTOS
 // ==========================================
 
-app.get('https://ocid.onrender.com/api/departamentos', async (req, res) => {
+app.get('/departamentos', async (req, res) => {
   try {
     const query = `
       SELECT d.id, d.nombre, d.descripcion, d.jefe_id,
@@ -117,7 +117,7 @@ app.get('https://ocid.onrender.com/api/departamentos', async (req, res) => {
 // ==========================================
 
 // Obtener todos los anuncios emitidos
-app.get('https://ocid.onrender.com/api/anuncios', async (req, res) => {
+app.get('/anuncios', async (req, res) => {
   try {
     const query = `
       SELECT a.id, a.titulo, a.contenido, a.prioridad, a.fecha,
@@ -169,7 +169,7 @@ app.post('https://ocid.onrender.com/api/anuncios', async (req, res) => {
 // 4. ENDPOINTS DE ARCHIVOS Y NOTIFICACIONES
 // ==========================================
 
-app.get('https://ocid.onrender.com/api/archivos', async (req, res) => {
+app.get('/archivos', async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM archivos ORDER BY id DESC');
     res.json(resultado.rows);
@@ -178,7 +178,7 @@ app.get('https://ocid.onrender.com/api/archivos', async (req, res) => {
   }
 });
 
-app.get('https://ocid.onrender.com/api/notificaciones', async (req, res) => {
+app.get('/notificaciones', async (req, res) => {
   try {
     const resultado = await pool.query('SELECT * FROM notificaciones ORDER BY id DESC');
     res.json(resultado.rows);
