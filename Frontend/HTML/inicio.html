@@ -1,14 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="es-MX">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrativo - Datos Reales PostgreSQL</title>
+  <title>Panel Administrativo - OCID</title>
+
   <style>
     * {
-      margin: 0px;
-      padding: 0px;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -23,7 +24,7 @@
     .barra_lateral {
       width: 260px;
       background-color: #0f2440;
-      color: #ffffff;
+      color: #fff;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -32,13 +33,12 @@
 
     .cabecera_lateral {
       padding: 24px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
     }
 
     .titulo_logo {
       font-size: 20px;
       font-weight: 800;
-      color: #ffffff;
     }
 
     .subtitulo_logo {
@@ -72,7 +72,7 @@
 
     .item_menu.activo {
       background-color: #17365d;
-      color: #ffffff;
+      color: #fff;
       font-weight: 700;
     }
 
@@ -81,16 +81,18 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      min-width: 0;
     }
 
     .barra_superior {
-      background-color: #ffffff;
-      height: 70px;
+      background-color: #fff;
+      min-height: 80px;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0px 32px;
+      gap: 16px;
+      padding: 16px 32px;
     }
 
     .titulo_saludo {
@@ -99,14 +101,25 @@
       color: #17365d;
     }
 
-    .badge_conexion {
-      background-color: #ecfdf5;
-      color: #059669;
-      border: 1px solid #a7f3d0;
-      font-size: 11px;
+    .usuario_saludo {
+      margin-top: 5px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .boton_guardar {
+      background-color: #17365d;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .boton_guardar:hover {
+      background-color: #0f2440;
     }
 
     .cuerpo_panel {
@@ -116,13 +129,13 @@
       gap: 24px;
     }
 
-    /* FORMULARIO DE REGISTRO REAL */
-    .caja_formulario {
-      background-color: #ffffff;
+    .caja_formulario, .caja_vista {
+      background-color: #fff;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 20px 24px;
       margin-bottom: 16px;
+      overflow-x: auto;
     }
 
     .titulo_form {
@@ -134,7 +147,7 @@
 
     .fila_formulario {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 12px;
       align-items: end;
     }
@@ -148,33 +161,19 @@
       outline: none;
     }
 
-    .boton_guardar {
-      background-color: #17365d;
-      color: #ffffff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      height: 38px;
-    }
-
-    .boton_guardar:hover {
-      background-color: #0f2440;
-    }
-
-    .caja_vista {
-      background-color: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 24px;
+    .etiqueta {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 5px;
     }
 
     .cabecera_vista {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       margin-bottom: 16px;
     }
 
@@ -189,6 +188,7 @@
       border-collapse: collapse;
       font-size: 13px;
       text-align: left;
+      min-width: 600px;
     }
 
     th {
@@ -232,83 +232,123 @@
       color: #991b1b;
       border: 1px solid #fecaca;
     }
+
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+      }
+
+      .barra_lateral {
+        width: 100%;
+        min-height: auto;
+      }
+
+      .menu_navegacion {
+        padding: 10px;
+      }
+
+      .barra_superior {
+        padding: 16px;
+      }
+
+      .cuerpo_panel {
+        padding: 16px;
+      }
+
+      .fila_formulario {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- BARRA LATERAL -->
   <aside class="barra_lateral">
     <div class="cabecera_lateral">
       <div class="titulo_logo">OCID</div>
-      <div class="subtitulo_logo">PostgreSQL en Tiempo Real</div>
+      <div class="subtitulo_logo">Organización y Comunicación Interna para Docentes</div>
     </div>
 
     <nav class="menu_navegacion">
       <button class="item_menu activo" onclick="mostrarSeccion('usuarios', this)">
         <span>👥 Usuarios</span>
-        <span id="conteo_usr" style="font-size: 11px;">0</span>
+        <span id="conteo_usr">0</span>
       </button>
+
       <button class="item_menu" onclick="mostrarSeccion('anuncios', this)">
         <span>📢 Anuncios</span>
-        <span id="conteo_anu" style="font-size: 11px;">0</span>
+        <span id="conteo_anu">0</span>
       </button>
+
       <button class="item_menu" onclick="mostrarSeccion('departamentos', this)">
         <span>🏢 Departamentos</span>
-        <span id="conteo_dep" style="font-size: 11px;">0</span>
+        <span id="conteo_dep">0</span>
       </button>
     </nav>
   </aside>
 
-  <!-- CONTENIDO -->
   <main class="contenedor_principal">
+
     <header class="barra_superior">
-      <h1 class="titulo_saludo">Gestión y Sincronización Directa de PostgreSQL</h1>
-      <div class="badge_conexion">🟢 Datos Reales de la BD</div>
+      <div>
+        <h1 class="titulo_saludo">Panel administrativo OCID</h1>
+        <p class="usuario_saludo">
+          Usuario conectado: <strong id="nombreUsuario">Cargando...</strong>
+        </p>
+      </div>
+
+      <button type="button" class="boton_guardar" onclick="cerrarSesion()">
+        Cerrar sesión
+      </button>
     </header>
 
     <div class="cuerpo_panel">
       <div id="aviso_notificacion" class="alerta_mensaje"></div>
 
-      <!-- SECCIÓN 1: USUARIOS REALES -->
+      <!-- USUARIOS -->
       <section id="modulo_usuarios">
-        <!-- FORMULARIO PARA REGISTRAR EN PSQL -->
+
         <div class="caja_formulario">
-          <div class="titulo_form">➕ Registrar Nuevo Usuario en PostgreSQL</div>
+          <div class="titulo_form">➕ Registrar nuevo usuario</div>
+
           <form id="form_nuevo_usuario" onsubmit="registrarUsuario(event)">
             <div class="fila_formulario">
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Nombre completo</label>
-                <input class="campo_input" type="text" id="usr_nombre" placeholder="Ej: Roberto Salazar" required>
+                <label class="etiqueta" for="usr_nombre">Nombre completo</label>
+                <input class="campo_input" type="text" id="usr_nombre" required>
               </div>
+
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Correo electrónico</label>
-                <input class="campo_input" type="email" id="usr_correo" placeholder="correo@instituto.edu.mx" required>
+                <label class="etiqueta" for="usr_correo">Correo electrónico</label>
+                <input class="campo_input" type="email" id="usr_correo" required>
               </div>
+
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contraseña inicial</label>
-                <input class="campo_input" type="password" id="usr_pass" placeholder="••••••••" required>
+                <label class="etiqueta" for="usr_pass">Contraseña inicial</label>
+                <input class="campo_input" type="password" id="usr_pass" required>
               </div>
+
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Rol</label>
+                <label class="etiqueta" for="usr_rol">Rol</label>
                 <select class="campo_input" id="usr_rol">
                   <option value="Docente">Docente</option>
                   <option value="Jefe de Depto">Jefe de Depto</option>
                   <option value="Administrador">Administrador</option>
                 </select>
               </div>
-              <button type="submit" class="boton_guardar">Guardar en BD</button>
+
+              <button type="submit" class="boton_guardar">Guardar usuario</button>
             </div>
           </form>
         </div>
 
-        <!-- TABLA EN VIVO -->
         <div class="caja_vista">
           <div class="cabecera_vista">
-            <h2 class="titulo_vista">Usuarios Registrados en PostgreSQL</h2>
-            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;"
-              onclick="cargarUsuarios()">Refrescar</button>
+            <h2 class="titulo_vista">Usuarios registrados</h2>
+            <button class="boton_guardar" onclick="cargarUsuarios()">Refrescar</button>
           </div>
+
           <table>
             <thead>
               <tr>
@@ -320,50 +360,50 @@
               </tr>
             </thead>
             <tbody id="tabla_usuarios_body">
-              <tr>
-                <td colspan="5" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
-              </tr>
+              <tr><td colspan="5">Consultando usuarios...</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- SECCIÓN 2: ANUNCIOS REALES -->
-      <section id="modulo_anuncios" style="display: none;">
-        <!-- FORMULARIO PARA CREAR ANUNCIO EN PSQL -->
+      <!-- ANUNCIOS -->
+      <section id="modulo_anuncios" style="display:none;">
+
         <div class="caja_formulario">
-          <div class="titulo_form">📢 Publicar Nuevo Aviso en PostgreSQL</div>
+          <div class="titulo_form">📢 Publicar nuevo aviso</div>
+
           <form id="form_nuevo_anuncio" onsubmit="publicarAnuncio(event)">
-            <div class="fila_formulario" style="grid-template-columns: 1fr 2fr 140px 140px;">
+            <div class="fila_formulario">
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Título del aviso</label>
-                <input class="campo_input" type="text" id="anu_titulo" placeholder="Ej: Entrega de calificaciones"
-                  required>
+                <label class="etiqueta" for="anu_titulo">Título del aviso</label>
+                <input class="campo_input" type="text" id="anu_titulo" required>
               </div>
+
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Contenido</label>
-                <input class="campo_input" type="text" id="anu_contenido"
-                  placeholder="Instrucciones o detalles del aviso" required>
+                <label class="etiqueta" for="anu_contenido">Contenido</label>
+                <input class="campo_input" type="text" id="anu_contenido" required>
               </div>
+
               <div>
-                <label style="font-size: 11px; font-weight: 600; color: #64748b;">Prioridad</label>
+                <label class="etiqueta" for="anu_prioridad">Prioridad</label>
                 <select class="campo_input" id="anu_prioridad">
                   <option value="Informativo">Informativo</option>
                   <option value="Alta">Alta</option>
                   <option value="Urgente">Urgente</option>
                 </select>
               </div>
-              <button type="submit" class="boton_guardar">Publicar Aviso</button>
+
+              <button type="submit" class="boton_guardar">Publicar aviso</button>
             </div>
           </form>
         </div>
 
         <div class="caja_vista">
           <div class="cabecera_vista">
-            <h2 class="titulo_vista">Avisos Activos en PostgreSQL</h2>
-            <button class="boton_guardar" style="height: 32px; padding: 4px 12px;"
-              onclick="cargarAnuncios()">Refrescar</button>
+            <h2 class="titulo_vista">Avisos publicados</h2>
+            <button class="boton_guardar" onclick="cargarAnuncios()">Refrescar</button>
           </div>
+
           <table>
             <thead>
               <tr>
@@ -372,35 +412,35 @@
                 <th>Contenido</th>
                 <th>Prioridad</th>
                 <th>Autor</th>
-                <th>Fecha de Creación</th>
+                <th>Fecha</th>
               </tr>
             </thead>
             <tbody id="tabla_anuncios_body">
-              <tr>
-                <td colspan="6" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
-              </tr>
+              <tr><td colspan="6">Consultando anuncios...</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- SECCIÓN 3: DEPARTAMENTOS -->
-      <section id="modulo_departamentos" style="display: none;">
+      <!-- DEPARTAMENTOS -->
+      <section id="modulo_departamentos" style="display:none;">
         <div class="caja_vista">
-          <h2 class="titulo_vista" style="margin-bottom: 16px;">Departamentos de la Institución</h2>
+          <div class="cabecera_vista">
+            <h2 class="titulo_vista">Departamentos de la institución</h2>
+            <button class="boton_guardar" onclick="cargarDepartamentos()">Refrescar</button>
+          </div>
+
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Jefe a Cargo</th>
+                <th>Jefe a cargo</th>
               </tr>
             </thead>
             <tbody id="tabla_deptos_body">
-              <tr>
-                <td colspan="4" style="text-align: center; color: #64748b;">Consultando PostgreSQL...</td>
-              </tr>
+              <tr><td colspan="4">Consultando departamentos...</td></tr>
             </tbody>
           </table>
         </div>
@@ -411,8 +451,25 @@
   <script>
     const $ = id => document.getElementById(id);
 
-    // Carga inicial directa de PostgreSQL
+    // Recuperar usuario guardado desde login.html
+    let usuario = null;
+
+    try {
+      usuario = JSON.parse(localStorage.getItem('usuario_ocid'));
+    } catch (error) {
+      localStorage.removeItem('usuario_ocid');
+    }
+
+    // Evitar entrar si no hay usuario guardado
+    if (!usuario || !usuario.id) {
+      window.location.replace('login.html');
+    } else {
+      $('nombreUsuario').textContent = usuario.nombre || usuario.correo || 'Usuario';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      if (!usuario || !usuario.id) return;
+
       cargarUsuarios();
       cargarAnuncios();
       cargarDepartamentos();
@@ -421,45 +478,55 @@
     function mostrarMensaje(texto, esError = false) {
       const box = $('aviso_notificacion');
       box.textContent = texto;
-      box.className = 'alerta_mensaje ' + (esError ? 'alerta_error' : 'alerta_exito');
+      box.className = 'alerta_mensaje ' +
+        (esError ? 'alerta_error' : 'alerta_exito');
       box.style.display = 'block';
-      setTimeout(() => { box.style.display = 'none'; }, 4000);
+
+      setTimeout(() => {
+        box.style.display = 'none';
+      }, 4000);
     }
 
-    // 1. CARGAR USUARIOS REALES DE PSQL
+    // CARGAR USUARIOS
     async function cargarUsuarios() {
       try {
         const res = await fetch('https://ocid.onrender.com/usuarios');
         const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Error al cargar usuarios');
+
         const tbody = $('tabla_usuarios_body');
 
-        if (!data || data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No hay usuarios aún en PostgreSQL. Usa el formulario de arriba para agregar uno.</td></tr>';
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="5">No hay usuarios registrados.</td></tr>';
           $('conteo_usr').textContent = '0';
           return;
         }
 
         $('conteo_usr').textContent = data.length;
+
         tbody.innerHTML = data.map(u => `
           <tr>
-            <td><strong>#${u.id}</strong></td>
-            <td><strong style="color: #17365d;">${u.nombre}</strong></td>
-            <td>${u.correo}</td>
-            <td><span class="badge_tag">${u.rol || 'Docente'}</span></td>
-            <td>${u.departamento_nombre || 'General'}</td>
+            <td>#${u.id}</td>
+            <td>${escaparHTML(u.nombre)}</td>
+            <td>${escaparHTML(u.correo)}</td>
+            <td><span class="badge_tag">${escaparHTML(u.rol || 'Docente')}</span></td>
+            <td>${escaparHTML(u.departamento_nombre || 'General')}</td>
           </tr>
         `).join('');
       } catch (err) {
-        $('tabla_usuarios_body').innerHTML = `<tr><td colspan="5" style="color: #ef4444; text-align: center;">Error al conectar con PostgreSQL: ${err.message}</td></tr>`;
+        $('tabla_usuarios_body').innerHTML =
+          `<tr><td colspan="5">Error al cargar usuarios: ${escaparHTML(err.message)}</td></tr>`;
       }
     }
 
-    // REGISTRAR USUARIO REAL EN POSTGRESQL
+    // REGISTRAR USUARIO
     async function registrarUsuario(e) {
       e.preventDefault();
+
       const payload = {
-        nombre: $('usr_nombre').value,
-        correo: $('usr_correo').value,
+        nombre: $('usr_nombre').value.trim(),
+        correo: $('usr_correo').value.trim(),
         password: $('usr_pass').value,
         rol: $('usr_rol').value
       };
@@ -474,52 +541,76 @@
         const data = await res.json();
 
         if (res.ok && data.success) {
-          mostrarMensaje(`✅ Usuario "${payload.nombre}" guardado en PostgreSQL correctamente.`);
+          mostrarMensaje('Usuario guardado correctamente.');
           $('form_nuevo_usuario').reset();
-          cargarUsuarios(); // Se recarga en vivo de la BD
+          cargarUsuarios();
         } else {
-          mostrarMensaje(data.error || 'Error al guardar en PostgreSQL', true);
+          mostrarMensaje(data.error || 'Error al guardar usuario.', true);
         }
       } catch (err) {
-        mostrarMensaje('No se pudo conectar al servidor.', true);
+        mostrarMensaje('No se pudo conectar con el servidor.', true);
       }
     }
 
-    // 2. CARGAR Y REGISTRAR ANUNCIOS REALES
+    // CARGAR ANUNCIOS
     async function cargarAnuncios() {
       try {
         const res = await fetch('https://ocid.onrender.com/anuncios');
         const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Error al cargar anuncios');
+
         const tbody = $('tabla_anuncios_body');
 
-        if (!data || data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No hay avisos publicados en PostgreSQL.</td></tr>';
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="6">No hay avisos publicados.</td></tr>';
           $('conteo_anu').textContent = '0';
           return;
         }
 
         $('conteo_anu').textContent = data.length;
+
         tbody.innerHTML = data.map(a => `
           <tr>
-            <td><strong>#${a.id}</strong></td>
-            <td><strong style="color: #17365d;">${a.titulo}</strong></td>
-            <td>${a.contenido}</td>
-            <td><span class="badge_tag">${a.prioridad}</span></td>
-            <td>${a.autor_nombre || 'Administración'}</td>
-            <td style="color: #64748b; font-size: 11px;">${new Date(a.fecha).toLocaleString()}</td>
+            <td>#${a.id}</td>
+            <td>${escaparHTML(a.titulo)}</td>
+            <td>${escaparHTML(a.contenido)}</td>
+            <td><span class="badge_tag">${escaparHTML(a.prioridad || 'Informativo')}</span></td>
+            <td>${escaparHTML(a.autor_nombre || 'Administración')}</td>
+            <td>${a.fecha ? new Date(a.fecha).toLocaleString() : ''}</td>
           </tr>
         `).join('');
       } catch (err) {
-        $('tabla_anuncios_body').innerHTML = `<tr><td colspan="6" style="color: #ef4444; text-align: center;">Error al leer avisos: ${err.message}</td></tr>`;
+        $('tabla_anuncios_body').innerHTML =
+          `<tr><td colspan="6">Error al cargar anuncios: ${escaparHTML(err.message)}</td></tr>`;
       }
     }
 
+    // PUBLICAR ANUNCIO CON EL ID DEL USUARIO
     async function publicarAnuncio(e) {
       e.preventDefault();
+
+      let usuarioActual;
+
+      try {
+        usuarioActual = JSON.parse(localStorage.getItem('usuario_ocid'));
+      } catch (error) {
+        usuarioActual = null;
+      }
+
+      if (!usuarioActual || !usuarioActual.id) {
+        mostrarMensaje('Tu sesión no está disponible. Inicia sesión nuevamente.', true);
+        localStorage.removeItem('usuario_ocid');
+        window.location.href = 'login.html';
+        return;
+      }
+
       const payload = {
-        titulo: $('anu_titulo').value,
-        contenido: $('anu_contenido').value,
-        prioridad: $('anu_prioridad').value
+        titulo: $('anu_titulo').value.trim(),
+        contenido: $('anu_contenido').value.trim(),
+        prioridad: $('anu_prioridad').value,
+        autor_id: usuarioActual.id,
+        departamento_id: usuarioActual.departamento_id || null
       };
 
       try {
@@ -532,48 +623,78 @@
         const data = await res.json();
 
         if (res.ok && data.success) {
-          mostrarMensaje('✅ Aviso publicado en PostgreSQL y visible para todos.');
+          mostrarMensaje('Aviso publicado correctamente.');
           $('form_nuevo_anuncio').reset();
-          cargarAnuncios();
+          await cargarAnuncios();
         } else {
-          mostrarMensaje(data.error || 'Error al publicar aviso', true);
+          mostrarMensaje(data.error || 'No se pudo publicar el aviso.', true);
         }
       } catch (err) {
-        mostrarMensaje('Error de red al guardar aviso', true);
+        mostrarMensaje('Error de conexión al guardar el aviso.', true);
+        console.error(err);
       }
     }
 
-    // 3. CARGAR DEPARTAMENTOS
+    // CARGAR DEPARTAMENTOS
     async function cargarDepartamentos() {
       try {
         const res = await fetch('https://ocid.onrender.com/departamentos');
         const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || 'Error al cargar departamentos');
+
         const tbody = $('tabla_deptos_body');
 
-        if (!data || data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px;">No hay departamentos en la base de datos.</td></tr>';
+        if (!data.length) {
+          tbody.innerHTML = '<tr><td colspan="4">No hay departamentos registrados.</td></tr>';
           $('conteo_dep').textContent = '0';
           return;
         }
 
         $('conteo_dep').textContent = data.length;
+
         tbody.innerHTML = data.map(d => `
           <tr>
-            <td><strong>#${d.id}</strong></td>
-            <td><strong style="color: #17365d;">${d.nombre}</strong></td>
-            <td>${d.descripcion || 'Sin descripción'}</td>
-            <td>${d.nombre_jefe}</td>
+            <td>#${d.id}</td>
+            <td>${escaparHTML(d.nombre)}</td>
+            <td>${escaparHTML(d.descripcion || 'Sin descripción')}</td>
+            <td>${escaparHTML(d.nombre_jefe || 'Sin jefe asignado')}</td>
           </tr>
         `).join('');
-      } catch (_) { }
+      } catch (err) {
+        $('tabla_deptos_body').innerHTML =
+          `<tr><td colspan="4">Error al cargar departamentos: ${escaparHTML(err.message)}</td></tr>`;
+      }
     }
 
+    // CAMBIAR SECCIONES
     function mostrarSeccion(sec, btn) {
       $('modulo_usuarios').style.display = sec === 'usuarios' ? 'block' : 'none';
       $('modulo_anuncios').style.display = sec === 'anuncios' ? 'block' : 'none';
       $('modulo_departamentos').style.display = sec === 'departamentos' ? 'block' : 'none';
 
       document.querySelectorAll('.item_menu').forEach(b => b.classList.remove('activo'));
+
       if (btn) btn.classList.add('activo');
     }
+
+    // CERRAR SESIÓN
+    function cerrarSesion() {
+      localStorage.removeItem('usuario_ocid');
+      window.location.replace('login.html');
+    }
+
+    // Evitar insertar contenido recibido de la base de datos como HTML ejecutable
+    function escaparHTML(valor) {
+      return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[caracter]);
+    }
   </script>
+
+</body>
+</html>

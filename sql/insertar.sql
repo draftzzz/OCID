@@ -1,1 +1,1 @@
-select * from usuarios
+delete from usuarios where id = 4W;
