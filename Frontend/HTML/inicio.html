@@ -429,7 +429,7 @@
     // 1. CARGAR USUARIOS REALES DE PSQL
     async function cargarUsuarios() {
       try {
-        const res = await fetch('https://ocid.onrender.com/usuarios');
+        const res = await fetch('https://ocid.onrender.com/api/usuarios');
         const data = await res.json();
         const tbody = $('tabla_usuarios_body');
 
@@ -546,7 +546,7 @@
     // 3. CARGAR DEPARTAMENTOS
     async function cargarDepartamentos() {
       try {
-        const res = await fetch('https://ocid.onrender.com/departamentos');
+        const res = await fetch('https://ocid.onrender.com/api/departamentos');
         const data = await res.json();
         const tbody = $('tabla_deptos_body');
 
