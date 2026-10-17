@@ -1,90 +1,100 @@
 <!DOCTYPE html>
 
 <html lang="es-MX">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Registro - OCID</title>
-<link href="css/registro.css" rel="stylesheet"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Registro - OCID</title>
+    <link href="css/registro.css" rel="stylesheet" />
 </head>
+
 <body>
-<main class="contenedor_registro">
-<header class="cabecera_registro">
-<div class="icono_emblema">
-<svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28">
-<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-<circle cx="9" cy="7" r="4"></circle>
-<line x1="19" x2="19" y1="8" y2="14"></line>
-<line x1="22" x2="16" y1="11" y2="11"></line>
-</svg>
-</div>
-<span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
-<h1 class="titulo_registro">Crear Cuenta</h1>
-<p class="subtitulo_registro">Únete a la comunidad de OCID</p>
-</header>
-<section class="cuerpo_formulario">
-<!-- Contenedor integrado para avisos sin alert() -->
-<div class="mensaje_alerta" id="mensaje_estado" role="alert"></div>
-<form id="registro">
-<div class="grupo_campo">
-<label class="etiqueta_campo" for="nombre">Nombre Completo</label>
-<div class="contenedor_entrada">
-<span class="icono_campo">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-<circle cx="12" cy="7" r="4"></circle>
-</svg>
-</span>
-<input class="campo_texto" id="nombre" placeholder="Juan Pérez González" required="" type="text"/>
-</div>
-</div>
-<div class="grupo_campo">
-<label class="etiqueta_campo" for="email">Correo Electrónico</label>
-<div class="contenedor_entrada">
-<span class="icono_campo">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<circle cx="12" cy="12" r="4"></circle>
-<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
-</svg>
-</span>
-<input class="campo_texto" id="email" placeholder="correo@ejemplo.com" required="" type="email"/>
-</div>
-</div>
-<div class="grupo_campo">
-<label class="etiqueta_campo" for="contrasena">Contraseña</label>
-<div class="contenedor_entrada">
-<span class="icono_campo">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
-<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-</svg>
-</span>
-<input class="campo_texto" id="contrasena" minlength="6" placeholder="••••••••" required="" type="password"/>
-<button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-<circle cx="12" cy="12" r="3"></circle>
-</svg>
-</button>
-</div>
-</div>
-<button class="boton_enviar" id="registerBtn" type="submit">
-<span>Registrarse</span>
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<line x1="5" x2="19" y1="12" y2="12"></line>
-<polyline points="12 5 19 12 12 19"></polyline>
-</svg>
-</button>
-</form>
-</section>
-<footer class="pie_formulario">
-<p>¿Ya tienes una cuenta? <a class="enlace_login" href="login.html">Inicia sesión aquí</a></p>
-</footer>
-</main>
-<footer class="pie_global">
+    <main class="contenedor_registro">
+        <header class="cabecera_registro">
+            <div class="icono_emblema">
+                <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" viewbox="0 0 24 24" width="28">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <line x1="19" x2="19" y1="8" y2="14"></line>
+                    <line x1="22" x2="16" y1="11" y2="11"></line>
+                </svg>
+            </div>
+            <span class="insignia_oficial">PORTAL DOCENTE OFICIAL</span>
+            <h1 class="titulo_registro">Crear Cuenta</h1>
+            <p class="subtitulo_registro">Únete a la comunidad de OCID</p>
+        </header>
+        <section class="cuerpo_formulario">
+            <!-- Contenedor integrado para avisos sin alert() -->
+            <div class="mensaje_alerta" id="mensaje_estado" role="alert"></div>
+            <form id="registro">
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="nombre">Nombre Completo</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
+                                width="18">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </span>
+                        <input class="campo_texto" id="nombre" placeholder="Juan Pérez González" required=""
+                            type="text" />
+                    </div>
+                </div>
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="email">Correo Electrónico</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
+                                width="18">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"></path>
+                            </svg>
+                        </span>
+                        <input class="campo_texto" id="email" placeholder="correo@ejemplo.com" required=""
+                            type="email" />
+                    </div>
+                </div>
+                <div class="grupo_campo">
+                    <label class="etiqueta_campo" for="contrasena">Contraseña</label>
+                    <div class="contenedor_entrada">
+                        <span class="icono_campo">
+                            <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
+                                width="18">
+                                <rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </span>
+                        <input class="campo_texto" id="contrasena" minlength="6" placeholder="••••••••" required=""
+                            type="password" />
+                        <button class="boton_ver_clave" id="boton_clave" title="Mostrar contraseña" type="button">
+                            <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
+                                width="18">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button class="boton_enviar" id="registerBtn" type="submit">
+                    <span>Registrarse</span>
+                    <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
+                        <line x1="5" x2="19" y1="12" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </form>
+        </section>
+        <footer class="pie_formulario">
+            <p>¿Ya tienes una cuenta? <a class="enlace_login" href="login.html">Inicia sesión aquí</a></p>
+        </footer>
+    </main>
+    <footer class="pie_global">
         OCID • Organización y Comunicación Interna para Docentes
     </footer>
-<script>
+    <script>
         const $ = id => document.getElementById(id);
 
         // Alternar visualización de clave
@@ -96,7 +106,7 @@
         // Envío con validación de correo registrado y silencio en fallos de red
         $('registro').onsubmit = async e => {
             e.preventDefault();
-            
+
             const alerta = $('mensaje_estado');
             alerta.style.display = 'none';
 
@@ -128,17 +138,17 @@
                 try {
                     const d = JSON.parse(respuestaTexto);
                     mensajeError = ((d.error || d.message || '') + ' ' + respuestaTexto).toLowerCase();
-                } catch (_) {}
+                } catch (_) { }
 
-                const esCorreoDuplicado = 
-                    res.status === 409 || 
+                const esCorreoDuplicado =
+                    res.status === 409 ||
                     res.status === 500 ||
-                    mensajeError.includes('correo') || 
-                    mensajeError.includes('email') || 
-                    mensajeError.includes('registrado') || 
-                    mensajeError.includes('existe') || 
-                    mensajeError.includes('duplicate') || 
-                    mensajeError.includes('unique') || 
+                    mensajeError.includes('correo') ||
+                    mensajeError.includes('email') ||
+                    mensajeError.includes('registrado') ||
+                    mensajeError.includes('existe') ||
+                    mensajeError.includes('duplicate') ||
+                    mensajeError.includes('unique') ||
                     mensajeError.includes('dup_entry');
 
                 if (esCorreoDuplicado) {
@@ -154,5 +164,5 @@
         };
     </script>
 </body>
-</html>
 
+</html>

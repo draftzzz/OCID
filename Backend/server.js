@@ -19,7 +19,7 @@ app.use(express.static('public'));
 const pool = new Pool({
   connectionString:
     process.env.DATABASE_URL ||
-    'postgresql://postgres:postgres@localhost:5432/ocid_db',
+    'postgresql://ocid_owner:npg_y8LEnM1BgzRk@ep-odd-mud-b4zxsswg-pooler.c-6.us-east-2.aws.neon.tech/ocid?sslmode=require&channel_binding=require',
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
