@@ -17,10 +17,14 @@ app.use(express.static('public'));
 
 // Conexión PostgreSQL (pon tu DATABASE_URL en tu archivo .env o usa esta)
 const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    'postgresql://ocid_owner:npg_y8LEnM1BgzRk@ep-odd-mud-b4zxsswg-pooler.c-6.us-east-2.aws.neon.tech/ocid?sslmode=require&channel_binding=require',
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+pool.on('error', (err) => {
+  console.error('Error inesperado en PostgreSQL:', err.message);
 });
 
 // Probar conexión a Postgres al arrancar
