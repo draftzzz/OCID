@@ -465,7 +465,7 @@
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/usuarios', {
+        const res = await fetch('https://ocid.onrender.com/api/usuarios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -488,7 +488,7 @@
     // 2. CARGAR Y REGISTRAR ANUNCIOS REALES
     async function cargarAnuncios() {
       try {
-        const res = await fetch('https://ocid.onrender.com/anuncios');
+        const res = await fetch('https://ocid.onrender.com/api/anuncios');
         const data = await res.json();
         const tbody = $('tabla_anuncios_body');
 
@@ -523,7 +523,7 @@
       };
 
       try {
-        const res = await fetch('https://ocid.onrender.com/anuncios', {
+        const res = await fetch('https://ocid.onrender.com/api/anuncios', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
