@@ -150,10 +150,12 @@
     }
 
     textarea.campo_input {
-      resize: vertical;
+      resize: none;
       min-height: 40px;
     }
-
+    textarea {
+      width: 400px;
+    }
     .boton_guardar {
       border: none;
       border-radius: 6px;
@@ -501,8 +503,7 @@
 
               <div>
                 <label class="etiqueta" for="anu_contenido">Contenido</label>
-                <textarea class="campo_input" id="anu_contenido"
-                  rows="2" required></textarea>
+                <textarea class="campo_input" id="anu_contenido" required></textarea>
               </div>
 
               <div>
