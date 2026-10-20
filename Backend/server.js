@@ -125,7 +125,7 @@ app.get('/usuarios', async (req, res) => {
 });
 
 // REGISTRAR USUARIO
-app.post('/usuarios', async (req, res) => {
+app.post('/registro', async (req, res) => {
   const { nombre, correo, password, rol } = req.body;
 
   if (!nombre || !correo || !password) {

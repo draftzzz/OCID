@@ -1,1 +1,1 @@
-select * from anuncios
+select * from usuarios
