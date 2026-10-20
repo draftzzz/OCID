@@ -96,7 +96,7 @@ app.post('/login', async (req, res) => {
 });
 
 // OBTENER USUARIOS
-app.get('/usuarios', async (req, res) => {
+app.get('/login', async (req, res) => {
   try {
     const resultado = await pool.query(
       `SELECT
@@ -176,7 +176,7 @@ app.post('/registro', async (req, res) => {
 });
 
 // ELIMINAR USUARIO
-app.delete('/usuarios/:id', async (req, res) => {
+app.delete('/login/:id', async (req, res) => {
   const id = Number(req.params.id);
 
   if (!Number.isInteger(id) || id <= 0) {
