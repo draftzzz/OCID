@@ -13,7 +13,7 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="test2.css">
+    <link rel="stylesheet" href="../test/test2.css">
 </head>
 
 <body>
@@ -39,10 +39,10 @@
                 <i class="fa-solid fa-building-user icono_nav"></i>
                 <span>Mi Departamento</span>
             </a>
-            <a class="enlace_navegacion" href="#anuncios" id="nav_anuncios">
+            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
                 <i class="fa-solid fa-bullhorn icono_nav"></i>
                 <span>Anuncios</span>
-                <span class="insignia_notificacion" id="badge_conteo_anuncios">0</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">—</span>
             </a>
             <a class="enlace_navegacion" href="#archivos" id="nav_archivos">
                 <i class="fa-regular fa-folder-open icono_nav"></i>
@@ -94,14 +94,14 @@
                     onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
                     title="Notificaciones del sistema">
                     <i class="fa-regular fa-bell"></i>
-                    <span class="punto_notificacion" id="indicador_notificaciones">0</span>
+                    <span class="punto_notificacion" id="indicador_notificaciones">—</span>
                 </button>
                 <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
                     <div class="avatar_usuario" id="avatar_usuario_circulo">
                         <i class="fa-regular fa-user"></i>
                     </div>
                     <div class="detalles_usuario">
-                        <strong id="nombreUsuario" style="color: white;">Cargando...</strong>
+                        <strong id="nombreUsuario" style="color: white;">Usuario</strong>
                         <span class="rol_usuario_texto" id="etiqueta_rol_usuario"></span>
                     </div>
                     <i class="fa-solid fa-chevron-down icono_dropdown"></i>
@@ -113,7 +113,7 @@
             <!-- Fila de Saludo y Selector de Departamento -->
             <section aria-label="Bienvenida al usuario" class="fila_bienvenida">
                 <div>
-                    <h1 class="saludo_titulo" id="texto_bienvenida_saludo">¡Bienvenido!</h1>
+                    <h1 class="saludo_titulo" id="texto_bienvenida_saludo">¡Hola, Usuario!</h1>
                     <p class="saludo_subtitulo">Bienvenido al sistema de coordinación del CBTIS 258.</p>
                 </div>
                 <div class="tarjeta_departamento_actual" onclick="cargarDepartamentos()" title="Departamento asignado">
@@ -137,8 +137,8 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Avisos nuevos</span>
-                        <span class="valor_metrica" id="conteo_anu">0</span>
-                        <a class="enlace_metrica enlace_metrica_azul" href="#anuncios" onclick="cargarAnuncios()">
+                        <span class="valor_metrica" id="conteo_anu">—</span>
+                        <a class="enlace_metrica enlace_metrica_azul" href="anuncios.html">
                             Ver todos <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Archivos disponibles</span>
-                        <span class="valor_metrica" id="conteo_dep">0</span>
+                        <span class="valor_metrica" id="conteo_dep">—</span>
                         <a class="enlace_metrica enlace_metrica_verde" href="#archivos">
                             Ver archivos <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Docentes en el área</span>
-                        <span class="valor_metrica" id="conteo_usr">0</span>
+                        <span class="valor_metrica" id="conteo_usr">—</span>
                         <a class="enlace_metrica enlace_metrica_morada" href="#docentes" onclick="abrirModalDocentes()">
                             Ver miembros <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -431,7 +431,7 @@
     </div>
     <!-- END: ModalsSection -->
     <!-- BEGIN: LogicScript -->
-    <script src="test2.js" defer></script>
+    <script src="panel_ocid.js" defer></script>
     <!-- END: LogicScript -->
 </body>
 
