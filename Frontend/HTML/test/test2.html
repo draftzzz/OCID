@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CBTIS 258 - Plataforma de Coordinación Escolar</title>
+    <!-- Estilos de Iconografía FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Fuente Inter -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="test2.css">
+</head>
+
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">CBTIS 258</div>
+                <div class="texto_logo_subtitulo">Plataforma de Coordinación Escolar</div>
+            </div>
+        </div>
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion activo" href="#inicio" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion" href="#mi_departamento" id="nav_departamento" onclick="cargarDepartamentos()">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion" href="#anuncios" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">0</span>
+            </a>
+            <a class="enlace_navegacion" href="#archivos" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="#docentes" id="nav_docentes" onclick="abrirModalDocentes()">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="#calendario" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="#asistente" id="nav_asistente" onclick="abrirModalIA()">
+                <i class="fa-solid fa-wand-magic-sparkles icono_nav"></i>
+                <span>Asistente IA</span>
+                <span class="insignia_nuevo">Nuevo</span>
+            </a>
+            <a class="enlace_navegacion" href="#configuracion" id="nav_configuracion">
+                <i class="fa-solid fa-gear icono_nav"></i>
+                <span>Configuración</span>
+            </a>
+        </nav>
+        <!-- Pie del Sidebar con Salida de Sesión -->
+        <div class="pie_lateral">
+            <button class="boton_cerrar_sesion" id="boton_cerrar_sesion" onclick="cerrarSesion()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+    <!-- END: Sidebar -->
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior -->
+        <header class="barra_superior">
+            <div class="seccion_superior_izquierda">
+                <button class="boton_menu_hamburguesa" title="Alternar menú">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" oninput="filtrarAnunciosEnTiempoReal()"
+                        placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones"
+                    onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
+                    title="Notificaciones del sistema">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">0</span>
+                </button>
+                <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong id="nombreUsuario" style="color: white;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario"></span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+        <!-- Cuerpo Central del Dashboard -->
+        <div class="cuerpo_dashboard">
+            <!-- Fila de Saludo y Selector de Departamento -->
+            <section aria-label="Bienvenida al usuario" class="fila_bienvenida">
+                <div>
+                    <h1 class="saludo_titulo" id="texto_bienvenida_saludo">¡Bienvenido!</h1>
+                    <p class="saludo_subtitulo">Bienvenido al sistema de coordinación del CBTIS 258.</p>
+                </div>
+                <div class="tarjeta_departamento_actual" onclick="cargarDepartamentos()" title="Departamento asignado">
+                    <div class="icono_birrete_contenedor">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div class="etiqueta_departamento">Tu departamento:</div>
+                        <div class="nombre_departamento_texto" id="etiqueta_nombre_departamento">
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="color: #94a3b8; font-size: 12px; margin-left: 6px;"></i>
+                </div>
+            </section>
+            <!-- Fila de 4 Métricas Dinámicas -->
+            <section aria-label="Métricas Principales" class="grid_metricas">
+                <!-- 1. Avisos Nuevos -->
+                <div class="tarjeta_metrica tarjeta_metrica_azul">
+                    <div class="icono_metrica_contenedor icono_metrica_azul">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div class="cuerpo_metrica">
+                        <span class="titulo_metrica">Avisos nuevos</span>
+                        <span class="valor_metrica" id="conteo_anu">0</span>
+                        <a class="enlace_metrica enlace_metrica_azul" href="#anuncios" onclick="cargarAnuncios()">
+                            Ver todos <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 2. Archivos Disponibles -->
+                <div class="tarjeta_metrica tarjeta_metrica_verde">
+                    <div class="icono_metrica_contenedor icono_metrica_verde">
+                        <i class="fa-regular fa-folder"></i>
+                    </div>
+                    <div class="cuerpo_metrica">
+                        <span class="titulo_metrica">Archivos disponibles</span>
+                        <span class="valor_metrica" id="conteo_dep">0</span>
+                        <a class="enlace_metrica enlace_metrica_verde" href="#archivos">
+                            Ver archivos <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 3. Docentes en el Área -->
+                <div class="tarjeta_metrica tarjeta_metrica_morada">
+                    <div class="icono_metrica_contenedor icono_metrica_morada">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                    <div class="cuerpo_metrica">
+                        <span class="titulo_metrica">Docentes en el área</span>
+                        <span class="valor_metrica" id="conteo_usr">0</span>
+                        <a class="enlace_metrica enlace_metrica_morada" href="#docentes" onclick="abrirModalDocentes()">
+                            Ver miembros <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 4. Próximos Eventos -->
+                <div class="tarjeta_metrica tarjeta_metrica_naranja">
+                    <div class="icono_metrica_contenedor icono_metrica_naranja">
+                        <i class="fa-regular fa-calendar-check"></i>
+                    </div>
+                    <div class="cuerpo_metrica">
+                        <span class="titulo_metrica">Próximos eventos</span>
+                        <span class="valor_metrica" id="metrica_conteo_eventos">—</span>
+                        <a class="enlace_metrica enlace_metrica_naranja" href="#calendario">
+                            Ver calendario <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <!-- Fila de Contenido Dividida en 3 Columnas -->
+            <section class="seccion_inferior_columnas">
+                <!-- Columna 1: Últimos Anuncios -->
+                <article class="bloque_blanco_anuncios">
+                    <div class="encabezado_bloque_anuncios">
+                        <h2 class="titulo_bloque">Últimos anuncios</h2>
+                        <a class="enlace_ver_todos" href="#ver_todos" onclick="cargarAnuncios()">
+                            Ver todos <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="lista_tarjetas_anuncios" id="contenedor_lista_anuncios">
+                        <p class="texto_vacio">Cargando anuncios...</p>
+                    </div>
+                </article>
+                <!-- Columna 2: Acceso Rápido -->
+                <article class="bloque_blanco_acciones">
+                    <h2 class="titulo_bloque">Acceso rápido</h2>
+                    <div class="contenedor_botones_acciones">
+                        <button class="boton_accion_rapida boton_azul_morado" onclick="abrirModalCrearAnuncio()">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span>Crear anuncio</span>
+                        </button>
+                        <button class="boton_accion_rapida boton_azul_cian" onclick="abrirModalSubirArchivo()">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Subir archivo</span>
+                        </button>
+                        <button class="boton_accion_rapida boton_verde_esmeralda" onclick="abrirModalDocentes()">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Ver docentes</span>
+                        </button>
+                        <button class="boton_accion_rapida boton_oscuro" onclick="abrirModalIA()">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Preguntar a la IA</span>
+                        </button>
+                    </div>
+                </article>
+                <!-- Columna 3: Tarjeta Plantel CBTIS 258 -->
+                <aside class="tarjeta_plantel_imagen">
+                    <div class="contenedor_foto_plantel">
+                        <!-- Imagen real o placeholder representativo de la fachada escolar -->
+                        <img alt="Instalaciones del CBTIS 258" class="foto_fachada_plantel"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLDWU3ao2NSFjR8Kh0YGZTGNDC1hyMvENcInWMURUILpfbawK697UOD7xOPNpJ3ujXnQ_7f6g9dRmR_qpww1ZhS97vfqBDuh0wYSXMMtmaWDcFA5xqPPTWAgjPB2_h3TODZPANEtCX8RptUbVn7m5SUywfMZuP5e7Y_jY0HNW0rDq3NDhiWhkePxtI59lHOCmjSnVn5PbK5R-3yBjl47zodfgJKIhEJk5sJbMxWiQXN_IQpuuwOom1FA" />
+                        <div class="capa_gradiente_plantel">
+                            <div class="titulo_plantel_superpuesto">CBTIS 258</div>
+                            <div class="lema_plantel_superpuesto">"Una mejor organización, una mejor comunicación."
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </div>
+    </main>
+    <!-- END: MainContentArea -->
+    <!-- BEGIN: ModalsSection -->
+    <!-- Modal: Crear Anuncio -->
+    <div class="fondo_modal_oscuro" id="modal_nuevo_anuncio">
+        <div class="caja_modal">
+            <div class="encabezado_modal">
+                <div class="titulo_modal">
+                    <i class="fa-solid fa-bullhorn" style="color: #4f46e5;"></i>
+                    <span>Publicar Nuevo Anuncio</span>
+                </div>
+                <button class="boton_cerrar_modal" onclick="cerrarModal('modal_nuevo_anuncio')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="formulario_crear_anuncio" onsubmit="publicarAnuncio(event)">
+                <div class="cuerpo_modal">
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Título del anuncio</label>
+                        <input class="campo_formulario" id="campo_titulo_anuncio"
+                            placeholder="Ej. Entrega de actas finales..." required="" type="text" />
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Tipo de prioridad</label>
+                        <select class="campo_formulario" id="campo_prioridad_anuncio">
+                            <option value="Importante">Importante</option>
+                            <option selected="" value="Aviso">Aviso</option>
+                            <option value="General">General / Informativo</option>
+                        </select>
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Contenido / Detalles</label>
+                        <textarea class="campo_formulario" id="campo_contenido_anuncio"
+                            placeholder="Escribe el cuerpo del aviso..." required="" rows="3"></textarea>
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Departamento Asignado</label>
+                        <select class="campo_formulario" id="campo_departamento_anuncio" required><option value="">Cargando departamentos...</option></select>
+                    </div>
+                </div>
+                <div class="pie_modal">
+                    <button class="boton_cancelar_modal" onclick="cerrarModal('modal_nuevo_anuncio')"
+                        type="button">Cancelar</button>
+                    <button class="boton_guardar_modal" id="btn_guardar_anuncio" type="submit">
+                        <i class="fa-solid fa-paper-plane"></i> Publicar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal: Subir Archivo -->
+    <div class="fondo_modal_oscuro" id="modal_subir_archivo">
+        <div class="caja_modal">
+            <div class="encabezado_modal">
+                <div class="titulo_modal">
+                    <i class="fa-solid fa-cloud-arrow-up" style="color: #0284c7;"></i>
+                    <span>Subir Archivo al Departamento</span>
+                </div>
+                <button class="boton_cerrar_modal" onclick="cerrarModal('modal_subir_archivo')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="cuerpo_modal">
+                <div class="grupo_formulario">
+                    <label class="etiqueta_formulario">Nombre del documento</label>
+                    <input class="campo_formulario" id="campo_nombre_archivo"
+                        placeholder="Ej. Formato_Reinscripcion_2026.pdf" type="text" />
+                </div>
+                <div class="grupo_formulario">
+                    <label class="etiqueta_formulario">Seleccionar archivo</label>
+                    <input class="campo_formulario" id="campo_input_file" type="file" />
+                </div>
+            </div>
+            <div class="pie_modal">
+                <button class="boton_cancelar_modal" onclick="cerrarModal('modal_subir_archivo')"
+                    type="button">Cancelar</button>
+                <button class="boton_guardar_modal" onclick="confirmarSubidaArchivo()"
+                    style="background-color: #0284c7;" type="button">
+                    <i class="fa-solid fa-upload"></i> Subir
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal: Asistente IA -->
+    <div class="fondo_modal_oscuro" id="modal_asistente_ia">
+        <div class="caja_modal" style="max-width: 580px;">
+            <div class="encabezado_modal">
+                <div class="titulo_modal">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="color: #6366f1;"></i>
+                    <span>Asistente Inteligente CBTIS 258</span>
+                </div>
+                <button class="boton_cerrar_modal" onclick="cerrarModal('modal_asistente_ia')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="cuerpo_modal">
+                <div class="caja_chat_ia" id="contenedor_chat_ia">
+                    <div class="burbuja_ia_respuesta">
+                        ¡Hola! Soy tu asistente virtual del CBTIS 258. ¿En qué información sobre trámites, avisos o
+                        docentes puedo colaborarte hoy?
+                    </div>
+                </div>
+                <div class="fila_input_ia">
+                    <input class="campo_formulario" id="campo_pregunta_ia"
+                        onkeydown="if(event.key === 'Enter') enviarPreguntaIA()"
+                        placeholder="Escribe tu consulta escolar..." type="text" />
+                    <button class="boton_guardar_modal" onclick="enviarPreguntaIA()"
+                        style="background-color: #4f46e5; border-radius: 9px;">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal: Autenticación / Cambio de Usuario -->
+    <div class="fondo_modal_oscuro" id="modal_login_sesion">
+        <div class="caja_modal" style="max-width: 440px;">
+            <div class="encabezado_modal">
+                <div class="titulo_modal">
+                    <i class="fa-solid fa-id-card" style="color: #2563eb;"></i>
+                    <span>Iniciar Sesión en el Plantel</span>
+                </div>
+                <button class="boton_cerrar_modal" onclick="cerrarModal('modal_login_sesion')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="formulario_autenticacion" onsubmit="ejecutarAutenticacion(event)">
+                <div class="cuerpo_modal">
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Correo Electrónico Institucional</label>
+                        <input class="campo_formulario" id="campo_login_correo" required="" type="email" />
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Contraseña</label>
+                        <input class="campo_formulario" id="campo_login_password" required="" type="password" />
+                    </div>
+                </div>
+                <div class="pie_modal">
+                    <button class="boton_cancelar_modal" onclick="cerrarModal('modal_login_sesion')"
+                        type="button">Cancelar</button>
+                    <button class="boton_guardar_modal" type="submit">
+                        <i class="fa-solid fa-right-to-bracket"></i> Acceder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal: Gestión de Docentes / Registro -->
+    <div class="fondo_modal_oscuro" id="modal_gestion_docentes">
+        <div class="caja_modal" style="max-width: 520px;">
+            <div class="encabezado_modal">
+                <div class="titulo_modal">
+                    <i class="fa-solid fa-users-gear" style="color: #7c3aed;"></i>
+                    <span>Gestión de Docentes y Personal</span>
+                </div>
+                <button class="boton_cerrar_modal" onclick="cerrarModal('modal_gestion_docentes')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="formulario_nuevo_docente" onsubmit="registrarUsuario(event)">
+                <div class="cuerpo_modal">
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Nombre Completo</label>
+                        <input class="campo_formulario" id="campo_docente_nombre"
+                            placeholder="Ej. Prof. Roberto Morales" required="" type="text" />
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Correo Institucional</label>
+                        <input class="campo_formulario" id="campo_docente_correo" placeholder="profesor@cbtis258.edu.mx"
+                            required="" type="email" />
+                    </div>
+                    <div class="grupo_formulario">
+                        <label class="etiqueta_formulario">Rol / Asignación</label>
+                        <select class="campo_formulario" id="campo_docente_rol">
+                            <option value="Docente">Docente Titular</option>
+                            <option value="Coordinador">Coordinador</option>
+                            <option value="Administrativo">Personal Administrativo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="pie_modal">
+                    <button class="boton_cancelar_modal" onclick="cerrarModal('modal_gestion_docentes')"
+                        type="button">Cerrar</button>
+                    <button class="boton_guardar_modal" style="background-color: #7c3aed;" type="submit">
+                        <i class="fa-solid fa-user-plus"></i> Registrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Contenedor Toast Notificador solicitado id: aviso_notificacion -->
+    <div class="toast_alerta" id="aviso_notificacion">
+        <i class="fa-solid fa-circle-check" id="icono_aviso_notificacion" style="color: #22c55e;"></i>
+        <span id="texto_aviso_notificacion">Operación ejecutada con éxito</span>
+    </div>
+    <!-- END: ModalsSection -->
+    <!-- BEGIN: LogicScript -->
+    <script src="test2.js" defer></script>
+    <!-- END: LogicScript -->
+</body>
+
+</html>
