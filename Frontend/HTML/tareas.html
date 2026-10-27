@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tareas - CBTIS 258</title>
+
+<!-- BEGIN: Estilos Generales y Reseteo -->
+
+<!-- END: Estilos Generales y Reseteo -->
+<!-- BEGIN: Estilos de Disposición Principal -->
+
+<!-- END: Estilos de Disposición Principal -->
+<!-- BEGIN: Estilos de la Barra Lateral -->
+
+<!-- END: Estilos de la Barra Lateral -->
+<!-- BEGIN: Estilos de la Barra Superior -->
+
+<!-- END: Estilos de la Barra Superior -->
+<!-- BEGIN: Estilos de Contenido y Tabla -->
+
+<!-- END: Estilos de Contenido y Tabla -->
+<!-- BEGIN: Estilos del Modal -->
+
+<!-- END: Estilos del Modal -->
+
+
+<link rel="stylesheet" href="css/tareas.css"/>
+</head>
+<body>
+<!-- BEGIN: ContenedorPrincipal -->
+<div class="contenedor_principal" data-purpose="contenedor_general">
+<!-- BEGIN: BarraLateral -->
+<aside class="barra_lateral" data-purpose="barra_lateral_navegacion">
+<!-- Identidad Escolar CBTIS 258 -->
+<div class="bloque_logotipo">
+<div class="icono_escudo">
+<!-- Escudo representativo -->
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+</div>
+<div class="info_logotipo">
+<span class="texto_logotipo_titulo">CBTIS 258</span>
+<span class="texto_logotipo_subtitulo">Plataforma de Coordinación Escolar</span>
+</div>
+</div>
+<!-- Menú Lateral -->
+<nav aria-label="Navegación principal" class="menu_navegacion">
+<a class="item_menu" href="inicio.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+</span>
+<span>Inicio</span>
+</a>
+<a class="item_menu" href="mi-departamento.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<rect height="14" rx="2" ry="2" width="20" x="2" y="7"></rect>
+<path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+</svg>
+</span>
+<span>Mi Departamento</span>
+</a>
+<a class="item_menu" href="anuncios.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+</svg>
+</span>
+<span>Anuncios</span>
+</a>
+<a class="item_menu" href="archivos.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+</svg>
+</span>
+<span>Archivos</span>
+</a>
+<a class="item_menu" href="docentes.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+<circle cx="9" cy="7" r="4"></circle>
+<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+</svg>
+</span>
+<span>Docentes</span>
+</a>
+<a class="item_menu" href="calendario.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect>
+<line x1="16" x2="16" y1="2" y2="6"></line>
+<line x1="8" x2="8" y1="2" y2="6"></line>
+<line x1="3" x2="21" y1="10" y2="10"></line>
+</svg>
+</span>
+<span>Calendario</span>
+</a>
+<!-- Opción Activa: Tareas -->
+<a class="item_menu item_menu_activo" href="tareas.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M9 11l3 3L22 4"></path>
+<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+</svg>
+</span>
+<span>Tareas</span>
+</a>
+<a class="item_menu" href="notificaciones.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+</svg>
+</span>
+<span>Notificaciones</span>
+<span class="etiqueta_notificaciones">3</span>
+</a>
+<a class="item_menu" href="configuracion.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+<circle cx="12" cy="7" r="4"></circle>
+</svg>
+</span>
+<span>Mi perfil</span>
+</a>
+</nav>
+<!-- Pie de Navegación -->
+<div class="pie_barra_lateral">
+<a class="item_menu" href="#">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+<polyline points="16 17 21 12 16 7"></polyline>
+<line x1="21" x2="9" y1="12" y2="12"></line>
+</svg>
+</span>
+<span>Cerrar sesión</span>
+</a>
+</div>
+</aside>
+<!-- END: BarraLateral -->
+<!-- BEGIN: AreaDerecha -->
+<div class="area_derecha">
+<!-- BEGIN: BarraSuperior -->
+<header class="barra_superior" data-purpose="barra_superior_navegacion">
+<!-- Buscador superior -->
+<div class="contenedor_buscador_superior">
+<span class="icono_buscador_superior">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+</span>
+<input class="campo_buscador_superior" placeholder="Buscar..." type="text"/>
+</div>
+<!-- Acciones del Usuario -->
+<div class="bloque_usuario_superior">
+<!-- Campana de Notificación -->
+<button aria-label="Notificaciones" class="boton_campana">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+</svg>
+<span class="punto_notificacion"></span>
+</button>
+<!-- Avatar y Nombre -->
+<div class="perfil_cabecera">
+<div class="avatar_perfil">CR</div>
+<div class="datos_perfil">
+<span class="nombre_perfil">Carlos Ramírez</span>
+<span class="cargo_perfil">Jefe de Departamento</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: BarraSuperior -->
+<!-- BEGIN: ContenidoPrincipal -->
+<main class="contenido_principal" data-purpose="vista_tareas">
+<!-- Encabezado de la página -->
+<div class="fila_titulo_accion">
+<div>
+<h1 class="titulo_pagina">Tareas</h1>
+<p class="subtitulo_pagina">Administra y da seguimiento a las tareas asignadas.</p>
+</div>
+<button class="boton_nueva_tarea" id="boton_abrir_modal">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="16">
+<line x1="12" x2="12" y1="5" y2="19"></line>
+<line x1="5" x2="19" y1="12" y2="12"></line>
+</svg>
+<span>+ Nueva tarea</span>
+</button>
+</div>
+<!-- Filtros de búsqueda -->
+<section class="tarjeta_filtros" data-purpose="filtros_busqueda">
+<div class="grupo_buscador_tabla">
+<span class="icono_buscador_tabla">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+</span>
+<input class="campo_buscador_tabla" id="campo_filtro_texto" placeholder="Buscar por título..." type="text"/>
+</div>
+<select class="select_filtro" id="filtro_departamento">
+<option value="todos">Todos los departamentos</option>
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Orientación">Orientación</option>
+</select>
+<select class="select_filtro" id="filtro_estado">
+<option value="todos">Todos los estados</option>
+<option value="Pendiente">Pendiente</option>
+<option value="En proceso">En proceso</option>
+<option value="Completado">Completado</option>
+</select>
+</section>
+<!-- Tarjeta de la Tabla -->
+<section class="tarjeta_tabla" data-purpose="tabla_de_datos">
+<table class="tabla_tareas">
+<thead>
+<tr>
+<th>Título</th>
+<th>Descripción</th>
+<th>Asignado a</th>
+<th>Departamento</th>
+<th>Fecha límite</th>
+<th>Estado</th>
+<th data-estilo-pagina="estilo-1">Acciones</th>
+</tr>
+</thead>
+<tbody id="cuerpo_tabla_tareas">
+<!-- Fila 1 -->
+<tr data-departamento="Servicios Escolares" data-estado="Pendiente" data-titulo="Revisar formatos">
+<td class="texto_titulo_tarea">Revisar formatos</td>
+<td class="texto_descripcion_tarea">Revisar y actualizar formatos de control escolar.</td>
+<td>Luis Mendoza Ruiz</td>
+<td>Servicios Escolares</td>
+<td>15/09/2026</td>
+<td><span class="badge_estado estado_pendiente">Pendiente</span></td>
+<td class="columna_acciones">
+<button class="boton_tres_puntos" data-evento-pagina="evento-1">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="1"></circle>
+<circle cx="12" cy="5" r="1"></circle>
+<circle cx="12" cy="19" r="1"></circle>
+</svg>
+</button>
+<div class="menu_flotante_acciones" id="menu_acciones_1">
+<button class="opcion_accion" data-evento-pagina="evento-2">En proceso</button>
+<button class="opcion_accion" data-evento-pagina="evento-3">Completado</button>
+<button class="opcion_accion opcion_eliminar" data-evento-pagina="evento-4">Eliminar</button>
+</div>
+</td>
+</tr>
+<!-- Fila 2 -->
+<tr data-departamento="Control Escolar" data-estado="En proceso" data-titulo="Captura de datos">
+<td class="texto_titulo_tarea">Captura de datos</td>
+<td class="texto_descripcion_tarea">Capturar información de alumnos.</td>
+<td>María Torres Silva</td>
+<td>Control Escolar</td>
+<td>18/09/2026</td>
+<td><span class="badge_estado estado_proceso">En proceso</span></td>
+<td class="columna_acciones">
+<button class="boton_tres_puntos" data-evento-pagina="evento-5">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="1"></circle>
+<circle cx="12" cy="5" r="1"></circle>
+<circle cx="12" cy="19" r="1"></circle>
+</svg>
+</button>
+<div class="menu_flotante_acciones" id="menu_acciones_2">
+<button class="opcion_accion" data-evento-pagina="evento-6">Pendiente</button>
+<button class="opcion_accion" data-evento-pagina="evento-7">Completado</button>
+<button class="opcion_accion opcion_eliminar" data-evento-pagina="evento-8">Eliminar</button>
+</div>
+</td>
+</tr>
+<!-- Fila 3 -->
+<tr data-departamento="Académico" data-estado="Completado" data-titulo="Elaborar informe">
+<td class="texto_titulo_tarea">Elaborar informe</td>
+<td class="texto_descripcion_tarea">Informe mensual de actividades.</td>
+<td>Jorge Hernández Díaz</td>
+<td>Académico</td>
+<td>22/09/2026</td>
+<td><span class="badge_estado estado_completado">Completado</span></td>
+<td class="columna_acciones">
+<button class="boton_tres_puntos" data-evento-pagina="evento-9">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="1"></circle>
+<circle cx="12" cy="5" r="1"></circle>
+<circle cx="12" cy="19" r="1"></circle>
+</svg>
+</button>
+<div class="menu_flotante_acciones" id="menu_acciones_3">
+<button class="opcion_accion" data-evento-pagina="evento-10">Pendiente</button>
+<button class="opcion_accion" data-evento-pagina="evento-11">En proceso</button>
+<button class="opcion_accion opcion_eliminar" data-evento-pagina="evento-12">Eliminar</button>
+</div>
+</td>
+</tr>
+<!-- Fila 4 -->
+<tr data-departamento="Orientación" data-estado="Pendiente" data-titulo="Reunión con padres">
+<td class="texto_titulo_tarea">Reunión con padres</td>
+<td class="texto_descripcion_tarea">Organizar reunión de padres de familia.</td>
+<td>Elena Vargas Cruz</td>
+<td>Orientación</td>
+<td>25/09/2026</td>
+<td><span class="badge_estado estado_pendiente">Pendiente</span></td>
+<td class="columna_acciones">
+<button class="boton_tres_puntos" data-evento-pagina="evento-13">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+<circle cx="12" cy="12" r="1"></circle>
+<circle cx="12" cy="5" r="1"></circle>
+<circle cx="12" cy="19" r="1"></circle>
+</svg>
+</button>
+<div class="menu_flotante_acciones" id="menu_acciones_4">
+<button class="opcion_accion" data-evento-pagina="evento-14">En proceso</button>
+<button class="opcion_accion" data-evento-pagina="evento-15">Completado</button>
+<button class="opcion_accion opcion_eliminar" data-evento-pagina="evento-16">Eliminar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Paginación y contador -->
+<footer class="pie_tabla">
+<span class="texto_conteo_filas" id="texto_resumen_conteo">Mostrando 1 a 4 de 4 tareas</span>
+<div class="bloque_paginacion">
+<button class="boton_pagina" title="Anterior">&lt;</button>
+<button class="boton_pagina boton_pagina_activo">1</button>
+<button class="boton_pagina" title="Siguiente">&gt;</button>
+</div>
+</footer>
+</section>
+</main>
+<!-- END: ContenidoPrincipal -->
+</div>
+<!-- END: AreaDerecha -->
+</div>
+<!-- END: ContenedorPrincipal -->
+<!-- BEGIN: ModalNuevaTarea -->
+<div class="modal_fondo" data-purpose="modal_formulario" id="modal_nueva_tarea">
+<div class="modal_cuerpo">
+<div class="modal_encabezado">
+<h2 class="modal_titulo">Nueva Tarea</h2>
+<button aria-label="Cerrar modal" class="modal_boton_cerrar" id="boton_cerrar_modal">×</button>
+</div>
+<form class="formulario_modal" id="formulario_crear_tarea">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_titulo">Título</label>
+<input class="campo_texto_modal" id="campo_modal_titulo" placeholder="Ej. Revisar inventario" required="" type="text"/>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_descripcion">Descripción</label>
+<textarea class="textarea_modal" id="campo_modal_descripcion" placeholder="Detalles de la tarea..." required=""></textarea>
+</div>
+<div class="fila_dos_campos">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_asignado">Asignado a</label>
+<input class="campo_texto_modal" id="campo_modal_asignado" placeholder="Nombre completo" required="" type="text"/>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_departamento">Departamento</label>
+<select class="campo_texto_modal" id="campo_modal_departamento" required="" data-estilo-pagina="estilo-2">
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Orientación">Orientación</option>
+</select>
+</div>
+</div>
+<div class="fila_dos_campos">
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_fecha">Fecha límite</label>
+<input class="campo_texto_modal" id="campo_modal_fecha" required="" type="date"/>
+</div>
+<div class="grupo_campo">
+<label class="etiqueta_campo" for="campo_modal_estado">Estado inicial</label>
+<select class="campo_texto_modal" id="campo_modal_estado" data-estilo-pagina="estilo-3">
+<option value="Pendiente">Pendiente</option>
+<option value="En proceso">En proceso</option>
+<option value="Completado">Completado</option>
+</select>
+</div>
+</div>
+<div class="modal_pie">
+<button class="boton_cancelar" id="boton_cancelar_modal" type="button">Cancelar</button>
+<button class="boton_guardar" type="submit">Guardar tarea</button>
+</div>
+</form>
+</div>
+</div>
+<!-- END: ModalNuevaTarea -->
+<!-- BEGIN: Scripts de Interacción -->
+
+<!-- END: Scripts de Interacción -->
+
+<script src="js/tareas.js"></script>
+</body></html>

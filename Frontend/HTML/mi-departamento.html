@@ -1,249 +1,273 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Departamento - OCID</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mi Departamento - CBTIS 258</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- BEGIN: CustomStyles -->
+
+<!-- END: CustomStyles -->
+
+
+<link rel="stylesheet" href="css/mi-departamento.css"/>
 </head>
 <body>
-    <div class="app">
-        <!-- Barra Lateral -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>OCID</h2>
-                <p>Plataforma Escolar</p>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
-                    <li><a href="mi-departamento.html" class="nav-item active"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
-                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
-                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
-                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
-                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
-                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
-                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
-                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
-                </ul>
-            </nav>
-        </aside>
+<!-- BEGIN: MainLayout -->
+<div class="diseno_pantalla" data-purpose="contenedor_aplicacion">
+<!-- BEGIN: Sidebar -->
+<aside class="barra_lateral" data-purpose="barra_navegacion_lateral">
+<!-- Encabezado con Escudo y Nombre del Plantel -->
+<div class="contenedor_logo">
+<div class="icono_escudo">258</div>
+<div>
+<div class="texto_logo_titulo">CBTIS 258</div>
+<div class="texto_logo_sub">Plataforma de Coordinación Escolar</div>
+</div>
+</div>
+<!-- Enlaces de navegación principal -->
+<nav class="menu_navegacion">
+<a class="item_menu" href="inicio.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Inicio
+        </a>
+<!-- Opción Activa: Mi Departamento -->
+<a class="item_menu item_menu_activo" href="mi-departamento.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Mi Departamento
+        </a>
+<a class="item_menu" href="anuncios.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+          Anuncios
+        </a>
+<a class="item_menu" href="archivos.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Archivos
+        </a>
+<a class="item_menu" href="docentes.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+          Docentes
+        </a>
+<a class="item_menu" href="calendario.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+          Calendario
+        </a>
+<a class="item_menu" href="tareas.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          Tareas
+        </a>
+<a class="item_menu" href="notificaciones.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+          Notificaciones
+          <span class="badge_notificacion_lateral">3</span>
+</a>
+</nav>
+<!-- Pie de navegación lateral -->
+<div class="seccion_inferior_menu">
+<a class="item_menu" href="configuracion.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          Mi perfil
+        </a>
+<a class="item_menu" href="#salir">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
+          Cerrar sesión
+        </a>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: MainContent -->
+<main class="contenido_principal">
+<!-- BEGIN: TopBar -->
+<header class="barra_superior" data-purpose="barra_herramientas_superior">
+<!-- Botón Hamburguesa -->
+<button aria-label="Abrir menú" data-estilo-pagina="estilo-1" type="button">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
+</button>
+<!-- Barra de búsqueda central -->
+<div class="grupo_busqueda">
+<input aria-label="Campo de búsqueda" class="campo_busqueda" placeholder="Buscar..." type="text"/>
+<svg class="icono_busqueda" fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+</div>
+<!-- Perfil y Notificaciones -->
+<div class="contenedor_usuario_superior">
+<button aria-label="Ver notificaciones" class="boton_campana" type="button">
+<svg fill="none" height="19" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="19"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+<span class="badge_campana">3</span>
+</button>
+<div class="perfil_superior">
+<div class="avatar_usuario">CR</div>
+<div class="info_usuario">
+<span class="nombre_usuario">Carlos Ramírez</span>
+<span class="rol_usuario">Jefe de Departamento</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: DepartmentDashboard -->
+<div class="area_trabajo">
+<!-- Título de sección -->
+<div class="cabecera_modulo">
+<h1 class="titulo_pagina">Mi Departamento</h1>
+<p class="subtitulo_pagina">Información y miembros de tu departamento.</p>
+</div>
+<!-- Fila superior: Resumen de departamento y Tarjeta del Jefe -->
+<div class="cuadricula_superior">
+<!-- Tarjeta de información principal de Servicios Escolares -->
+<div class="tarjeta_general" data-purpose="tarjeta_resumen_departamento">
+<div class="encabezado_departamento">
+<div class="icono_dep_destacado">
+<svg fill="none" height="26" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="26"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+</div>
+<div data-estilo-pagina="estilo-2">
+<h2 class="nombre_departamento" id="nombre_departamento_texto">Servicios Escolares</h2>
+<div class="detalle_departamento" id="detalle_departamento_texto">Gestión de la información escolar y control de trámites académicos.</div>
+</div>
+<button aria-label="Opciones de departamento" class="boton_acciones">
+<svg fill="currentColor" height="18" viewbox="0 0 24 24" width="18"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+</button>
+</div>
+<!-- Métricas estadísticas del departamento -->
+<div class="fila_metricas">
+<div class="caja_metrica" data-purpose="metrica_docentes">
+<div class="icono_metrica icono_docentes">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+</div>
+<div>
+<div class="etiqueta_metrica">Docentes</div>
+<div class="valor_metrica" id="total_docentes">8</div>
+</div>
+</div>
+<div class="caja_metrica" data-purpose="metrica_documentos">
+<div class="icono_metrica icono_documentos">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+</div>
+<div>
+<div class="etiqueta_metrica">Documentos</div>
+<div class="valor_metrica" id="total_documentos">15</div>
+</div>
+</div>
+<div class="caja_metrica" data-purpose="metrica_eventos">
+<div class="icono_metrica icono_eventos">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+</div>
+<div>
+<div class="etiqueta_metrica">Eventos</div>
+<div class="valor_metrica" id="total_eventos">3</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tarjeta de contacto Jefe de Departamento -->
+<div class="tarjeta_jefe" data-purpose="tarjeta_jefe_departamento">
+<div class="titulo_caja_pequena">Jefe de departamento</div>
+<div class="avatar_jefe_grande" id="avatar_jefe">AL</div>
+<h3 class="nombre_jefe" id="nombre_jefe">Ana López García</h3>
+<span class="correo_jefe" id="correo_jefe">ana.lopez@cbtis258.edu.mx</span>
+<button class="boton_contactar" id="boton_abrir_contacto" type="button">Contactar</button>
+</div>
+</div>
+<!-- Sección de Descripción Institucional -->
+<div class="tarjeta_descripcion" data-purpose="bloque_descripcion">
+<div class="titulo_seccion_bloque">Descripción</div>
+<p class="texto_parrafo_desc" id="parrafo_descripcion">
+            El departamento de Servicios Escolares se encarga de organizar el registro, inscripción, control de documentos y atención académica a estudiantes.
+          </p>
+</div>
+<!-- Sección de Tabla de Integrantes del Departamento -->
+<div class="tarjeta_integrantes" data-purpose="bloque_integrantes">
+<div class="cabecera_integrantes">
+<div class="titulo_seccion_bloque" data-estilo-pagina="estilo-3">Integrantes del departamento</div>
+<a class="enlace_ver_todos" href="#ver_todos_integrantes">
+              Ver todos
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+</a>
+</div>
+<table class="tabla_integrantes">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Puesto</th>
+<th>Estado</th>
+<th data-estilo-pagina="estilo-4"></th>
+</tr>
+</thead>
+<tbody id="cuerpo_tabla_integrantes">
+<tr>
+<td><span class="nombre_miembro">Ana López García</span></td>
+<td>Jefe</td>
+<td><span class="badge_estado_activo">Activo</span></td>
+<td data-estilo-pagina="estilo-5">
+<button aria-label="Acciones de usuario" class="boton_acciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+</button>
+</td>
+</tr>
+<tr>
+<td><span class="nombre_miembro">Luis Mendoza Ruiz</span></td>
+<td>Docente</td>
+<td><span class="badge_estado_activo">Activo</span></td>
+<td data-estilo-pagina="estilo-6">
+<button aria-label="Acciones de usuario" class="boton_acciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+</button>
+</td>
+</tr>
+<tr>
+<td><span class="nombre_miembro">María Torres Silva</span></td>
+<td>Docente</td>
+<td><span class="badge_estado_activo">Activo</span></td>
+<td data-estilo-pagina="estilo-7">
+<button aria-label="Acciones de usuario" class="boton_acciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+</button>
+</td>
+</tr>
+<tr>
+<td><span class="nombre_miembro">Jorge Hernández Díaz</span></td>
+<td>Docente</td>
+<td><span class="badge_estado_activo">Activo</span></td>
+<td data-estilo-pagina="estilo-8">
+<button aria-label="Acciones de usuario" class="boton_acciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- END: DepartmentDashboard -->
+</main>
+<!-- END: MainContent -->
+</div>
+<!-- END: MainLayout -->
+<!-- BEGIN: ModalContact -->
+<div class="modal_contacto" data-purpose="modal_contactar_jefe" id="modal_contacto">
+<div class="caja_modal">
+<div data-estilo-pagina="estilo-9">
+<h3 data-estilo-pagina="estilo-10">Enviar mensaje al Jefe de Departamento</h3>
+<button id="boton_cerrar_modal" data-estilo-pagina="estilo-11">✕</button>
+</div>
+<p data-estilo-pagina="estilo-12">
+        Destinatario: <strong id="modal_destinatario">Ana López García (ana.lopez@cbtis258.edu.mx)</strong>
+</p>
+<div data-estilo-pagina="estilo-13">
+<label for="asunto_mensaje" data-estilo-pagina="estilo-14">Asunto</label>
+<input id="asunto_mensaje" placeholder="Ingresa el asunto..." data-estilo-pagina="estilo-15" type="text"/>
+<label for="cuerpo_mensaje" data-estilo-pagina="estilo-16">Mensaje</label>
+<textarea id="cuerpo_mensaje" placeholder="Escribe tu mensaje institucional aquí..." rows="4" data-estilo-pagina="estilo-17"></textarea>
+<div data-estilo-pagina="estilo-18">
+<button id="boton_cancelar_modal" data-estilo-pagina="estilo-19" type="button">Cancelar</button>
+<button id="boton_enviar_mensaje" data-estilo-pagina="estilo-20" type="button">Enviar Mensaje</button>
+</div>
+</div>
+</div>
+</div>
+<!-- END: ModalContact -->
+<!-- BEGIN: LogicScript -->
 
-        <!-- Contenido Principal -->
-        <main class="main-content">
-            <!-- Barra Superior -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <h1>OCID</h1>
-                </div>
-                <div class="topbar-center">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar en mi departamento...">
-                    </div>
-                </div>
-                <div class="topbar-right">
-                    <div class="topbar-user">
-                        <div class="user-info">
-                            <img src="https://via.placeholder.com/40" alt="Usuario">
-                            <span>Docente Ejemplo</span>
-                        </div>
-                        <div class="user-menu">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge">3</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Panel Principal -->
-            <div class="dashboard">
-                <div class="dashboard-header">
-                    <h2>Mi Departamento</h2>
-                    <p>Departamento: Académico</p>
-                </div>
-
-                <!-- Información del Departamento -->
-                <div class="dashboard-section">
-                    <h3><i class="fas fa-info-circle"></i> Información del Departamento</h3>
-                    <div class="departamento-info">
-                        <div class="info-item">
-                            <span class="info-label">Nombre:</span>
-                            <span class="info-value">Académico</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Descripción:</span>
-                            <span class="info-value">Departamento responsable de la planeación y ejecución del currículo educativo.</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Jefe de Departamento:</span>
-                            <span class="info-value">María González López</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Fecha de Creación:</span>
-                            <span class="info-value">Marzo 2025</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Código de Departamento:</span>
-                            <span class="info-value">ACD-001</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Estadísticas del Departamento -->
-                <div class="dashboard-section">
-                    <h3><i class="fas fa-chart-bar"></i> Estadísticas del Departamento</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <i class="fas fa-users"></i>
-                            <div>
-                                <h4>Docentes</h4>
-                                <p class="stat-number">8</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-file-alt"></i>
-                            <div>
-                                <h4>Archivos Compartidos</h4>
-                                <p class="stat-number">24</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-bell"></i>
-                            <div>
-                                <h4>Anuncios Este Mes</h4>
-                                <p class="stat-number">12</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-calendar"></i>
-                            <div>
-                                <h4>Próximos Eventos</h4>
-                                <p class="stat-number">5</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gestión de Departamento (solo para jefes y administradores) -->
-                <div class="dashboard-section">
-                    <h3><i class="fas fa-cogs"></i> Gestión del Departamento</h3>
-                    <div class="departamento-actions">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Agregar Docente</a>
-                        <a href="#" class="btn btn-success btn-sm"><i class="fas fa-upload"></i> Subir Archivo</a>
-                        <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-bell"></i> Crear Anuncio</a>
-                        <a href="#" class="btn btn-info btn-sm"><i class="fas fa-calendar-plus"></i> Programar Evento</a>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Modals (misma estructura que en index.html) -->
-        <div class="modal" id="loginModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-                </form>
-                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="registerModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Registrarse</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="registerNombre">Nombre completo</label>
-                        <input type="text" id="registerNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerRol">Rol</label>
-                        <select id="registerRol" required>
-                            <option value="">Seleccione su rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="jefe_departamento">Jefe de Departamento</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerDepartamento">Departamento</label>
-                        <select id="registerDepartamento" required>
-                            <option value="">Seleccione su departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
-                </form>
-                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="createAnnouncementModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Crear Nuevo Anuncio</h2>
-                <form id="announcementForm">
-                    <div class="form-group">
-                        <label for="announcementTitle">Título</label>
-                        <input type="text" id="announcementTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDescription">Descripción</label>
-                        <textarea id="announcementDescription" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDepartment">Departamento</label>
-                        <select id="announcementDepartment" required>
-                            <option value="">Seleccione departamento</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDate">Fecha de expiración (opcional)</label>
-                        <input type="date" id="announcementDate">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="announcementImportant">
-                            Marcar como importante
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementPriority">Prioridad</label>
-                        <select id="announcementPriority">
-                            <option value="baja">Baja</option>
-                            <option value="media" selected>Media</option>
-                            <option value="alta">Alta</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Crear Anuncio</button>
-                </form>
-            </div>
-        </div>
-
-        <script src="js/main.js"></script>
-    </body>
-</html>
+<!-- END: LogicScript -->
+<script src="js/mi-departamento.js"></script>
+</body></html>

@@ -39,10 +39,10 @@
                 <i class="fa-solid fa-building-user icono_nav"></i>
                 <span>Mi Departamento</span>
             </a>
-            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
+            <a class="enlace_navegacion" href="#anuncios" id="nav_anuncios">
                 <i class="fa-solid fa-bullhorn icono_nav"></i>
                 <span>Anuncios</span>
-                <span class="insignia_notificacion" id="badge_conteo_anuncios">—</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
             </a>
             <a class="enlace_navegacion" href="#archivos" id="nav_archivos">
                 <i class="fa-regular fa-folder-open icono_nav"></i>
@@ -94,15 +94,15 @@
                     onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
                     title="Notificaciones del sistema">
                     <i class="fa-regular fa-bell"></i>
-                    <span class="punto_notificacion" id="indicador_notificaciones">—</span>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
                 </button>
                 <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
                     <div class="avatar_usuario" id="avatar_usuario_circulo">
                         <i class="fa-regular fa-user"></i>
                     </div>
                     <div class="detalles_usuario">
-                        <strong id="nombreUsuario" style="color: white;">Usuario</strong>
-                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario"></span>
+                        <strong id="nombreUsuario" style="color: white;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
                     </div>
                     <i class="fa-solid fa-chevron-down icono_dropdown"></i>
                 </div>
@@ -113,7 +113,7 @@
             <!-- Fila de Saludo y Selector de Departamento -->
             <section aria-label="Bienvenida al usuario" class="fila_bienvenida">
                 <div>
-                    <h1 class="saludo_titulo" id="texto_bienvenida_saludo">¡Hola, Usuario!</h1>
+                    <h1 class="saludo_titulo" id="texto_bienvenida_saludo">¡Hola, Carlos!</h1>
                     <p class="saludo_subtitulo">Bienvenido al sistema de coordinación del CBTIS 258.</p>
                 </div>
                 <div class="tarjeta_departamento_actual" onclick="cargarDepartamentos()" title="Departamento asignado">
@@ -122,7 +122,7 @@
                     </div>
                     <div>
                         <div class="etiqueta_departamento">Tu departamento:</div>
-                        <div class="nombre_departamento_texto" id="etiqueta_nombre_departamento">
+                        <div class="nombre_departamento_texto" id="etiqueta_nombre_departamento">Servicios Escolares
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-down" style="color: #94a3b8; font-size: 12px; margin-left: 6px;"></i>
@@ -137,8 +137,8 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Avisos nuevos</span>
-                        <span class="valor_metrica" id="conteo_anu">—</span>
-                        <a class="enlace_metrica enlace_metrica_azul" href="anuncios.html">
+                        <span class="valor_metrica" id="conteo_anu">3</span>
+                        <a class="enlace_metrica enlace_metrica_azul" href="#anuncios" onclick="cargarAnuncios()">
                             Ver todos <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Archivos disponibles</span>
-                        <span class="valor_metrica" id="conteo_dep">—</span>
+                        <span class="valor_metrica" id="conteo_dep">12</span>
                         <a class="enlace_metrica enlace_metrica_verde" href="#archivos">
                             Ver archivos <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Docentes en el área</span>
-                        <span class="valor_metrica" id="conteo_usr">—</span>
+                        <span class="valor_metrica" id="conteo_usr">8</span>
                         <a class="enlace_metrica enlace_metrica_morada" href="#docentes" onclick="abrirModalDocentes()">
                             Ver miembros <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -176,7 +176,7 @@
                     </div>
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Próximos eventos</span>
-                        <span class="valor_metrica" id="metrica_conteo_eventos">—</span>
+                        <span class="valor_metrica" id="metrica_conteo_eventos">2</span>
                         <a class="enlace_metrica enlace_metrica_naranja" href="#calendario">
                             Ver calendario <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -194,7 +194,40 @@
                         </a>
                     </div>
                     <div class="lista_tarjetas_anuncios" id="contenedor_lista_anuncios">
-                        <p class="texto_vacio">Cargando anuncios...</p>
+                        <!-- Anuncio 1 -->
+                        <div class="tarjeta_item_anuncio">
+                            <div class="contenido_item_anuncio">
+                                <span class="etiqueta_prioridad etiqueta_importante">Importante</span>
+                                <div class="detalles_texto_anuncio">
+                                    <span class="titulo_item_anuncio">Entrega de documentos para reinscripción</span>
+                                    <span class="meta_item_anuncio">Publicado por: Servicios Escolares ·
+                                        12/09/2026</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right icono_flecha_anuncio"></i>
+                        </div>
+                        <!-- Anuncio 2 -->
+                        <div class="tarjeta_item_anuncio">
+                            <div class="contenido_item_anuncio">
+                                <span class="etiqueta_prioridad etiqueta_aviso">Aviso</span>
+                                <div class="detalles_texto_anuncio">
+                                    <span class="titulo_item_anuncio">Reunión de jefes de departamento</span>
+                                    <span class="meta_item_anuncio">Publicado por: Dirección · 10/09/2026</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right icono_flecha_anuncio"></i>
+                        </div>
+                        <!-- Anuncio 3 -->
+                        <div class="tarjeta_item_anuncio">
+                            <div class="contenido_item_anuncio">
+                                <span class="etiqueta_prioridad etiqueta_general">General</span>
+                                <div class="detalles_texto_anuncio">
+                                    <span class="titulo_item_anuncio">Actualización de formatos</span>
+                                    <span class="meta_item_anuncio">Publicado por: Control Escolar · 08/09/2026</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right icono_flecha_anuncio"></i>
+                        </div>
                     </div>
                 </article>
                 <!-- Columna 2: Acceso Rápido -->
@@ -271,7 +304,11 @@
                     </div>
                     <div class="grupo_formulario">
                         <label class="etiqueta_formulario">Departamento Asignado</label>
-                        <select class="campo_formulario" id="campo_departamento_anuncio" required><option value="">Cargando departamentos...</option></select>
+                        <select class="campo_formulario" id="campo_departamento_anuncio">
+                            <option value="1">Servicios Escolares</option>
+                            <option value="2">Dirección</option>
+                            <option value="3">Control Escolar</option>
+                        </select>
                     </div>
                 </div>
                 <div class="pie_modal">
@@ -364,11 +401,13 @@
                 <div class="cuerpo_modal">
                     <div class="grupo_formulario">
                         <label class="etiqueta_formulario">Correo Electrónico Institucional</label>
-                        <input class="campo_formulario" id="campo_login_correo" required="" type="email" />
+                        <input class="campo_formulario" id="campo_login_correo" required="" type="email"
+                            value="carlos.ramirez@cbtis258.edu.mx" />
                     </div>
                     <div class="grupo_formulario">
                         <label class="etiqueta_formulario">Contraseña</label>
-                        <input class="campo_formulario" id="campo_login_password" required="" type="password" />
+                        <input class="campo_formulario" id="campo_login_password" required="" type="password"
+                            value="********" />
                     </div>
                 </div>
                 <div class="pie_modal">
@@ -431,7 +470,432 @@
     </div>
     <!-- END: ModalsSection -->
     <!-- BEGIN: LogicScript -->
-    <script src="panel_ocid.js" defer></script>
+    <script data-purpose="dashboard-integration">
+        const $ = id => document.getElementById(id);
+        const API = 'https://ocid.onrender.com';
+
+        let usuario = null;
+
+        try {
+            usuario = JSON.parse(localStorage.getItem('usuario_ocid'));
+        } catch (error) {
+            localStorage.removeItem('usuario_ocid');
+        }
+
+        if (!usuario || !usuario.id) {
+            $('nombreUsuario').textContent =
+                usuario.nombre || usuario.correo || 'Usuario';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!usuario || !usuario.id) return;
+
+            cargarUsuarios();
+            cargarAnuncios();
+            cargarDepartamentos();
+        });
+
+
+        let totalArchivosGlobal = 12;
+
+        function escaparHTML(texto) {
+            if (!texto) return "";
+            return String(texto)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        async function leerRespuesta(respuesta) {
+            const contentType = respuesta.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                return await respuesta.json();
+            }
+            return await respuesta.text();
+        }
+
+        function mostrarMensaje(texto, esError = false) {
+            const contenedor = $('aviso_notificacion');
+            const mensajeTexto = $('texto_aviso_notificacion');
+            const icono = $('icono_aviso_notificacion');
+
+            if (!contenedor || !mensajeTexto) return;
+
+            mensajeTexto.textContent = texto;
+            if (icono) {
+                if (esError) {
+                    icono.className = "fa-solid fa-circle-exclamation";
+                    icono.style.color = "#ef4444";
+                } else {
+                    icono.className = "fa-solid fa-circle-check";
+                    icono.style.color = "#22c55e";
+                }
+            }
+
+            contenedor.classList.add("visible");
+            setTimeout(() => {
+                contenedor.classList.remove("visible");
+            }, 3500);
+        }
+
+        // Inicialización de la sesión institucional
+        function inicializarSesion() {
+            let rawSesion = localStorage.getItem('usuario_ocid');
+
+            const nombreMostrar = usuario.nombre || usuario.correo || 'Usuario';
+            const primerNombre = nombreMostrar.split(" ")[0];
+
+            if ($('etiqueta_nombre_usuario')) {
+                $('etiqueta_nombre_usuario').textContent = nombreMostrar;
+            }
+            if ($('texto_bienvenida_saludo')) {
+                $('texto_bienvenida_saludo').textContent = `¡Hola, ${primerNombre}!`;
+            }
+            if ($('etiqueta_rol_usuario')) {
+                $('etiqueta_rol_usuario').textContent = usuario.rol || 'Jefe de Departamento';
+            }
+            if ($('etiqueta_nombre_departamento')) {
+                $('etiqueta_nombre_departamento').textContent = usuario.departamento || 'Servicios Escolares';
+            }
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('usuario_ocid');
+            mostrarMensaje('Sesión cerrada exitosamente');
+            setTimeout(() => {
+                abrirModalLogin();
+            }, 500);
+        }
+
+        // Cargar y sincronizar anuncios desde API
+        async function cargarAnuncios() {
+            try {
+                const respuesta = await fetch(API + '/anuncios', { method: 'GET' });
+                if (respuesta.ok) {
+                    const datos = await leerRespuesta(respuesta);
+                    if (Array.isArray(datos) && datos.length > 0) {
+                        listaAnunciosGlobal = datos.map((item, index) => ({
+                            id: item.id || `anu_${index}`,
+                            titulo: item.titulo || item.title || "Aviso escolar",
+                            prioridad: normalizarPrioridad(item.prioridad),
+                            autor: item.autor || item.creado_por || "Servicios Escolares",
+                            fecha: item.fecha ? item.fecha.slice(0, 10) : "12/09/2026",
+                            contenido: item.contenido || item.descripcion || "Información departamental."
+                        }));
+                    }
+                }
+            } catch (err) {
+                console.warn('API /anuncios inaccesible, empleando datos locales.', err);
+            }
+
+            renderizarAnunciosUI(listaAnunciosGlobal);
+        }
+
+        function normalizarPrioridad(valor) {
+            if (!valor) return "General";
+            const v = String(valor).toLowerCase();
+            if (v.includes("import") || v.includes("alta")) return "Importante";
+            if (v.includes("aviso") || v.includes("media")) return "Aviso";
+            return "General";
+        }
+
+        function renderizarAnunciosUI(anuncios) {
+            const contenedor = $('contenedor_lista_anuncios');
+            if (!contenedor) return;
+
+            const cantidad = anuncios.length;
+            if ($('conteo_anu')) $('conteo_anu').textContent = cantidad;
+            if ($('badge_conteo_anuncios')) $('badge_conteo_anuncios').textContent = cantidad;
+            if ($('indicador_notificaciones')) $('indicador_notificaciones').textContent = cantidad;
+
+            if (anuncios.length === 0) {
+                contenedor.innerHTML = `
+          <div style="text-align: center; padding: 24px; color: #94a3b8; font-size: 13px;">
+            No se encontraron avisos que coincidan con la búsqueda.
+          </div>
+        `;
+                return;
+            }
+
+            contenedor.innerHTML = anuncios.slice(0, 5).map(anuncio => {
+                let claseColor = "etiqueta_general";
+                if (anuncio.prioridad === "Importante") claseColor = "etiqueta_importante";
+                if (anuncio.prioridad === "Aviso") claseColor = "etiqueta_aviso";
+
+                return `
+          <div class="tarjeta_item_anuncio">
+            <div class="contenido_item_anuncio" onclick="mostrarMensaje('${escaparHTML(anuncio.titulo)}')">
+              <span class="etiqueta_prioridad ${claseColor}">${escaparHTML(anuncio.prioridad)}</span>
+              <div class="detalles_texto_anuncio">
+                <span class="titulo_item_anuncio">${escaparHTML(anuncio.titulo)}</span>
+                <span class="meta_item_anuncio">Publicado por: ${escaparHTML(anuncio.autor)} · ${escaparHTML(anuncio.fecha)}</span>
+              </div>
+            </div>
+            <div class="acciones_item_anuncio">
+              <button class="boton_eliminar_anuncio" onclick="eliminarAnuncio('${anuncio.id}', event)" title="Eliminar anuncio">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+              <i class="fa-solid fa-chevron-right icono_flecha_anuncio" onclick="mostrarMensaje('${escaparHTML(anuncio.titulo)}')"></i>
+            </div>
+          </div>
+        `;
+            }).join("");
+        }
+
+        // Publicar anuncio con el payload exacto
+        async function publicarAnuncio(evento) {
+            evento.preventDefault();
+            const titulo = $('campo_titulo_anuncio').value.trim();
+            const contenido = $('campo_contenido_anuncio').value.trim();
+            const prioridad = $('campo_prioridad_anuncio').value;
+            const departamento_id = $('campo_departamento_anuncio') ? parseInt($('campo_departamento_anuncio').value, 10) : 1;
+
+            let usuario = null;
+            try {
+                usuario = JSON.parse(localStorage.getItem('usuario_ocid') || '{}');
+            } catch (e) {
+                usuario = {};
+            }
+            const autor_id = usuario.id || 1;
+
+            const payload = {
+                titulo: titulo,
+                contenido: contenido,
+                prioridad: prioridad,
+                autor_id: autor_id,
+                departamento_id: departamento_id
+            };
+
+            const fechaHoy = new Date().toLocaleDateString("es-MX", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            });
+
+            // Añadimos inmediatamente al array local para respuesta fluida
+            const nuevoLocal = {
+                id: Date.now(),
+                titulo: titulo,
+                contenido: contenido,
+                prioridad: normalizarPrioridad(prioridad),
+                autor: usuario.nombre || usuario.correo || "Servicios Escolares",
+                fecha: fechaHoy
+            };
+            listaAnunciosGlobal.unshift(nuevoLocal);
+            renderizarAnunciosUI(listaAnunciosGlobal);
+
+            cerrarModal('modal_nuevo_anuncio');
+            evento.target.reset();
+
+            try {
+                const respuesta = await fetch(API + '/anuncios', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (respuesta.ok) {
+                    mostrarMensaje('¡Anuncio publicado en el servidor con éxito!');
+                } else {
+                    mostrarMensaje('Anuncio registrado localmente (servidor no disponible)');
+                }
+            } catch (err) {
+                mostrarMensaje('Anuncio registrado en sesión local');
+            }
+        }
+
+        // Eliminar anuncio
+        async function eliminarAnuncio(id, evento) {
+            if (evento) evento.stopPropagation();
+            listaAnunciosGlobal = listaAnunciosGlobal.filter(a => String(a.id) !== String(id));
+            renderizarAnunciosUI(listaAnunciosGlobal);
+
+            try {
+                await fetch(`${API}/anuncios/${id}`, { method: 'DELETE' });
+                mostrarMensaje('Anuncio eliminado con éxito');
+            } catch (err) {
+                mostrarMensaje('Anuncio eliminado localmente');
+            }
+        }
+
+        // Cargar usuarios / docentes
+        async function cargarUsuarios() {
+            try {
+                const respuesta = await fetch(API + '/usuarios', { method: 'GET' });
+                if (respuesta.ok) {
+                    const usuarios = await leerRespuesta(respuesta);
+                    if (Array.isArray(usuarios)) {
+                        if ($('conteo_usr')) $('conteo_usr').textContent = usuarios.length;
+                        return usuarios;
+                    }
+                }
+            } catch (err) {
+                console.warn('API /usuarios no respondió, manteniendo conteo actual', err);
+            }
+            return null;
+        }
+
+        // Cargar departamentos
+        async function cargarDepartamentos() {
+            try {
+                const respuesta = await fetch(API + '/departamentos', { method: 'GET' });
+                if (respuesta.ok) {
+                    const departamentos = await leerRespuesta(respuesta);
+                    if (Array.isArray(departamentos) && departamentos.length > 0) {
+                        if ($('conteo_dep')) $('conteo_dep').textContent = departamentos.length;
+                        mostrarMensaje(`Se coordinan ${departamentos.length} departamentos escolares`);
+                        return departamentos;
+                    }
+                }
+            } catch (err) {
+                console.warn('API /departamentos no respondió', err);
+            }
+            mostrarMensaje('Departamento actual: Servicios Escolares');
+            return null;
+        }
+
+        // Registrar usuario / docente
+        async function registrarUsuario(evento) {
+            evento.preventDefault();
+            const nombre = $('campo_docente_nombre').value.trim();
+            const correo = $('campo_docente_correo').value.trim();
+            const rol = $('campo_docente_rol').value;
+
+            try {
+                const respuesta = await fetch(API + '/usuarios', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, correo, rol })
+                });
+
+                if (respuesta.ok) {
+                    mostrarMensaje('Docente registrado exitosamente');
+                } else {
+                    mostrarMensaje('Docente registrado en la plantilla local');
+                }
+            } catch (err) {
+                mostrarMensaje('Docente añadido a la plantilla escolar');
+            }
+
+            const usrActual = parseInt($('conteo_usr').textContent || '8', 10);
+            if ($('conteo_usr')) $('conteo_usr').textContent = usrActual + 1;
+
+            cerrarModal('modal_gestion_docentes');
+            evento.target.reset();
+        }
+
+        // Búsqueda en tiempo real
+        function filtrarAnunciosEnTiempoReal() {
+            const termino = $('campo_busqueda_general').value.toLowerCase().trim();
+            const filtrados = listaAnunciosGlobal.filter(item =>
+                item.titulo.toLowerCase().includes(termino) ||
+                item.autor.toLowerCase().includes(termino) ||
+                item.prioridad.toLowerCase().includes(termino)
+            );
+            renderizarAnunciosUI(filtrados);
+        }
+
+        // Subida de Archivos
+        function confirmarSubidaArchivo() {
+            const nombreInput = $('campo_nombre_archivo').value.trim();
+            if (!nombreInput) {
+                mostrarMensaje('Por favor ingresa un nombre para el archivo', true);
+                return;
+            }
+            totalArchivosGlobal++;
+            if ($('conteo_dep')) $('conteo_dep').textContent = totalArchivosGlobal;
+            cerrarModal('modal_subir_archivo');
+            $('campo_nombre_archivo').value = '';
+            mostrarMensaje(`Archivo "${nombreInput}" cargado con éxito`);
+        }
+
+        // Asistente IA
+        function enviarPreguntaIA() {
+            const input = $('campo_pregunta_ia');
+            const pregunta = input.value.trim();
+            if (!pregunta) return;
+
+            const chatContenedor = $('contenedor_chat_ia');
+            const divUsuario = document.createElement("div");
+            divUsuario.className = "burbuja_usuario_pregunta";
+            divUsuario.textContent = pregunta;
+            chatContenedor.appendChild(divUsuario);
+
+            input.value = "";
+            chatContenedor.scrollTop = chatContenedor.scrollHeight;
+
+            setTimeout(() => {
+                let respuesta = "He revisado la base de datos del departamento. Puedes gestionar este trámite directamente en la oficina de Servicios Escolares de 8:00 AM a 2:00 PM.";
+                const q = pregunta.toLowerCase();
+                if (q.includes("reinscrip") || q.includes("documento")) {
+                    respuesta = "Para el proceso de reinscripción debes presentar: historial académico sellado, ficha de pago bancario y copia de CURP antes del 15 de septiembre.";
+                } else if (q.includes("docente") || q.includes("profesor")) {
+                    respuesta = "Actualmente contamos con docentes adscritos al área de Servicios Escolares y Coordinación Técnica.";
+                } else if (q.includes("calendario") || q.includes("evento")) {
+                    respuesta = "El próximo evento calendarizado es la reunión general de planeación este 20 de septiembre a las 11:00 AM.";
+                }
+
+                const divIA = document.createElement("div");
+                divIA.className = "burbuja_ia_respuesta";
+                divIA.innerHTML = `<strong>Asistente CBTIS:</strong> ${respuesta}`;
+                chatContenedor.appendChild(divIA);
+                chatContenedor.scrollTop = chatContenedor.scrollHeight;
+            }, 500);
+        }
+
+        // Login modal submit
+        function ejecutarAutenticacion(evento) {
+            evento.preventDefault();
+            const correo = $('campo_login_correo').value.trim();
+            const nombrePartes = correo.split("@")[0].split(".");
+            const nombreFormateado = nombrePartes.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+
+            const nuevoUsuario = {
+                id: Date.now(),
+                nombre: nombreFormateado || "Usuario CBTIS",
+                correo: correo,
+                rol: "Jefe de Departamento",
+                departamento: "Servicios Escolares",
+                departamento_id: 1
+            };
+
+            localStorage.setItem('usuario_ocid', JSON.stringify(nuevoUsuario));
+            inicializarSesion();
+            cerrarModal('modal_login_sesion');
+            mostrarMensaje(`Bienvenido nuevamente, ${nuevoUsuario.nombre}`);
+        }
+
+        // Modales
+        function abrirModalCrearAnuncio() {
+            $('modal_nuevo_anuncio').classList.add('visible');
+        }
+        function abrirModalSubirArchivo() {
+            $('modal_subir_archivo').classList.add('visible');
+        }
+        function abrirModalIA() {
+            $('modal_asistente_ia').classList.add('visible');
+        }
+        function abrirModalLogin() {
+            $('modal_login_sesion').classList.add('visible');
+        }
+        function abrirModalDocentes() {
+            $('modal_gestion_docentes').classList.add('visible');
+        }
+        function cerrarModal(id) {
+            const modal = $(id);
+            if (modal) modal.classList.remove('visible');
+        }
+
+        // Inicialización del DOM
+        document.addEventListener("DOMContentLoaded", () => {
+            inicializarSesion();
+            cargarAnuncios();
+            cargarUsuarios();
+            cargarDepartamentos();
+        });
+    </script>
     <!-- END: LogicScript -->
 </body>
 

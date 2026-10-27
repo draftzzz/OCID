@@ -6,7 +6,10 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Registro - OCID</title>
-    <link href="css/registro.css" rel="stylesheet" />
+
+
+
+<link rel="stylesheet" href="css/registro.css"/>
 </head>
 
 <body>
@@ -94,75 +97,8 @@
     <footer class="pie_global">
         OCID • Organización y Comunicación Interna para Docentes
     </footer>
-    <script>
-        const $ = id => document.getElementById(id);
 
-        // Alternar visualización de clave
-        $('boton_clave').onclick = () => {
-            const c = $('password');
-            c.type = c.type === 'password' ? 'text' : 'password';
-        };
-
-        // Envío con validación de correo registrado y silencio en fallos de red
-        $('registro').onsubmit = async e => {
-            e.preventDefault();
-
-            const alerta = $('mensaje_estado');
-            alerta.style.display = 'none';
-
-            const btn = $('registerBtn');
-            btn.disabled = true;
-
-            try {
-                const res = await fetch('https://ocid.onrender.com/registro', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        nombre: $('nombre').value.trim(),
-                        correo: $('correo').value.trim(),
-                        password: $('password').value
-                    })
-                });
-
-                if (res.ok) {
-                    const data = await res.json().catch(() => ({ success: true }));
-                    if (data.success !== false) {
-                        location.href = 'login.html';
-                        return;
-                    }
-                }
-
-                const respuestaTexto = await res.text();
-                let mensajeError = respuestaTexto.toLowerCase();
-
-                try {
-                    const d = JSON.parse(respuestaTexto);
-                    mensajeError = ((d.error || d.message || '') + ' ' + respuestaTexto).toLowerCase();
-                } catch (_) { }
-
-                const esCorreoDuplicado =
-                    res.status === 409 ||
-                    res.status === 500 ||
-                    mensajeError.includes('correo') ||
-                    mensajeError.includes('correo') ||
-                    mensajeError.includes('registrado') ||
-                    mensajeError.includes('existe') ||
-                    mensajeError.includes('duplicate') ||
-                    mensajeError.includes('unique') ||
-                    mensajeError.includes('dup_entry');
-
-                if (esCorreoDuplicado) {
-                    alerta.className = 'mensaje_alerta error';
-                    alerta.textContent = 'Este correo electrónico ya se encuentra registrado';
-                    alerta.style.display = 'block';
-                }
-            } catch (err) {
-                // Silencio ante fallos de conexión a BD
-            } finally {
-                btn.disabled = false;
-            }
-        };
-    </script>
+<script src="js/registro.js"></script>
 </body>
 
 </html>

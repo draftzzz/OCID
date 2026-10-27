@@ -6,7 +6,10 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Iniciar Sesión - OCID</title>
-    <link href="css/login.css" rel="stylesheet" />
+
+
+
+<link rel="stylesheet" href="css/login.css"/>
 </head>
 
 <body>
@@ -37,7 +40,7 @@
                             </svg>
                         </span>
                         <input class="campo_texto" id="correo" placeholder="correo@instituto.edu.mx" required=""
-                            type="correo" />
+                            type="email" />
                     </div>
                 </div>
                 <div class="grupo_campo">
@@ -78,70 +81,9 @@
         OCID • Organización y Comunicación Interna para Docentes
     </footer>
 
-    <script>
-        const $ = id => document.getElementById(id);
 
-        // Mostrar / ocultar contraseña
-        $('boton_clave').onclick = () => {
-            const c = $('password');
-            c.type = c.type === 'password' ? 'text' : 'password';
-        };
 
-        // Procesar login
-        $('formulario_login').onsubmit = async e => {
-            e.preventDefault();
-
-            const alerta = $('mensaje_estado');
-            alerta.style.display = 'none';
-
-            const btn = $('loginBtn');
-            btn.disabled = true;
-
-            try {
-                const res = await fetch('https://ocid.onrender.com/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        correo: $('correo').value.trim(),
-                        password: $('password').value
-                    })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success && data.usuario) {
-
-                    // Guardar los datos del usuario en el navegador
-                    localStorage.setItem(
-                        'usuario_ocid',
-                        JSON.stringify(data.usuario)
-                    );
-
-                    // Ir al inicio
-                    window.location.href = 'inicio.html';
-
-                } else {
-                    alerta.className = 'mensaje_alerta error';
-                    alerta.textContent = data.error ||
-                        'Credenciales no válidas. Revisa tu correo y contraseña.';
-                    alerta.style.display = 'block';
-                }
-
-            } catch (err) {
-                console.error('Error al iniciar sesión:', err);
-
-                alerta.className = 'mensaje_alerta error';
-                alerta.textContent = 'No se pudo conectar con el servidor';
-                alerta.style.display = 'block';
-
-            } finally {
-                btn.disabled = false;
-            }
-        };
-    </script>
-
+<script src="js/login.js"></script>
 </body>
 
 </html>

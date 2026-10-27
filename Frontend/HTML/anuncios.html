@@ -1,319 +1,276 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anuncios - OCID</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Anuncios - CBTIS 258</title>
+
+<!-- BEGIN: EstilosAutocontenidos -->
+
+
+
+
+
+
+
+<!-- END: EstilosAutocontenidos -->
+
+
+<link rel="stylesheet" href="css/anuncios.css"/>
 </head>
 <body>
-    <div class="app">
-        <!-- Barra Lateral -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>OCID</h2>
-                <p>Plataforma Escolar</p>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
-                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
-                    <li><a href="anuncios.html" class="nav-item active"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
-                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
-                    <li><a href="docentes.html" class="nav-item"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
-                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
-                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
-                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
-                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
-                </ul>
-            </nav>
-        </aside>
+<!-- BEGIN: BarraLateralNavegacion -->
+<aside class="barra_lateral" data-purpose="navegacion_sistema">
+<!-- Logotipo institucional -->
+<div class="logotipo_contenedor">
+<div class="icono_escudo">258</div>
+<div>
+<div class="texto_logo_principal">CBTIS 258</div>
+<div class="subtexto_logo">Plataforma de Coordinación Escolar</div>
+</div>
+</div>
+<!-- Menú vertical de navegación -->
+<nav class="navegacion_lateral">
+<a class="enlace_navegacion" href="inicio.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Inicio
+      </a>
+<a class="enlace_navegacion" href="mi-departamento.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Mi Departamento
+      </a>
+<!-- Elemento Activo: Anuncios -->
+<a class="enlace_navegacion enlace_navegacion_activo" href="anuncios.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Anuncios
+      </a>
+<a class="enlace_navegacion" href="archivos.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Archivos
+      </a>
+<a class="enlace_navegacion" href="docentes.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Docentes
+      </a>
+<a class="enlace_navegacion" href="calendario.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M8 7V3m8 7V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Calendario
+      </a>
+<a class="enlace_navegacion" href="tareas.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Tareas
+      </a>
+<a class="enlace_navegacion" href="notificaciones.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Notificaciones
+        <span class="insignia_notificacion_lateral">3</span>
+</a>
+<a class="enlace_navegacion" href="configuracion.html">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Mi perfil
+      </a>
+<a class="enlace_navegacion" href="#cerrar_sesion" data-estilo-pagina="estilo-1">
+<span class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" viewbox="0 0 24 24" width="18"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+        Cerrar sesión
+      </a>
+</nav>
+</aside>
+<!-- END: BarraLateralNavegacion -->
+<!-- BEGIN: ContenidoPrincipal -->
+<main class="area_principal">
+<!-- BEGIN: BarraSuperior -->
+<header class="barra_superior" data-purpose="cabecera_global">
+<div class="seccion_izquierda_superior">
+<button aria-label="Menu" class="boton_hamburguesa" title="Alternar menú lateral">
+<svg fill="none" height="20" stroke="currentColor" viewbox="0 0 24 24" width="20"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="caja_busqueda_superior">
+<input aria-label="Buscar en el sistema" class="input_busqueda_superior" placeholder="Buscar..." type="text"/>
+<span class="icono_lupa_superior">
+<svg fill="none" height="15" stroke="currentColor" viewbox="0 0 24 24" width="15"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+</div>
+</div>
+<div class="seccion_derecha_superior">
+<div aria-label="Notificaciones pendientes" class="contenedor_campana" title="Notificaciones">
+<svg fill="none" height="20" stroke="currentColor" viewbox="0 0 24 24" width="20"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="badge_campana">3</span>
+</div>
+<div class="perfil_usuario_superior" data-purpose="datos_usuario_activo">
+<div class="avatar_usuario">CR</div>
+<div class="detalles_usuario">
+<span class="nombre_usuario">Carlos Ramírez</span>
+<span class="cargo_usuario">Jefe de Departamento</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: BarraSuperior -->
+<!-- BEGIN: VistaDeAnuncios -->
+<div class="cuerpo_contenido">
+<!-- Encabezado de Anuncios y botón Nuevo -->
+<div class="fila_encabezado_anuncios">
+<div>
+<h1 class="titulo_pantalla">Anuncios</h1>
+<p class="subtitulo_pantalla">Publica y consulta los anuncios de tu departamento.</p>
+</div>
+<button class="boton_nuevo_anuncio" data-purpose="crear_anuncio" id="boton_abrir_modal">
+<svg fill="none" height="16" stroke="currentColor" viewbox="0 0 24 24" width="16"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          + Nuevo anuncio
+        </button>
+</div>
+<!-- Barra de Filtros -->
+<div class="barra_filtros" data-purpose="controles_filtro">
+<div class="filtro_busqueda_contenedor">
+<span class="icono_lupa_filtro">
+<svg fill="none" height="14" stroke="currentColor" viewbox="0 0 24 24" width="14"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+<input class="input_filtro_busqueda" id="filtro_busqueda_titulo" placeholder="Buscar por título..." type="text"/>
+</div>
+<select class="filtro_selector" id="filtro_departamento">
+<option value="">Todos los departamentos</option>
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Vinculación">Vinculación</option>
+<option value="Orientación">Orientación</option>
+</select>
+<select class="filtro_selector" id="filtro_tipo">
+<option value="">Todos los tipos</option>
+<option value="Importante">Importante</option>
+<option value="Aviso">Aviso</option>
+<option value="General">General</option>
+</select>
+<button class="boton_limpiar_filtros" id="boton_limpiar">Limpiar</button>
+</div>
+<!-- Contenedor con distribución de 2 columnas -->
+<div class="contenedor_dos_columnas">
+<!-- Columna Izquierda: Tarjetas de Anuncios -->
+<section class="columna_lista_anuncios" data-purpose="listado_tarjetas" id="contenedor_tarjetas_anuncios">
+<!-- Se inyecta dinámicamente vía JavaScript -->
+</section>
+<!-- Columna Derecha: Paneles de conteo y últimos anuncios -->
+<aside class="columna_lateral_derecha">
+<!-- Bloque de departamentos -->
+<div class="tarjeta_lateral_panel" data-purpose="resumen_por_departamento">
+<h2 class="titulo_bloque_lateral">Por departamento</h2>
+<div class="lista_conteo_departamentos">
+<div class="fila_conteo_departamento">
+<span class="indicador_con_nombre">
+<span class="punto_departamento punto_servicios"></span>
+                  Servicios Escolares
+                </span>
+<span class="cifra_departamento" id="conteo_servicios">3</span>
+</div>
+<div class="fila_conteo_departamento">
+<span class="indicador_con_nombre">
+<span class="punto_departamento punto_control"></span>
+                  Control Escolar
+                </span>
+<span class="cifra_departamento" id="conteo_control">2</span>
+</div>
+<div class="fila_conteo_departamento">
+<span class="indicador_con_nombre">
+<span class="punto_departamento punto_academico"></span>
+                  Académico
+                </span>
+<span class="cifra_departamento" id="conteo_academico">1</span>
+</div>
+<div class="fila_conteo_departamento">
+<span class="indicador_con_nombre">
+<span class="punto_departamento punto_vinculacion"></span>
+                  Vinculación
+                </span>
+<span class="cifra_departamento" id="conteo_vinculacion">1</span>
+</div>
+<div class="fila_conteo_departamento">
+<span class="indicador_con_nombre">
+<span class="punto_departamento punto_orientacion"></span>
+                  Orientación
+                </span>
+<span class="cifra_departamento" id="conteo_orientacion">1</span>
+</div>
+</div>
+</div>
+<!-- Bloque de Últimos Anuncios -->
+<div class="tarjeta_lateral_panel" data-purpose="resumen_ultimos_anuncios">
+<h2 class="titulo_bloque_lateral">Últimos anuncios</h2>
+<div class="lista_ultimos_anuncios" id="contenedor_ultimos_anuncios">
+<!-- Rellenado dinámicamente -->
+</div>
+</div>
+</aside>
+</div>
+</div>
+<!-- END: VistaDeAnuncios -->
+</main>
+<!-- END: ContenidoPrincipal -->
+<!-- BEGIN: ModalNuevoAnuncio -->
+<div class="fondo_oscuro_modal" data-purpose="dialogo_creacion" id="modal_nuevo_anuncio">
+<div class="caja_modal">
+<div class="cabecera_modal">
+<h3 class="titulo_modal">Nuevo Anuncio</h3>
+<button class="boton_cerrar_modal" id="boton_cerrar_cruz">×</button>
+</div>
+<form id="formulario_nuevo_anuncio">
+<div class="cuerpo_modal">
+<div class="grupo_campo_modal">
+<label class="etiqueta_campo" for="campo_titulo">Título del anuncio</label>
+<input class="input_campo_modal" id="campo_titulo" placeholder="Ej: Reunión de jefes..." required="" type="text"/>
+</div>
+<div class="grupo_campo_modal">
+<label class="etiqueta_campo" for="campo_tipo">Tipo / Prioridad</label>
+<select class="selector_campo_modal" id="campo_tipo" required="">
+<option value="Importante">Importante</option>
+<option value="Aviso">Aviso</option>
+<option value="General">General</option>
+</select>
+</div>
+<div class="grupo_campo_modal">
+<label class="etiqueta_campo" for="campo_departamento">Departamento</label>
+<select class="selector_campo_modal" id="campo_departamento" required="">
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Vinculación">Vinculación</option>
+<option value="Orientación">Orientación</option>
+</select>
+</div>
+<div class="grupo_campo_modal">
+<label class="etiqueta_campo" for="campo_contenido">Contenido o descripción</label>
+<textarea class="textarea_campo_modal" id="campo_contenido" placeholder="Escribe aquí los detalles del anuncio..." required=""></textarea>
+</div>
+</div>
+<div class="pie_modal">
+<button class="boton_cancelar_modal" id="boton_cancelar_modal" type="button">Cancelar</button>
+<button class="boton_guardar_modal" type="submit">Publicar anuncio</button>
+</div>
+</form>
+</div>
+</div>
+<!-- END: ModalNuevoAnuncio -->
+<!-- BEGIN: ScriptsInteractividad -->
 
-        <!-- Contenido Principal -->
-        <main class="main-content">
-            <!-- Barra Superior -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <h1>OCID</h1>
-                </div>
-                <div class="topbar-center">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar anuncios...">
-                    </div>
-                </div>
-                <div class="topbar-right">
-                    <div class="topbar-user">
-                        <div class="user-info">
-                            <img src="https://via.placeholder.com/40" alt="Usuario">
-                            <span>Docente Ejemplo</span>
-                        </div>
-                        <div class="user-menu">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge">3</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Panel Principal -->
-            <div class="dashboard">
-                <div class="dashboard-header">
-                    <h2>Anuncios</h2>
-                    <p>Gestiona los anuncios de tu departamento e institución</p>
-                </div>
-
-                <!-- Filtros y acciones -->
-                <div class="dashboard-section filtros-section">
-                    <div class="filtros-header">
-                        <h3><i class="fas fa-filter"></i> Filtros</h3>
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Crear Anuncio</a>
-                    </div>
-                    <div class="filtros-content">
-                        <div class="filtro-group">
-                            <label for="filtroDepartamento">Departamento:</label>
-                            <select id="filtroDepartamento">
-                                <option value="">Todos los departamentos</option>
-                                <option value="academico">Académico</option>
-                                <option value="servicios_escolares">Servicios Escolares</option>
-                                <option value="vinculación">Vinculación</option>
-                                <option value="orientacion">Orientación</option>
-                                <option value="control_escolar">Control Escolar</option>
-                            </select>
-                        </div>
-                        <div class="filtro-group">
-                            <label for="filtroPrioridad">Prioridad:</label>
-                            <select id="filtroPrioridad">
-                                <option value="">Todas las prioridades</option>
-                                <option value="alta">Alta</option>
-                                <option value="media">Media</option>
-                                <option value="baja">Baja</option>
-                            </select>
-                        </div>
-                        <div class="filtro-group">
-                            <label>
-                                <input type="checkbox" id="filtroImportante">
-                                Solo importantes
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lista de anuncios -->
-                <div class="dashboard-section anuncios-lista-section">
-                    <h3><i class="fas fa-list"></i> Lista de Anuncios</h3>
-                    <div class="anuncios-container">
-                        <!-- Anuncio Importante -->
-                        <div class="announcement-card important">
-                            <div class="announcement-header">
-                                <h3>Reunión General de Docentes</h3>
-                                <span class="priority high">Alta</span>
-                            </div>
-                            <p>Se convoca a reunión general de todos los docentes para revisión del avance académico y planificación de actividades extracurriculares.</p>
-                            <div class="announcement-footer">
-                                <span>Departamento: Académico</span>
-                                <span>Publicado por: María González López</span>
-                                <span>Hoy • 08:00 AM</span>
-                            </div>
-                            <div class="announcement-actions">
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Ver</a>
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-                            </div>
-                        </div>
-
-                        <!-- Anuncio Regular -->
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <h3>Entrega de Calificaciones Parciales</h3>
-                                <span class="priority high">Alta</span>
-                            </div>
-                            <p>Recordatorio importante: las calificaciones del parcial deben entregarse antes del viernes 15 de octubre a las 5:00 PM en el sistema escolar.</p>
-                            <div class="announcement-footer">
-                                <span>Departamento: Académico</span>
-                                <span>Publicado por: María González López</span>
-                                <span>Ayer • 03:30 PM</span>
-                            </div>
-                            <div class="announcement-actions">
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Ver</a>
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-                            </div>
-                        </div>
-
-                        <!-- Anuncio Regular -->
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <h3>Taller de Actualización Pedagógica</h3>
-                                <span class="priority media">Media</span>
-                            </div>
-                            <p>Invitación al taller de actualización en metodologías activas de aprendizaje, dirigido a todos los docentes de institución. Cupo limitado a 30 participantes.</p>
-                            <div class="announcement-footer">
-                                <span>Departamento: Servicios Escolares</span>
-                                <span>Publicado por: Ana Torres Ruiz</span>
-                                <span>3 días atrás • 10:15 AM</span>
-                            </div>
-                            <div class="announcement-actions">
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Ver</a>
-                            </div>
-                        </div>
-
-                        <!-- Anuncio Regular -->
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <h3>Feria de Vinculación Universitaria</h3>
-                                <span class="priority media">Media</span>
-                            </div>
-                            <p>Se invita a la comunidad estudiantil a participar en la feria de vinculación con universidades del estado el próximo 20 de noviembre en el auditorio principal.</p>
-                            <div class="announcement-footer">
-                                <span>Departamento: Vinculación</span>
-                                <span>Publicado por: Luis Hernández Castillo</span>
-                                <span>5 días atrás • 02:00 PM</span>
-                            </div>
-                            <div class="announcement-actions">
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Ver</a>
-                            </div>
-                        </div>
-
-                        <!-- Anuncio Regular -->
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <h3>Campaña de Vacunación Escolar</h3>
-                                <span class="priority baja">Baja</span>
-                            </div>
-                            <p>Informamos sobre la campaña de vacunación contra influenza que se llevará a cabo del 1 al 15 de diciembre en las instalaciones escolares.</p>
-                            <div class="announcement-footer">
-                                <span>Departamento: Servicios Escolares</span>
-                                <span>Publicado por: Ana Torres Ruiz</span>
-                                <span>1 semana atrás • 09:45 AM</span>
-                            </div>
-                            <div class="announcement-actions">
-                                <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> Ver</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Paginación -->
-                    <div class="paginacion">
-                        <button class="btn btn-sm btn-outline">&laquo; Anterior</button>
-                        <span class="pagina-actual">1</span>
-                        <span>de</span>
-                        <span class="total-paginas">5</span>
-                        <button class="btn btn-sm btn-outline">Siguiente &raquo;</button>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Modals (misma estructura que en index.html) -->
-        <div class="modal" id="loginModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-                </form>
-                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="registerModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Registrarse</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="registerNombre">Nombre completo</label>
-                        <input type="text" id="registerNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerRol">Rol</label>
-                        <select id="registerRol" required>
-                            <option value="">Seleccione su rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="jefe_departamento">Jefe de Departamento</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerDepartamento">Departamento</label>
-                        <select id="registerDepartamento" required>
-                            <option value="">Seleccione su departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
-                </form>
-                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="createAnnouncementModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Crear Nuevo Anuncio</h2>
-                <form id="announcementForm">
-                    <div class="form-group">
-                        <label for="announcementTitle">Título</label>
-                        <input type="text" id="announcementTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDescription">Descripción</label>
-                        <textarea id="announcementDescription" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDepartment">Departamento</label>
-                        <select id="announcementDepartment" required>
-                            <option value="">Seleccione departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementDate">Fecha de expiración (opcional)</label>
-                        <input type="date" id="announcementDate">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="announcementImportant">
-                            Marcar como importante
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="announcementPriority">Prioridad</label>
-                        <select id="announcementPriority">
-                            <option value="baja">Baja</option>
-                            <option value="media" selected>Media</option>
-                            <option value="alta">Alta</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Crear Anuncio</button>
-                </form>
-            </div>
-        </div>
-
-        <script src="js/main.js"></script>
-    </body>
-</html>
+<!-- END: ScriptsInteractividad -->
+<script src="js/anuncios.js"></script>
+</body></html>

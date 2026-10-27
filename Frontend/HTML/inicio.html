@@ -6,363 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OCID | Panel administrativo</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
 
-    body {
-      background: #f1f5f9;
-      color: #1e293b;
-      min-height: 100vh;
-      display: flex;
-    }
 
-    .barra_lateral {
-      width: 245px;
-      min-height: 100vh;
-      flex-shrink: 0;
-      background: #0f2440;
-      color: white;
-    }
 
-    .cabecera_lateral {
-      padding: 24px 20px;
-      border-bottom: 1px solid #334155;
-    }
 
-    .titulo_logo {
-      font-size: 25px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .subtitulo_logo {
-      font-size: 12px;
-      color: #cbd5e1;
-      line-height: 1.5;
-    }
-
-    .menu_navegacion {
-      padding: 18px 10px;
-    }
-
-    .item_menu {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 7px;
-      border: none;
-      border-radius: 7px;
-      background: transparent;
-      color: #cbd5e1;
-      text-align: left;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .item_menu:hover,
-    .item_menu.activo {
-      background: #17365d;
-      color: white;
-    }
-
-    .contenedor_principal {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .barra_superior {
-      min-height: 85px;
-      padding: 18px 28px;
-      background: white;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .titulo_saludo {
-      font-size: 20px;
-      color: #17365d;
-    }
-
-    .usuario_saludo {
-      margin-top: 7px;
-      color: #64748b;
-      font-size: 13px;
-    }
-
-    .cuerpo_panel {
-      padding: 25px;
-    }
-
-    .caja_formulario,
-    .caja_vista {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 18px;
-      margin-bottom: 20px;
-      min-width: 0;
-    }
-
-    .titulo_form {
-      font-size: 16px;
-      color: #17365d;
-      font-weight: bold;
-      margin-bottom: 16px;
-    }
-
-    .fila_formulario {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-      align-items: end;
-    }
-
-    .etiqueta {
-      display: block;
-      color: #64748b;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .campo_input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 13px;
-      background: white;
-      outline: none;
-    }
-
-    .campo_input:focus {
-      border-color: #17365d;
-    }
-
-    textarea.campo_input {
-      resize: none;
-      min-height: 40px;
-    }
-    textarea {
-      width: 400px;
-    }
-    .boton_guardar {
-      border: none;
-      border-radius: 6px;
-      background: #17365d;
-      color: white;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .boton_guardar:hover {
-      background: #0f2440;
-    }
-
-    .boton_eliminar {
-      border: none;
-      border-radius: 5px;
-      background: #dc2626;
-      color: white;
-      padding: 7px 10px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .boton_eliminar:hover {
-      background: #991b1b;
-    }
-
-    .cabecera_vista {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .titulo_vista {
-      font-size: 18px;
-      color: #17365d;
-    }
-
-    .tabla_contenedor {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    th {
-      background: #f8fafc;
-      color: #475569;
-      padding: 12px;
-      border-bottom: 2px solid #e2e8f0;
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #e2e8f0;
-      overflow-wrap: anywhere;
-    }
-
-    .badge_tag {
-      display: inline-block;
-      background: #eff6ff;
-      color: #1d4ed8;
-      padding: 4px 8px;
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    /* ANUNCIOS: DOS POR FILA */
-    .lista_anuncios {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      width: 100%;
-    }
-
-    .tarjeta_anuncio {
-      min-width: 0;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 9px;
-      padding: 14px;
-      overflow-wrap: anywhere;
-    }
-
-    .encabezado_anuncios {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .tarjeta_anuncio h3 {
-      color: #17365d;
-      font-size: 15px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
-
-    .contenido_anuncio {
-      margin: 9px 0 12px;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #475569;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .info_anuncio {
-      color: #64748b;
-      font-size: 11px;
-      line-height: 1.5;
-      margin-top: 5px;
-    }
-
-    .alerta_mensaje {
-      display: none;
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .alerta_exito {
-      display: block;
-      color: #065f46;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-    }
-
-    .alerta_error {
-      display: block;
-      color: #991b1b;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-    }
-
-    .texto_vacio {
-      color: #64748b;
-      font-size: 13px;
-      padding: 10px 0;
-    }
-
-    @media (max-width: 850px) {
-      body {
-        display: block;
-      }
-
-      .barra_lateral {
-        width: 100%;
-        min-height: auto;
-      }
-
-      .menu_navegacion {
-        display: flex;
-        gap: 6px;
-        padding: 10px;
-      }
-
-      .item_menu {
-        margin: 0;
-        gap: 5px;
-      }
-
-      .barra_superior {
-        padding: 16px;
-      }
-
-      .cuerpo_panel {
-        padding: 15px;
-      }
-    }
-
-    @media (max-width: 550px) {
-      .lista_anuncios {
-        grid-template-columns: 1fr;
-      }
-
-      .menu_navegacion {
-        flex-wrap: wrap;
-      }
-
-      .item_menu {
-        flex: 1 1 130px;
-      }
-
-      .titulo_saludo {
-        font-size: 17px;
-      }
-
-      .barra_superior {
-        align-items: flex-start;
-      }
-    }
-  </style>
+<link rel="stylesheet" href="css/inicio.css"/>
 </head>
 
 <body>
@@ -377,19 +25,19 @@
 
     <nav class="menu_navegacion">
       <button class="item_menu activo"
-        onclick="mostrarSeccion('usuarios', this)">
+        data-evento-pagina="evento-1">
         <span>👥 Usuarios</span>
         <span id="conteo_usr">0</span>
       </button>
 
       <button class="item_menu"
-        onclick="mostrarSeccion('anuncios', this)">
+        data-evento-pagina="evento-2">
         <span>📢 Anuncios</span>
         <span id="conteo_anu">0</span>
       </button>
 
       <button class="item_menu"
-        onclick="mostrarSeccion('departamentos', this)">
+        data-evento-pagina="evento-3">
         <span>🏢 Departamentos</span>
         <span id="conteo_dep">0</span>
       </button>
@@ -407,7 +55,7 @@
         </p>
       </div>
 
-      <button class="boton_guardar" onclick="cerrarSesion()">
+      <button class="boton_guardar" data-evento-pagina="evento-4">
         Cerrar sesión
       </button>
     </header>
@@ -422,7 +70,7 @@
         <div class="caja_formulario">
           <div class="titulo_form">➕ Registrar usuario</div>
 
-          <form id="form_nuevo_usuario" onsubmit="registrarUsuario(event)">
+          <form id="form_nuevo_usuario" data-evento-pagina="evento-5">
             <div class="fila_formulario">
 
               <div>
@@ -461,7 +109,7 @@
         <div class="caja_vista">
           <div class="cabecera_vista">
             <h2 class="titulo_vista">Usuarios registrados</h2>
-            <button class="boton_guardar" onclick="cargarUsuarios()">
+            <button class="boton_guardar" data-evento-pagina="evento-6">
               Refrescar
             </button>
           </div>
@@ -488,12 +136,12 @@
       </section>
 
       <!-- ANUNCIOS -->
-      <section id="modulo_anuncios" style="display:none;">
+      <section id="modulo_anuncios" data-estilo-pagina="estilo-1">
 
         <div class="caja_formulario">
           <div class="titulo_form">📢 Publicar anuncio</div>
 
-          <form id="form_nuevo_anuncio" onsubmit="publicarAnuncio(event)">
+          <form id="form_nuevo_anuncio" data-evento-pagina="evento-7">
             <div class="fila_formulario">
 
               <div>
@@ -525,7 +173,7 @@
         <div class="caja_vista">
           <div class="cabecera_vista">
             <h2 class="titulo_vista">Anuncios publicados</h2>
-            <button class="boton_guardar" onclick="cargarAnuncios()">
+            <button class="boton_guardar" data-evento-pagina="evento-8">
               Refrescar
             </button>
           </div>
@@ -537,12 +185,12 @@
       </section>
 
       <!-- DEPARTAMENTOS -->
-      <section id="modulo_departamentos" style="display:none;">
+      <section id="modulo_departamentos" data-estilo-pagina="estilo-2">
         <div class="caja_vista">
           <div class="cabecera_vista">
             <h2 class="titulo_vista">Departamentos</h2>
             <button class="boton_guardar"
-              onclick="cargarDepartamentos()">
+              data-evento-pagina="evento-9">
               Refrescar
             </button>
           </div>
@@ -569,334 +217,8 @@
     </div>
   </main>
 
-  <script>
-    const $ = id => document.getElementById(id);
-    const API = 'https://ocid.onrender.com';
 
-    let usuario = null;
 
-    try {
-      usuario = JSON.parse(localStorage.getItem('usuario_ocid'));
-    } catch (error) {
-      localStorage.removeItem('usuario_ocid');
-    }
-
-    if (!usuario || !usuario.id) {
-      window.location.replace('login.html');
-    } else {
-      $('nombreUsuario').textContent =
-        usuario.nombre || usuario.correo || 'Usuario';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!usuario || !usuario.id) return;
-
-      cargarUsuarios();
-      cargarAnuncios();
-      cargarDepartamentos();
-    });
-
-    function escaparHTML(valor) {
-      return String(valor ?? '').replace(/[&<>"']/g, caracter => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      })[caracter]);
-    }
-
-    async function leerRespuesta(res) {
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Ocurrió un error en la solicitud.');
-      }
-
-      return data;
-    }
-
-    function mostrarMensaje(texto, esError = false) {
-      const aviso = $('aviso_notificacion');
-
-      aviso.textContent = texto;
-      aviso.className = 'alerta_mensaje ' +
-        (esError ? 'alerta_error' : 'alerta_exito');
-
-      aviso.style.display = 'block';
-    }
-
-    function mostrarSeccion(seccion, boton) {
-      $('modulo_usuarios').style.display =
-        seccion === 'usuarios' ? 'block' : 'none';
-
-      $('modulo_anuncios').style.display =
-        seccion === 'anuncios' ? 'block' : 'none';
-
-      $('modulo_departamentos').style.display =
-        seccion === 'departamentos' ? 'block' : 'none';
-
-      document.querySelectorAll('.item_menu').forEach(elemento => {
-        elemento.classList.remove('activo');
-      });
-
-      if (boton) boton.classList.add('activo');
-    }
-
-    async function cargarUsuarios() {
-      const tbody = $('tabla_usuarios_body');
-
-      try {
-        const res = await fetch(API + '/usuarios');
-        const data = await leerRespuesta(res);
-
-        $('conteo_usr').textContent = data.length;
-
-        if (!data.length) {
-          tbody.innerHTML =
-            '<tr><td colspan="6">No hay usuarios registrados.</td></tr>';
-          return;
-        }
-
-        tbody.innerHTML = data.map(u => `
-          <tr>
-            <td>#${Number(u.id)}</td>
-            <td>${escaparHTML(u.nombre)}</td>
-            <td>${escaparHTML(u.correo)}</td>
-            <td>
-              <span class="badge_tag">
-                ${escaparHTML(u.rol || 'Docente')}
-              </span>
-            </td>
-            <td>${escaparHTML(u.departamento_nombre || 'General')}</td>
-            <td>
-              <button class="boton_eliminar"
-                onclick="eliminarUsuario(${Number(u.id)})">
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        `).join('');
-
-      } catch (error) {
-        tbody.innerHTML =
-          `<tr><td colspan="6">${escaparHTML(error.message)}</td></tr>`;
-      }
-    }
-
-    async function registrarUsuario(evento) {
-      evento.preventDefault();
-
-      const payload = {
-        nombre: $('usr_nombre').value.trim(),
-        correo: $('usr_correo').value.trim(),
-        password: $('usr_pass').value,
-        rol: $('usr_rol').value
-      };
-
-      try {
-        const res = await fetch(API + '/usuarios', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await leerRespuesta(res);
-
-        if (data.success) {
-          $('form_nuevo_usuario').reset();
-          mostrarMensaje('Usuario registrado correctamente.');
-          await cargarUsuarios();
-        } else {
-          mostrarMensaje(data.error || 'No se pudo registrar.', true);
-        }
-
-      } catch (error) {
-        mostrarMensaje(error.message, true);
-      }
-    }
-
-    async function eliminarUsuario(id) {
-      if (Number(id) === Number(usuario.id)) {
-        mostrarMensaje('No puedes eliminar el usuario de tu sesión actual.', true);
-        return;
-      }
-
-      if (!confirm('¿Seguro que quieres eliminar este usuario?')) return;
-
-      try {
-        const res = await fetch(API + '/usuarios/' + Number(id), {
-          method: 'DELETE'
-        });
-
-        const data = await leerRespuesta(res);
-
-        if (!data.success) {
-          throw new Error(data.error || 'No se pudo eliminar el usuario.');
-        }
-
-        mostrarMensaje('Usuario eliminado correctamente.');
-        await cargarUsuarios();
-
-      } catch (error) {
-        mostrarMensaje(error.message, true);
-      }
-    }
-
-    async function cargarAnuncios() {
-      const contenedor = $('lista_anuncios');
-
-      try {
-        const res = await fetch(API + '/anuncios');
-        const data = await leerRespuesta(res);
-
-        $('conteo_anu').textContent = data.length;
-
-        if (!data.length) {
-          contenedor.innerHTML =
-            '<p class="texto_vacio">No hay anuncios publicados.</p>';
-          return;
-        }
-
-        contenedor.innerHTML = data.map(a => `
-          <article class="tarjeta_anuncio">
-            <div class="encabezado_anuncios">
-              <span class="badge_tag">
-                ${escaparHTML(a.prioridad || 'Informativo')}
-              </span>
-
-              <button class="boton_eliminar"
-                onclick="eliminarAnuncio(${Number(a.id)})">
-                Eliminar
-              </button>
-            </div>
-
-            <h3>${escaparHTML(a.titulo)}</h3>
-
-            <div class="contenido_anuncio">${escaparHTML(a.contenido)}</div>
-
-            <div class="info_anuncio">
-              Autor: ${escaparHTML(a.autor_nombre || 'Administración')}
-            </div>
-
-            <div class="info_anuncio">
-              ${a.fecha
-                ? escaparHTML(new Date(a.fecha).toLocaleString())
-                : ''}
-            </div>
-          </article>
-        `).join('');
-
-      } catch (error) {
-        contenedor.innerHTML =
-          `<p class="texto_vacio">${escaparHTML(error.message)}</p>`;
-      }
-    }
-
-    async function publicarAnuncio(evento) {
-      evento.preventDefault();
-
-      let usuarioActual;
-
-      try {
-        usuarioActual = JSON.parse(localStorage.getItem('usuario_ocid'));
-      } catch (error) {
-        usuarioActual = null;
-      }
-
-      if (!usuarioActual || !usuarioActual.id) {
-        mostrarMensaje('Inicia sesión nuevamente para publicar.', true);
-        window.location.replace('login.html');
-        return;
-      }
-
-      const payload = {
-        titulo: $('anu_titulo').value.trim(),
-        contenido: $('anu_contenido').value.trim(),
-        prioridad: $('anu_prioridad').value,
-        autor_id: Number(usuarioActual.id),
-        departamento_id: usuarioActual.departamento_id || null
-      };
-
-      try {
-        const res = await fetch(API + '/anuncios', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await leerRespuesta(res);
-
-        if (!data.success) {
-          throw new Error(data.error || 'No se pudo publicar el anuncio.');
-        }
-
-        $('form_nuevo_anuncio').reset();
-        mostrarMensaje('Anuncio publicado correctamente.');
-        await cargarAnuncios();
-
-      } catch (error) {
-        mostrarMensaje(error.message, true);
-      }
-    }
-
-    async function eliminarAnuncio(id) {
-      if (!confirm('¿Seguro que quieres eliminar este anuncio?')) return;
-
-      try {
-        const res = await fetch(API + '/anuncios/' + Number(id), {
-          method: 'DELETE'
-        });
-
-        const data = await leerRespuesta(res);
-
-        if (!data.success) {
-          throw new Error(data.error || 'No se pudo eliminar el anuncio.');
-        }
-
-        mostrarMensaje('Anuncio eliminado correctamente.');
-        await cargarAnuncios();
-
-      } catch (error) {
-        mostrarMensaje(error.message, true);
-      }
-    }
-
-    async function cargarDepartamentos() {
-      const tbody = $('tabla_deptos_body');
-
-      try {
-        const res = await fetch(API + '/departamentos');
-        const data = await leerRespuesta(res);
-
-        $('conteo_dep').textContent = data.length;
-
-        if (!data.length) {
-          tbody.innerHTML =
-            '<tr><td colspan="4">No hay departamentos registrados.</td></tr>';
-          return;
-        }
-
-        tbody.innerHTML = data.map(d => `
-          <tr>
-            <td>#${Number(d.id)}</td>
-            <td>${escaparHTML(d.nombre)}</td>
-            <td>${escaparHTML(d.descripcion || 'Sin descripción')}</td>
-            <td>${escaparHTML(d.nombre_jefe || 'Sin jefe asignado')}</td>
-          </tr>
-        `).join('');
-
-      } catch (error) {
-        tbody.innerHTML =
-          `<tr><td colspan="4">${escaparHTML(error.message)}</td></tr>`;
-      }
-    }
-
-    function cerrarSesion() {
-      localStorage.removeItem('usuario_ocid');
-      window.location.replace('login.html');
-    }
-  </script>
-
+<script src="js/inicio-pagina.js"></script>
 </body>
 </html>

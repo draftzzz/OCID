@@ -1,434 +1,369 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docentes - OCID</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CBTIS 258 - Gestión de Docentes</title>
+
+
+
+<!-- END: EstilosBase -->
+
+
+<link rel="stylesheet" href="css/docentes.css"/>
 </head>
 <body>
-    <div class="app">
-        <!-- Barra Lateral -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>OCID</h2>
-                <p>Plataforma Escolar</p>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="index.html" class="nav-item"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
-                    <li><a href="mi-departamento.html" class="nav-item"><i class="fas fa-building"></i> <span>Mi departamento</span></a></li>
-                    <li><a href="anuncios.html" class="nav-item"><i class="fas fa-bullhorn"></i> <span>Anuncios</span></a></li>
-                    <li><a href="archivos.html" class="nav-item"><i class="fas fa-folder-open"></i> <span>Archivos</span></a></li>
-                    <li><a href="docentes.html" class="nav-item active"><i class="fas fa-users"></i> <span>Docentes</span></a></li>
-                    <li><a href="calendario.html" class="nav-item"><i class="fas fa-calendar-alt"></i> <span>Calendario</span></a></li>
-                    <li><a href="asistente-ia.html" class="nav-item"><i class="fas fa-robot"></i> <span>Asistente IA</span></a></li>
-                    <li><a href="configuracion.html" class="nav-item"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
-                    <li><a href="#" class="nav-item logout"><i class="fas fa-sign-out-alt"></i> <span>Cerrar sesión</span></a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Contenido Principal -->
-        <main class="main-content">
-            <!-- Barra Superior -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <h1>OCID</h1>
-                </div>
-                <div class="topbar-center">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar docentes...">
-                    </div>
-                </div>
-                <div class="topbar-right">
-                    <div class="topbar-user">
-                        <div class="user-info">
-                            <img src="https://via.placeholder.com/40" alt="Usuario">
-                            <span>Docente Ejemplo</span>
-                        </div>
-                        <div class="user-menu">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge">3</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Panel Principal -->
-            <div class="dashboard">
-                <div class="dashboard-header">
-                    <h2>Docentes</h2>
-                    <p>Consulta el directorio de docentes por departamento</p>
-                </div>
-
-                <!-- Filtros y acciones -->
-                <div class="dashboard-section filtros-section">
-                    <div class="filtros-header">
-                        <h3><i class="fas fa-filter"></i> Filtros</h3>
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Agregar Docente</a>
-                    </div>
-                    <div class="filtros-content">
-                        <div class="filtro-group">
-                            <label for="filtroDepartamento">Departamento:</label>
-                            <select id="filtroDepartamento">
-                                <option value="">Todos los departamentos</option>
-                                <option value="academico">Académico</option>
-                                <option value="servicios_escolares">Servicios Escolares</option>
-                                <option value="vinculación">Vinculación</option>
-                                <option value="orientacion">Orientación</option>
-                                <option value="control_escolar">Control Escolar</option>
-                            </select>
-                        </div>
-                        <div class="filtro-group">
-                            <label for="filtroRol">Rol:</label>
-                            <select id="filtroRol">
-                                <option value="">Todos los roles</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="jefe_departamento">Jefe de Departamento</option>
-                                <option value="docente">Docente</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lista de docentes -->
-                <div class="dashboard-section docentes-lista-section">
-                    <h3><i class="fas fa-list"></i> Lista de Docentes</h3>
-                    <div class="docentes-container">
-                        <!-- Docente 1 -->
-                        <div class="docente-card">
-                            <div class="docente-header">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>María González López</h4>
-                                    <p>Jefe de Departamento Académico</p>
-                                </div>
-                            </div>
-                            <div class="docente-body">
-                                <div class="info-item">
-                                    <span class="info-label">Email:</span>
-                                    <span class="info-value">maria.gonzalez@edu.mx</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Departamento:</span>
-                                    <span class="info-value">Académico</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Teléfono:</span>
-                                    <span class="info-value">555-1234</span>
-                                </div>
-                            </div>
-                            <div class="docente-footer">
-                                <span class="status active">Activo</span>
-                                <div class="docente-actions">
-                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Docente 2 -->
-                        <div class="docente-card">
-                            <div class="docente-header">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>Carlos Ramírez Méndez</h4>
-                                    <p>Docente de Matemáticas</p>
-                                </div>
-                            </div>
-                            <div class="docente-body">
-                                <div class="info-item">
-                                    <span class="info-label">Email:</span>
-                                    <span class="info-value">carlos.ramirez@edu.mx</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Departamento:</span>
-                                    <span class="info-value">Académico</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Teléfono:</span>
-                                    <span class="info-value">555-5678</span>
-                                </div>
-                            </div>
-                            <div class="docente-footer">
-                                <span class="status active">Activo</span>
-                                <div class="docente-actions">
-                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Docente 3 -->
-                        <div class="docente-card">
-                            <div class="docente-header">
-                                <i class="fas fa-user"></i>
-                                <div>
-                                    <h4>Ana Torres Ruiz</h4>
-                                    <p>Docente de Servicios Escolares</p>
-                                </div>
-                            </div>
-                            <div class="docente-body">
-                                <div class="info-item">
-                                    <span class="info-label">Email:</span>
-                                    <span class="info-value">ana.torres@edu.mx</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Departamento:</span>
-                                    <span class="info-value">Servicios Escolares</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Teléfono:</span>
-                                    <span class="info-value">555-9012</span>
-                                </div>
-                            </div>
-                            <div class="docente-footer">
-                                <span class="status active">Activo</span>
-                                <div class="docente-actions">
-                                    <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar
+<!-- BEGIN: ContenedorPrincipal -->
+<div class="layout_sistema" data-purpose="contenedor-global">
+<!-- BEGIN: BarraLateral -->
+<aside class="barra_lateral" data-purpose="navegacion-sistema">
+<div class="logo_seccion">
+<div class="logo_icono">
+<!-- Icono Escudo CBTIS -->
+<svg fill="none" height="20" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+</div>
+<div class="logo_textos">
+<span class="logo_titulo">CBTIS 258</span>
+<span class="logo_subtitulo">Plataforma de Coordinación Escolar</span>
 </div>
 </div>
-
-<div class="docente-card">
-    <div class="docente-header">
-        <i class="fas fa-user"></i>
-        <div>
-            <h4>Luis Hernández Castillo</h4>
-            <p>Docente de Vinculación</p>
-        </div>
-    </div>
-    <div class="docente-body">
-        <div class="info-item">
-            <span class="info-label">Email:</span>
-            <span class="info-value">luis.hernandez@edu.mx</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Departamento:</span>
-            <span class="info-value">Vinculación</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Teléfono:</span>
-            <span class="info-value">555-3456</span>
-        </div>
-    </div>
-    <div class="docente-footer">
-        <span class="status active">Activo</span>
-        <div class="docente-actions">
-            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-        </div>
-    </div>
+<nav class="menu_navegacion">
+<a class="enlace_navegacion" href="inicio.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
 </div>
-
-<div class="docente-card">
-    <div class="docente-header">
-        <i class="fas fa-user"></i>
-        <div>
-            <h4>Juana Pérez Martínez</h4>
-            <p>Orientadora Vocacional</p>
-        </div>
-    </div>
-    <div class="docente-body">
-        <div class="info-item">
-            <span class="info-label">Email:</span>
-            <span class="info-value">juana.perez@edu.mx</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Departamento:</span>
-            <span class="info-value">Orientación</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Teléfono:</span>
-            <span class="info-value">555-7890</span>
-        </div>
-    </div>
-    <div class="docente-footer">
-        <span class="status active">Activo</span>
-        <div class="docente-actions">
-            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-        </div>
-    </div>
+<span>Inicio</span>
+</a>
+<a class="enlace_navegacion" href="mi-departamento.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M3 21h18M3 7v14M21 7v14M6 11h3m-3 4h3m6-4h3m-3 4h3M9 3l3-1 3 1v4H9V3z"></path></svg>
 </div>
-
-<div class="docente-card">
-    <div class="docente-header">
-        <i class="fas fa-user"></i>
-        <div>
-            <h4>Roberto Gómez Sánchez</h4>
-            <p>Docente de Control Escolar</p>
-        </div>
-    </div>
-    <div class="docente-body">
-        <div class="info-item">
-            <span class="info-label">Email:</span>
-            <span class="info-value">roberto.gomez@edu.mx</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Departamento:</span>
-            <span class="info-value">Control Escolar</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Teléfono:</span>
-            <span class="info-value">555-2345</span>
-        </div>
-    </div>
-    <div class="docente-footer">
-        <span class="status active">Activo</span>
-        <div class="docente-actions">
-            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-        </div>
-    </div>
+<span>Mi Departamento</span>
+</a>
+<a class="enlace_navegacion" href="anuncios.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M11 5.882V19.24a1.76 1.76 0 0 1-3.417.592l-2.147-6.15M18 10a6 6 0 0 0-12 0v2a6 6 0 0 0 12 0v-2z"></path></svg>
 </div>
-
-<div class="docente-card">
-    <div class="docente-header">
-        <i class="fas fa-user"></i>
-        <div>
-            <h4>Laura Díaz López</h4>
-            <p>Docente de Historia</p>
-        </div>
-    </div>
-    <div class="docente-body">
-        <div class="info-item">
-            <span class="info-label">Email:</span>
-            <span class="info-value">laura.diaz@edu.mx</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Departamento:</span>
-            <span class="info-value">Académico</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">Teléfono:</span>
-            <span class="info-value">555-6789</span>
-        </div>
-    </div>
-    <div class="docente-footer">
-        <span class="status active">Activo</span>
-        <div class="docente-actions">
-            <a href="#" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Editar</a>
-        </div>
-    </div>
+<span>Anuncios</span>
+</a>
+<a class="enlace_navegacion" href="archivos.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
 </div>
+<span>Archivos</span>
+</a>
+<!-- Item Activo: Docentes -->
+<a class="enlace_navegacion enlace_activo" href="docentes.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+</div>
+<span>Docentes</span>
+</a>
+<a class="enlace_navegacion" href="calendario.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+</div>
+<span>Calendario</span>
+</a>
+<a class="enlace_navegacion" href="tareas.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+</div>
+<span>Tareas</span>
+</a>
+<a class="enlace_navegacion" href="notificaciones.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+</div>
+<span>Notificaciones</span>
+</a>
+<div class="separador_menu"></div>
+<a class="enlace_navegacion" href="configuracion.html">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+</div>
+<span>Mi perfil</span>
+</a>
+<a class="enlace_navegacion" href="#">
+<div class="icono_menu">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
+</div>
+<span>Cerrar sesión</span>
+</a>
+</nav>
+</aside>
+<!-- END: BarraLateral -->
+<!-- BEGIN: AreaContenido -->
+<div class="area_principal">
+<!-- BEGIN: BarraSuperior -->
+<header class="barra_superior" data-purpose="encabezado-superior">
+<!-- Buscador Global -->
+<div class="buscador_global_contenedor">
+<div class="icono_buscador_global">
+<svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="15"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</div>
+<input class="input_buscador_global" placeholder="Buscar..." type="text"/>
+</div>
+<!-- Acciones Usuario -->
+<div class="usuario_acciones_contenedor">
+<button aria-label="Notificaciones" class="campana_notificaciones_btn">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+<span class="badge_notificaciones">3</span>
+</button>
+<div class="tarjeta_usuario_perfil">
+<div class="avatar_usuario">CR</div>
+<div class="detalles_usuario">
+<span class="nombre_usuario">Carlos Ramírez</span>
+<span class="rol_usuario">Jefe de Departamento</span>
+</div>
+</div>
+</div>
+</header>
+<!-- END: BarraSuperior -->
+<!-- BEGIN: ContenidoPrincipal -->
+<main class="contenido_principal" data-purpose="contenido-docentes">
+<!-- Cabecera de la Página -->
+<div class="cabecera_seccion">
+<div>
+<h1 class="titulo_docentes">Docentes</h1>
+<p class="subtitulo_docentes">Gestiona la información de los docentes del plantel.</p>
+</div>
+<button class="boton_nuevo_docente" id="btn_abrir_modal" data-evento-pagina="evento-1">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" width="16"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+            Nuevo docente
+          </button>
+</div>
+<!-- Filtros y Búsqueda -->
+<div class="barra_filtros">
+<div class="filtro_buscador_contenedor">
+<div class="icono_buscador_filtro">
+<svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="15"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</div>
+<input class="input_filtro_nombre" id="filtro_nombre_input" data-evento-pagina="evento-2" placeholder="Buscar por nombre..." type="text"/>
+</div>
+<select class="select_filtro" id="filtro_departamento" data-evento-pagina="evento-3">
+<option value="todos">Todos los departamentos</option>
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Vinculación">Vinculación</option>
+<option value="Orientación">Orientación</option>
+</select>
+<select class="select_filtro" id="filtro_estado" data-evento-pagina="evento-4">
+<option value="todos">Todos los estados</option>
+<option value="Activo">Activo</option>
+<option value="Inactivo">Inactivo</option>
+</select>
+</div>
+<!-- BEGIN: TablaDocentes -->
+<div class="contenedor_tabla">
+<table class="tabla_docentes">
+<thead class="encabezado_tabla">
+<tr>
+<th class="celda_encabezado">Nombre</th>
+<th class="celda_encabezado">Correo</th>
+<th class="celda_encabezado">Departamento</th>
+<th class="celda_encabezado">Rol</th>
+<th class="celda_encabezado">Estado</th>
+<th class="celda_encabezado" data-estilo-pagina="estilo-1">Acciones</th>
+</tr>
+</thead>
+<tbody id="cuerpo_tabla_docentes">
+<!-- Docente 1 -->
+<tr class="fila_docente" data-departamento="Servicios Escolares" data-estado="Activo" data-nombre="Ana López García">
+<td class="celda_docente">
+<div class="columna_nombre_info">
+<div class="avatar_docente avatar_morado">AL</div>
+<span class="texto_nombre_docente">Ana López García</span>
+</div>
+</td>
+<td class="celda_docente">ana.lopez@cbtis258.edu.mx</td>
+<td class="celda_docente">Servicios Escolares</td>
+<td class="celda_docente">
+<span class="badge_rol badge_rol_jefe">Jefe</span>
+</td>
+<td class="celda_docente">
+<span class="badge_estado badge_estado_activo">
+<span class="punto_estado punto_activo"></span>
+                    Activo
+                  </span>
+</td>
+<td class="celda_docente" data-estilo-pagina="estilo-2">
+<button class="boton_accion_fila" title="Opciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+</button>
+</td>
+</tr>
+<!-- Docente 2 -->
+<tr class="fila_docente" data-departamento="Control Escolar" data-estado="Activo" data-nombre="Luis Mendoza Ruiz">
+<td class="celda_docente">
+<div class="columna_nombre_info">
+<div class="avatar_docente avatar_azul">LM</div>
+<span class="texto_nombre_docente">Luis Mendoza Ruiz</span>
+</div>
+</td>
+<td class="celda_docente">luis.mendoza@cbtis258.edu.mx</td>
+<td class="celda_docente">Control Escolar</td>
+<td class="celda_docente">
+<span class="badge_rol badge_rol_docente">Docente</span>
+</td>
+<td class="celda_docente">
+<span class="badge_estado badge_estado_activo">
+<span class="punto_estado punto_activo"></span>
+                    Activo
+                  </span>
+</td>
+<td class="celda_docente" data-estilo-pagina="estilo-3">
+<button class="boton_accion_fila" title="Opciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+</button>
+</td>
+</tr>
+<!-- Docente 3 -->
+<tr class="fila_docente" data-departamento="Académico" data-estado="Activo" data-nombre="María Torres Silva">
+<td class="celda_docente">
+<div class="columna_nombre_info">
+<div class="avatar_docente avatar_verde">MT</div>
+<span class="texto_nombre_docente">María Torres Silva</span>
+</div>
+</td>
+<td class="celda_docente">maria.torres@cbtis258.edu.mx</td>
+<td class="celda_docente">Académico</td>
+<td class="celda_docente">
+<span class="badge_rol badge_rol_docente">Docente</span>
+</td>
+<td class="celda_docente">
+<span class="badge_estado badge_estado_activo">
+<span class="punto_estado punto_activo"></span>
+                    Activo
+                  </span>
+</td>
+<td class="celda_docente" data-estilo-pagina="estilo-4">
+<button class="boton_accion_fila" title="Opciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+</button>
+</td>
+</tr>
+<!-- Docente 4 -->
+<tr class="fila_docente" data-departamento="Vinculación" data-estado="Activo" data-nombre="Jorge Hernández Díaz">
+<td class="celda_docente">
+<div class="columna_nombre_info">
+<div class="avatar_docente avatar_ambar">JH</div>
+<span class="texto_nombre_docente">Jorge Hernández Díaz</span>
+</div>
+</td>
+<td class="celda_docente">jorge.hernandez@cbtis258.edu.mx</td>
+<td class="celda_docente">Vinculación</td>
+<td class="celda_docente">
+<span class="badge_rol badge_rol_docente">Docente</span>
+</td>
+<td class="celda_docente">
+<span class="badge_estado badge_estado_activo">
+<span class="punto_estado punto_activo"></span>
+                    Activo
+                  </span>
+</td>
+<td class="celda_docente" data-estilo-pagina="estilo-5">
+<button class="boton_accion_fila" title="Opciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+</button>
+</td>
+</tr>
+<!-- Docente 5 -->
+<tr class="fila_docente" data-departamento="Orientación" data-estado="Inactivo" data-nombre="Elena Vargas Cruz">
+<td class="celda_docente">
+<div class="columna_nombre_info">
+<div class="avatar_docente avatar_rojo">EV</div>
+<span class="texto_nombre_docente">Elena Vargas Cruz</span>
+</div>
+</td>
+<td class="celda_docente">elena.vargas@cbtis258.edu.mx</td>
+<td class="celda_docente">Orientación</td>
+<td class="celda_docente">
+<span class="badge_rol badge_rol_docente">Docente</span>
+</td>
+<td class="celda_docente">
+<span class="badge_estado badge_estado_inactivo">
+<span class="punto_estado punto_inactivo"></span>
+                    Inactivo
+                  </span>
+</td>
+<td class="celda_docente" data-estilo-pagina="estilo-6">
+<button class="boton_accion_fila" title="Opciones">
+<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Paginación -->
+<div class="barra_paginacion">
+<span class="texto_paginacion" id="resumen_paginacion">Mostrando 1 a 5 de 12 docentes</span>
+<div class="botones_paginacion_grupo">
+<button class="btn_pagina" title="Anterior">&lt;</button>
+<button class="btn_pagina btn_pagina_activa">1</button>
+<button class="btn_pagina">2</button>
+<button class="btn_pagina">3</button>
+<button class="btn_pagina" title="Siguiente">&gt;</button>
+</div>
+</div>
+</div>
+<!-- END: TablaDocentes -->
+</main>
+<!-- END: ContenidoPrincipal -->
+</div>
+<!-- END: AreaContenido -->
+</div>
+<!-- END: ContenedorPrincipal -->
+<!-- BEGIN: ModalNuevoDocente -->
+<div class="modal_overlay" data-purpose="dialogo-modal" id="modal_registro_docente">
+<div class="modal_contenedor">
+<div class="modal_cabecera">
+<h3 class="modal_titulo">Registrar nuevo docente</h3>
+<button class="modal_boton_cerrar" data-evento-pagina="evento-5">×</button>
+</div>
+<form action="/registro" class="modal_formulario" id="formulario_docente" method="POST" data-evento-pagina="evento-6">
+<div class="grupo_campo">
+<label class="label_campo" for="nombre_docente_input">Nombre completo</label>
+<input class="input_modal" id="nombre_docente_input" name="nombre" placeholder="Ej. Roberto Sánchez Gómez" required="" type="text"/>
+</div>
+<div class="grupo_campo">
+<label class="label_campo" for="correo_docente_input">Correo institucional</label>
+<input class="input_modal" id="correo_docente_input" name="correo" placeholder="nombre.apellido@cbtis258.edu.mx" required="" type="email"/>
+</div>
+<div class="grupo_campo">
+<label class="label_campo" for="password_docente_input">Contraseña inicial</label>
+<input class="input_modal" id="password_docente_input" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+<div class="grupo_campo">
+<label class="label_campo" for="departamento_select">Departamento</label>
+<select class="select_modal" id="departamento_select" name="departamento" required="">
+<option value="Servicios Escolares">Servicios Escolares</option>
+<option value="Control Escolar">Control Escolar</option>
+<option value="Académico">Académico</option>
+<option value="Vinculación">Vinculación</option>
+<option value="Orientación">Orientación</option>
+</select>
+</div>
+<div class="grupo_campo">
+<label class="label_campo" for="rol_select">Rol asignado</label>
+<select class="select_modal" id="rol_select" name="rol" required="">
+<option value="Docente">Docente</option>
+<option value="Jefe">Jefe</option>
+</select>
+</div>
+<div class="modal_pie">
+<button class="boton_cancelar_modal" data-evento-pagina="evento-7" type="button">Cancelar</button>
+<button class="boton_guardar_modal" type="submit">Guardar Docente</button>
+</div>
+</form>
+</div>
+</div>
+<!-- END: ModalNuevoDocente -->
+<!-- BEGIN: ScriptsInteractividad -->
 
-                    </div>
-
-                    <!-- Paginación -->
-                    <div class="paginacion">
-                        <button class="btn btn-sm btn-outline">&laquo; Anterior</button>
-                        <span class="pagina-actual">1</span>
-                        <span>de</span>
-                        <span class="total-paginas">2</span>
-                        <button class="btn btn-sm btn-outline">Siguiente &raquo;</button>
-                    </div>
-                </div>
-            </main>
-        </div>
-
-        <!-- Modals (misma estructura que en index.html) -->
-        <div class="modal" id="loginModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Iniciar Sesión</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-                </form>
-                <p class="register-link">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="registerModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Registrarse</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="registerNombre">Nombre completo</label>
-                        <input type="text" id="registerNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerRol">Rol</label>
-                        <select id="registerRol" required>
-                            <option value="">Seleccione su rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="jefe_departamento">Jefe de Departamento</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerDepartamento">Departamento</label>
-                        <select id="registerDepartamento" required>
-                            <option value="">Seleccione su departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Registrarse</button>
-                </form>
-                <p class="register-link">Ya tienes cuenta? <a href="#" id="showLoginLink">Inicia sesión aquí</a></p>
-            </div>
-        </div>
-
-        <div class="modal" id="createDocenteModal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Agregar Nuevo Docente</h2>
-                <form id="docenteForm">
-                    <div class="form-group">
-                        <label for="docenteNombre">Nombre completo</label>
-                        <input type="text" id="docenteNombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="docenteEmail">Email</label>
-                        <input type="email" id="docenteEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="docentePassword">Password</label>
-                        <input type="password" id="docentePassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="docenteDepartamento">Departamento</label>
-                        <select id="docenteDepartamento" required>
-                            <option value="">Seleccione departamento</option>
-                            <option value="servicios_escolares">Servicios Escolares</option>
-                            <option value="academico">Académico</option>
-                            <option value="vinculación">Vinculación</option>
-                            <option value="orientacion">Orientación</option>
-                            <option value="control_escolar">Control Escolar</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="docenteRol">Rol</label>
-                        <select id="docenteRol" required>
-                            <option value="">Seleccione rol</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="jefe_departamento">Jefe de Departamento</option>
-                            <option value="docente">Docente</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Agregar Docente</button>
-                </form>
-            </div>
-        </div>
-
-        <script src="js/main.js"></script>
-    </body>
-</html>
+<!-- END: ScriptsInteractividad -->
+<script src="js/docentes.js"></script>
+</body></html>
