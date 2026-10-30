@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="../test/test2.css">
+    <link rel="stylesheet" href="../css/menu-theme.css">
 </head>
 
 <body>
@@ -31,28 +32,28 @@
         </div>
         <!-- Menú de Enlaces -->
         <nav class="navegacion_lateral">
-            <a class="enlace_navegacion activo" href="#inicio" id="nav_inicio">
+            <a class="enlace_navegacion activo" href="inicio.html" id="nav_inicio">
                 <i class="fa-solid fa-house icono_nav"></i>
                 <span>Inicio</span>
             </a>
-            <a class="enlace_navegacion" href="#mi_departamento" id="nav_departamento" onclick="cargarDepartamentos()">
+            <a class="enlace_navegacion" href="mi-departamento.html" id="nav_departamento">
                 <i class="fa-solid fa-building-user icono_nav"></i>
                 <span>Mi Departamento</span>
             </a>
-            <a class="enlace_navegacion" href="#anuncios" id="nav_anuncios">
+            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
                 <i class="fa-solid fa-bullhorn icono_nav"></i>
                 <span>Anuncios</span>
                 <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
             </a>
-            <a class="enlace_navegacion" href="#archivos" id="nav_archivos">
+            <a class="enlace_navegacion" href="archivos.html" id="nav_archivos">
                 <i class="fa-regular fa-folder-open icono_nav"></i>
                 <span>Archivos</span>
             </a>
-            <a class="enlace_navegacion" href="#docentes" id="nav_docentes" onclick="abrirModalDocentes()">
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
                 <i class="fa-solid fa-users-gear icono_nav"></i>
                 <span>Docentes</span>
             </a>
-            <a class="enlace_navegacion" href="#calendario" id="nav_calendario">
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
                 <i class="fa-regular fa-calendar-days icono_nav"></i>
                 <span>Calendario</span>
             </a>
@@ -61,7 +62,7 @@
                 <span>Asistente IA</span>
                 <span class="insignia_nuevo">Nuevo</span>
             </a>
-            <a class="enlace_navegacion" href="#configuracion" id="nav_configuracion">
+            <a class="enlace_navegacion" href="configuracion.html" id="nav_configuracion">
                 <i class="fa-solid fa-gear icono_nav"></i>
                 <span>Configuración</span>
             </a>
@@ -138,7 +139,7 @@
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Avisos nuevos</span>
                         <span class="valor_metrica" id="conteo_anu">3</span>
-                        <a class="enlace_metrica enlace_metrica_azul" href="#anuncios" onclick="cargarAnuncios()">
+                        <a class="enlace_metrica enlace_metrica_azul" href="anuncios.html">
                             Ver todos <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -151,7 +152,7 @@
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Archivos disponibles</span>
                         <span class="valor_metrica" id="conteo_dep">12</span>
-                        <a class="enlace_metrica enlace_metrica_verde" href="#archivos">
+                        <a class="enlace_metrica enlace_metrica_verde" href="archivos.html">
                             Ver archivos <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -164,7 +165,7 @@
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Docentes en el área</span>
                         <span class="valor_metrica" id="conteo_usr">8</span>
-                        <a class="enlace_metrica enlace_metrica_morada" href="#docentes" onclick="abrirModalDocentes()">
+                        <a class="enlace_metrica enlace_metrica_morada" href="docentes.html">
                             Ver miembros <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -177,7 +178,7 @@
                     <div class="cuerpo_metrica">
                         <span class="titulo_metrica">Próximos eventos</span>
                         <span class="valor_metrica" id="metrica_conteo_eventos">2</span>
-                        <a class="enlace_metrica enlace_metrica_naranja" href="#calendario">
+                        <a class="enlace_metrica enlace_metrica_naranja" href="calendario.html">
                             Ver calendario <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -189,7 +190,7 @@
                 <article class="bloque_blanco_anuncios">
                     <div class="encabezado_bloque_anuncios">
                         <h2 class="titulo_bloque">Últimos anuncios</h2>
-                        <a class="enlace_ver_todos" href="#ver_todos" onclick="cargarAnuncios()">
+                        <a class="enlace_ver_todos" href="anuncios.html">
                             Ver todos <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>

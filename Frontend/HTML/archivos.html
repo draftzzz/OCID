@@ -1,362 +1,261 @@
 <!DOCTYPE html>
+<html lang="es">
 
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CBTIS 258 - Gestión de Archivos</title>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CBTIS 258 - Plataforma de Coordinación Escolar</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- BEGIN: CustomStyleBlock -->
-
-<!-- END: CustomStyleBlock -->
+    <!-- Iconografía FontAwesome y Fuente Inter -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
 
-<link rel="stylesheet" href="css/archivos.css"/>
+    <!-- Hoja de Estilos -->
+    <link rel="stylesheet" href="css/anuncios.css" />
 </head>
-<body>
-<!-- BEGIN: ContenedorPrincipal -->
-<div class="contenedor_sistema" data-purpose="contenedor-raiz">
-<!-- BEGIN: BarraLateral -->
-<aside class="barra_lateral" data-purpose="navegacion-sistema">
-<!-- Encabezado del CBTIS 258 -->
-<div class="encabezado_lateral">
-<div class="logo_institucion">
-<span>258</span>
-</div>
-<div>
-<div class="titulo_logo">CBTIS 258</div>
-<div class="subtitulo_logo">Plataforma de Coordinación Escolar</div>
-</div>
-</div>
-<!-- Enlaces de navegación -->
-<nav class="menu_navegacion">
-<a class="item_menu" href="inicio.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-<span>Inicio</span>
-</a>
-<a class="item_menu" href="mi-departamento.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-<span>Mi Departamento</span>
-</a>
-<a class="item_menu" href="anuncios.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-<span>Anuncios</span>
-</a>
-<!-- Opción Activa: Archivos -->
-<a class="item_menu item_menu_activo" href="archivos.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-<span>Archivos</span>
-</a>
-<a class="item_menu" href="docentes.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-<span>Docentes</span>
-</a>
-<a class="item_menu" href="calendario.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
-<span>Calendario</span>
-</a>
-<a class="item_menu" href="tareas.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-<span>Tareas</span>
-</a>
-<a class="item_menu" href="notificaciones.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-<span>Notificaciones</span>
-<span class="badge_notificacion_lateral">3</span>
-</a>
-<a class="item_menu" href="configuracion.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-<span>Mi perfil</span>
-</a>
-</nav>
-<!-- Salir del sistema -->
-<div class="pie_lateral">
-<a class="item_menu" href="#">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
-<span>Cerrar sesión</span>
-</a>
-</div>
-</aside>
-<!-- END: BarraLateral -->
-<!-- BEGIN: AreaPrincipal -->
-<main class="area_principal">
-<!-- BEGIN: BarraSuperior -->
-<header class="barra_superior" data-purpose="cabecera-global">
-<!-- Buscador superior -->
-<div class="contenedor_busqueda_superior">
-<input class="input_busqueda_superior" placeholder="Buscar..." type="text"/>
-<svg class="icono_busqueda_superior" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<circle cx="11" cy="11" r="8"></circle>
-<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
-</svg>
-</div>
-<!-- Usuario y notificaciones -->
-<div class="bloque_usuario_superior">
-<button aria-label="Notificaciones" class="boton_campana" id="boton_notificaciones">
-<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20">
-<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-</svg>
-<span class="badge_campana">3</span>
-</button>
-<div class="perfil_usuario">
-<div class="avatar_usuario">CR</div>
-<div>
-<div class="nombre_usuario">Carlos Ramírez</div>
-<div class="cargo_usuario">Jefe de Departamento</div>
-</div>
-</div>
-</div>
-</header>
-<!-- END: BarraSuperior -->
-<!-- BEGIN: SeccionArchivos -->
-<section class="cuerpo_contenido" data-purpose="panel-archivos">
-<!-- Título y botón de acción principal -->
-<div class="encabezado_archivos">
-<div>
-<h1 class="titulo_seccion">Archivos</h1>
-<p class="subtitulo_seccion">Consulta, descarga y comparte documentos de tu departamento.</p>
-</div>
-<button class="boton_subir_archivo" id="abrir_modal_subir">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="17 8 12 3 7 8"></polyline>
-<line x1="12" x2="12" y1="3" y2="15"></line>
-</svg>
-<span>Subir archivo</span>
-</button>
-</div>
-<!-- Barra de filtros -->
-<div class="barra_filtros" data-purpose="filtros-archivos">
-<div class="filtro_busqueda">
-<svg class="icono_filtro_lupa" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-<circle cx="11" cy="11" r="8"></circle>
-<line x1="21" x2="16.65" y1="21" y2="16.65"></line>
-</svg>
-<input class="input_filtro" id="filtro_nombre" placeholder="Buscar por nombre..." type="text"/>
-</div>
-<select class="selector_filtro" id="filtro_departamento">
-<option value="todos">Todos los departamentos</option>
-<option value="servicios">Servicios Escolares</option>
-<option value="control">Control Escolar</option>
-<option value="academico">Académico</option>
-</select>
-<select class="selector_filtro" id="filtro_tipo">
-<option value="todos">Todos los tipos</option>
-<option value="pdf">PDF</option>
-<option value="xlsx">XLSX</option>
-<option value="docx">DOCX</option>
-</select>
-</div>
-<!-- Tabla con los datos solicitados -->
-<div class="tarjeta_tabla">
-<table class="tabla_archivos" id="tabla_documentos">
-<thead>
-<tr>
-<th>Nombre</th>
-<th>Tipo</th>
-<th>Departamento</th>
-<th>Usuario</th>
-<th>Fecha</th>
-<th>Acciones</th>
-</tr>
-</thead>
-<tbody>
-<!-- Fila 1: Reglamento de reinscripción.pdf -->
-<tr>
-<td>
-<div class="contenedor_nombre_archivo">
-<div class="icono_tipo_pdf">PDF</div>
-<div>
-<div class="texto_nombre_archivo">Reglamento de reinscripción.pdf</div>
-<div class="texto_tamano_archivo">2.4 MB</div>
-</div>
-</div>
-</td>
-<td><span class="badge_pdf">PDF</span></td>
-<td>Servicios Escolares</td>
-<td>Ana López García</td>
-<td>12/09/2026</td>
-<td>
-<div class="acciones_celda">
-<button class="boton_accion_icono" title="Descargar">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="7 10 12 15 17 10"></polyline>
-<line x1="12" x2="12" y1="15" y2="3"></line>
-</svg>
-</button>
-<button class="boton_accion_icono" title="Más opciones">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<circle cx="12" cy="12" r="1"></circle>
-<circle cx="12" cy="5" r="1"></circle>
-<circle cx="12" cy="19" r="1"></circle>
-</svg>
-</button>
-</div>
-</td>
-</tr>
-<!-- Fila 2: Lista de alumnos.xlsx -->
-<tr>
-<td>
-<div class="contenedor_nombre_archivo">
-<div class="icono_tipo_xlsx">XLSX</div>
-<div>
-<div class="texto_nombre_archivo">Lista de alumnos.xlsx</div>
-<div class="texto_tamano_archivo">1.1 MB</div>
-</div>
-</div>
-</td>
-<td><span class="badge_xlsx">XLSX</span></td>
-<td>Control Escolar</td>
-<td>Luis Mendoza Ruiz</td>
-<td>10/09/2026</td>
-<td>
-<div class="acciones_celda">
-<button class="boton_accion_icono" title="Descargar">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="7 10 12 15 17 10"></polyline>
-<line x1="12" x2="12" y1="15" y2="3"></line>
-</svg>
-</button>
-<button class="boton_accion_icono" title="Más opciones">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<circle cx="12" cy="12" r="1"></circle>
-<circle cx="12" cy="5" r="1"></circle>
-<circle cx="12" cy="19" r="1"></circle>
-</svg>
-</button>
-</div>
-</td>
-</tr>
-<!-- Fila 3: Lineamientos académicos.pdf -->
-<tr>
-<td>
-<div class="contenedor_nombre_archivo">
-<div class="icono_tipo_pdf">PDF</div>
-<div>
-<div class="texto_nombre_archivo">Lineamientos académicos.pdf</div>
-<div class="texto_tamano_archivo">3.7 MB</div>
-</div>
-</div>
-</td>
-<td><span class="badge_pdf">PDF</span></td>
-<td>Académico</td>
-<td>María Torres Silva</td>
-<td>08/09/2026</td>
-<td>
-<div class="acciones_celda">
-<button class="boton_accion_icono" title="Descargar">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="7 10 12 15 17 10"></polyline>
-<line x1="12" x2="12" y1="15" y2="3"></line>
-</svg>
-</button>
-<button class="boton_accion_icono" title="Más opciones">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<circle cx="12" cy="12" r="1"></circle>
-<circle cx="12" cy="5" r="1"></circle>
-<circle cx="12" cy="19" r="1"></circle>
-</svg>
-</button>
-</div>
-</td>
-</tr>
-<!-- Fila 4: Control de asistencia.xlsx -->
-<tr>
-<td>
-<div class="contenedor_nombre_archivo">
-<div class="icono_tipo_xlsx">XLSX</div>
-<div>
-<div class="texto_nombre_archivo">Control de asistencia.xlsx</div>
-<div class="texto_tamano_archivo">850 KB</div>
-</div>
-</div>
-</td>
-<td><span class="badge_xlsx">XLSX</span></td>
-<td>Servicios Escolares</td>
-<td>Jorge Hernández Díaz</td>
-<td>05/09/2026</td>
-<td>
-<div class="acciones_celda">
-<button class="boton_accion_icono" title="Descargar">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="7 10 12 15 17 10"></polyline>
-<line x1="12" x2="12" y1="15" y2="3"></line>
-</svg>
-</button>
-<button class="boton_accion_icono" title="Más opciones">
-<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="17">
-<circle cx="12" cy="12" r="1"></circle>
-<circle cx="12" cy="5" r="1"></circle>
-<circle cx="12" cy="19" r="1"></circle>
-</svg>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Paginación -->
-<div class="pie_paginador" data-purpose="paginador-archivos">
-<button aria-label="Anterior" class="item_paginacion">&lt;</button>
-<button class="item_paginacion item_paginacion_activo">1</button>
-<button class="item_paginacion">2</button>
-<button class="item_paginacion">3</button>
-<button aria-label="Siguiente" class="item_paginacion">&gt;</button>
-</div>
-</section>
-<!-- END: SeccionArchivos -->
-</main>
-<!-- END: AreaPrincipal -->
-</div>
-<!-- END: ContenedorPrincipal -->
-<!-- BEGIN: VentanaModalSubirArchivo -->
-<div class="modal_fondo" id="modal_subir_archivo">
-<div class="modal_caja">
-<div class="modal_encabezado">
-<h3 class="modal_titulo">Subir nuevo documento</h3>
-<button class="boton_cerrar_modal" id="cerrar_modal_subir">×</button>
-</div>
-<div class="modal_cuerpo">
-<!-- Arrastre o selección -->
-<div class="zona_arrastre_archivo" id="zona_archivo">
-<svg fill="none" height="32" stroke="#64748b" stroke-width="2" viewbox="0 0 24 24" width="32">
-<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-<polyline points="17 8 12 3 7 8"></polyline>
-<line x1="12" x2="12" y1="3" y2="15"></line>
-</svg>
-<div data-estilo-pagina="estilo-1">Arrastra tu archivo aquí o haz clic para explorar</div>
-<div data-estilo-pagina="estilo-2">Formatos aceptados: PDF, XLSX, DOCX (máx. 10MB)</div>
-<input accept=".pdf,.xlsx,.docx" id="input_archivo_oculto" data-estilo-pagina="estilo-3" type="file"/>
-</div>
-<div class="campo_formulario">
-<label class="etiqueta_campo" for="nombre_documento">Nombre del documento</label>
-<input class="input_modal" id="nombre_documento" placeholder="Ej. Lineamientos 2026.pdf" type="text"/>
-</div>
-<div class="campo_formulario">
-<label class="etiqueta_campo" for="departamento_seleccion">Departamento destino</label>
-<select class="input_modal" id="departamento_seleccion">
-<option value="Servicios Escolares">Servicios Escolares</option>
-<option value="Control Escolar">Control Escolar</option>
-<option value="Académico">Académico</option>
-<option value="Orientación">Orientación</option>
-</select>
-</div>
-</div>
-<div class="modal_pie">
-<button class="boton_cancelar" id="cancelar_modal">Cancelar</button>
-<button class="boton_guardar" id="guardar_archivo">Subir archivo</button>
-</div>
-</div>
-</div>
-<!-- END: VentanaModalSubirArchivo -->
-<!-- BEGIN: ScriptModal -->
 
-<!-- END: ScriptModal -->
-<script src="js/archivos.js"></script>
-</body></html>
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">OCID</div>
+                <div class="texto_logo_subtitulo">Plataforma de Coordinación Escolar</div>
+            </div>
+        </div>
+
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion" href="inicio.html" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion" href="mi-departamento.html" id="nav_departamento">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion activo" href="anuncios.html" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
+            </a>
+            <a class="enlace_navegacion" href="archivos.html" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="tareas.html" id="nav_asistente">
+                <i class="fa-regular fa-list-check icono_nav"></i>
+                <span>Tareas</span>
+            </a>
+            <a class="enlace_navegacion" href="notificaciones.html">
+                <i class="fa-solid fa-bell icono_nav"></i>
+                <span>Notificaciones</span>
+            </a>
+            <div class="separador_menu"></div>
+            <a class="enlace_navegacion" href="mi-perfil.html">
+                <i class="fa-solid fa-user icono_nav"></i>
+                <span>Mi perfil</span>
+            </a>
+            <a class="boton_cerrar_sesion" id="boton_cerrar_sesion" onclick="cerrarSesion()">
+                <i class="fa-solid fa-arrow-right-from-bracket icono_nav"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior Global -->
+        <header class="barra_superior" data-purpose="cabecera_global">
+            <div class="seccion_superior_izquierda">
+                <button aria-label="Menu" class="boton_menu_hamburguesa" title="Alternar menú lateral">
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" oninput="filtrarAnunciosEnTiempoReal()"
+                        placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones"
+                    onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
+                    title="Notificaciones del sistema">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
+                </button>
+                <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong id="nombreUsuario" style="color: #ffffff;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Vista Principal de Anuncios -->
+        <div class="cuerpo_contenido">
+            <!-- Encabezado de la Sección -->
+            <div class="fila_encabezado_anuncios">
+                <div>
+                    <h1 class="titulo_pantalla">Anuncios</h1>
+                    <p class="subtitulo_pantalla">Publica y consulta los anuncios de tu departamento.</p>
+                </div>
+                <button class="boton_nuevo_anuncio" data-purpose="crear_anuncio" id="boton_abrir_modal">
+                    <i class="fa-solid fa-plus"></i>
+                    Nuevo anuncio
+                </button>
+            </div>
+
+            <!-- Controles de Filtros -->
+            <div class="barra_filtros" data-purpose="controles_filtro">
+                <div class="filtro_busqueda_contenedor">
+                    <span class="icono_lupa_filtro">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input class="input_filtro_busqueda" id="filtro_busqueda_titulo" placeholder="Buscar por título..."
+                        type="text" />
+                </div>
+                <select class="filtro_selector" id="filtro_departamento">
+                    <option value="">Todos los departamentos</option>
+                    <option value="Servicios Escolares">Servicios Escolares</option>
+                    <option value="Control Escolar">Control Escolar</option>
+                    <option value="Académico">Académico</option>
+                    <option value="Vinculación">Vinculación</option>
+                    <option value="Orientación">Orientación</option>
+                </select>
+                <select class="filtro_selector" id="filtro_tipo">
+                    <option value="">Todos los tipos</option>
+                    <option value="Importante">Importante</option>
+                    <option value="Aviso">Aviso</option>
+                    <option value="General">General</option>
+                </select>
+                <button class="boton_limpiar_filtros" id="boton_limpiar">Limpiar</button>
+            </div>
+
+            <!-- Distribución en 2 Columnas -->
+            <div class="contenedor_dos_columnas">
+                <!-- Columna Izquierda: Listado dinamico de tarjetas -->
+                <section class="columna_lista_anuncios" data-purpose="listado_tarjetas"
+                    id="contenedor_tarjetas_anuncios">
+                    <!-- Se renderiza desde JS -->
+                </section>
+
+                <!-- Columna Derecha: Paneles laterales de resumen -->
+                <aside class="columna_lateral_derecha">
+                    <div class="tarjeta_lateral_panel" data-purpose="resumen_por_departamento">
+                        <h2 class="titulo_bloque_lateral">Por departamento</h2>
+                        <div class="lista_conteo_departamentos">
+                            <div class="fila_conteo_departamento">
+                                <span class="indicador_con_nombre">
+                                    <span class="punto_departamento punto_servicios"></span>
+                                    Servicios Escolares
+                                </span>
+                                <span class="cifra_departamento" id="conteo_servicios">3</span>
+                            </div>
+                            <div class="fila_conteo_departamento">
+                                <span class="indicador_con_nombre">
+                                    <span class="punto_departamento punto_control"></span>
+                                    Control Escolar
+                                </span>
+                                <span class="cifra_departamento" id="conteo_control">2</span>
+                            </div>
+                            <div class="fila_conteo_departamento">
+                                <span class="indicador_con_nombre">
+                                    <span class="punto_departamento punto_academico"></span>
+                                    Académico
+                                </span>
+                                <span class="cifra_departamento" id="conteo_academico">1</span>
+                            </div>
+                            <div class="fila_conteo_departamento">
+                                <span class="indicador_con_nombre">
+                                    <span class="punto_departamento punto_vinculacion"></span>
+                                    Vinculación
+                                </span>
+                                <span class="cifra_departamento" id="conteo_vinculacion">1</span>
+                            </div>
+                            <div class="fila_conteo_departamento">
+                                <span class="indicador_con_nombre">
+                                    <span class="punto_departamento punto_orientacion"></span>
+                                    Orientación
+                                </span>
+                                <span class="cifra_departamento" id="conteo_orientacion">1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tarjeta_lateral_panel" data-purpose="resumen_ultimos_anuncios">
+                        <h2 class="titulo_bloque_lateral">Últimos anuncios</h2>
+                        <div class="lista_ultimos_anuncios" id="contenedor_ultimos_anuncios">
+                            <!-- Se renderiza desde JS -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para crear anuncios -->
+    <div class="fondo_oscuro_modal" data-purpose="dialogo_creacion" id="modal_nuevo_anuncio">
+        <div class="caja_modal">
+            <div class="cabecera_modal">
+                <h3 class="titulo_modal">Nuevo Anuncio</h3>
+                <button class="boton_cerrar_modal" id="boton_cerrar_cruz">×</button>
+            </div>
+            <form id="formulario_nuevo_anuncio">
+                <div class="cuerpo_modal">
+                    <div class="grupo_campo_modal">
+                        <label class="etiqueta_campo" for="campo_titulo">Título del anuncio</label>
+                        <input class="input_campo_modal" id="campo_titulo" placeholder="Ej: Reunión de jefes..."
+                            required="" type="text" />
+                    </div>
+                    <div class="grupo_campo_modal">
+                        <label class="etiqueta_campo" for="campo_tipo">Tipo / Prioridad</label>
+                        <select class="selector_campo_modal" id="campo_tipo" required="">
+                            <option value="Importante">Importante</option>
+                            <option value="Aviso">Aviso</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <div class="grupo_campo_modal">
+                        <label class="etiqueta_campo" for="campo_departamento">Departamento</label>
+                        <select class="selector_campo_modal" id="campo_departamento" required="">
+                            <option value="Servicios Escolares">Servicios Escolares</option>
+                            <option value="Control Escolar">Control Escolar</option>
+                            <option value="Académico">Académico</option>
+                            <option value="Vinculación">Vinculación</option>
+                            <option value="Orientación">Orientación</option>
+                        </select>
+                    </div>
+                    <div class="grupo_campo_modal">
+                        <label class="etiqueta_campo" for="campo_contenido">Contenido o descripción</label>
+                        <textarea class="textarea_campo_modal" id="campo_contenido"
+                            placeholder="Escribe aquí los detalles del anuncio..." required=""></textarea>
+                    </div>
+                </div>
+                <div class="pie_modal">
+                    <button class="boton_cancelar_modal" id="boton_cancelar_modal" type="button">Cancelar</button>
+                    <button class="boton_guardar_modal" type="submit">Publicar anuncio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/anuncios.js"></script>
+</body>
+
+</html>

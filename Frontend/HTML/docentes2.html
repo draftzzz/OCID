@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CBTIS 258 - Plataforma de Coordinación Escolar</title>
+
+    <!-- Iconografía FontAwesome y Fuente Inter -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+
+    <!-- Hoja de Estilos -->
+    <link rel="stylesheet" href="css/anuncios.css" />
+</head>
+
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">OCID</div>
+                <div class="texto_logo_subtitulo">Plataforma de Coordinación Escolar</div>
+            </div>
+        </div>
+
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion" href="inicio.html" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion" href="mi-departamento.html" id="nav_departamento">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion activo" href="anuncios.html" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
+            </a>
+            <a class="enlace_navegacion" href="archivos.html" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="tareas.html" id="nav_asistente">
+                <i class="fa-regular fa-list-check icono_nav"></i>
+                <span>Tareas</span>
+            </a>
+            <a class="enlace_navegacion" href="notificaciones.html">
+                <i class="fa-solid fa-bell icono_nav"></i>
+                <span>Notificaciones</span>
+            </a>
+            <div class="separador_menu"></div>
+            <a class="enlace_navegacion" href="mi-perfil.html">
+                <i class="fa-solid fa-user icono_nav"></i>
+                <span>Mi perfil</span>
+            </a>
+            <a class="boton_cerrar_sesion" id="boton_cerrar_sesion" onclick="cerrarSesion()">
+                <i class="fa-solid fa-arrow-right-from-bracket icono_nav"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior Global -->
+        <header class="barra_superior" data-purpose="cabecera_global">
+            <div class="seccion_superior_izquierda">
+                <button aria-label="Menu" class="boton_menu_hamburguesa" title="Alternar menú lateral">
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" oninput="filtrarAnunciosEnTiempoReal()"
+                        placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones"
+                    onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
+                    title="Notificaciones del sistema">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
+                </button>
+                <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong id="nombreUsuario" style="color: #ffffff;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+        <main class="contenido_principal" data-purpose="contenido-docentes">
+            <!-- Cabecera de la Página -->
+            <div class="cabecera_seccion">
+                <div>
+                    <h1 class="titulo_docentes">Docentes</h1>
+                    <p class="subtitulo_docentes">Gestiona la información de los docentes del plantel.</p>
+                </div>
+                <button class="boton_nuevo_docente" id="btn_abrir_modal" data-evento-pagina="evento-1">
+                    <svg fill="none" height="16" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"
+                        width="16">
+                        <line x1="12" x2="12" y1="5" y2="19"></line>
+                        <line x1="5" x2="19" y1="12" y2="12"></line>
+                    </svg>
+                    Nuevo docente
+                </button>
+            </div>
+            <!-- Filtros y Búsqueda -->
+            <div class="barra_filtros">
+                <div class="filtro_buscador_contenedor">
+                    <div class="icono_buscador_filtro">
+                        <svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"
+                            width="15">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <input class="input_filtro_nombre" id="filtro_nombre_input" data-evento-pagina="evento-2"
+                        placeholder="Buscar por nombre..." type="text" />
+                </div>
+                <select class="select_filtro" id="filtro_departamento" data-evento-pagina="evento-3">
+                    <option value="todos">Todos los departamentos</option>
+                    <option value="Servicios Escolares">Servicios Escolares</option>
+                    <option value="Control Escolar">Control Escolar</option>
+                    <option value="Académico">Académico</option>
+                    <option value="Vinculación">Vinculación</option>
+                    <option value="Orientación">Orientación</option>
+                </select>
+                <select class="select_filtro" id="filtro_estado" data-evento-pagina="evento-4">
+                    <option value="todos">Todos los estados</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+            </div>
+            <!-- BEGIN: TablaDocentes -->
+            <div class="contenedor_tabla">
+                <table class="tabla_docentes">
+                    <thead class="encabezado_tabla">
+                        <tr>
+                            <th class="celda_encabezado">Nombre</th>
+                            <th class="celda_encabezado">Correo</th>
+                            <th class="celda_encabezado">Departamento</th>
+                            <th class="celda_encabezado">Rol</th>
+                            <th class="celda_encabezado">Estado</th>
+                            <th class="celda_encabezado" data-estilo-pagina="estilo-1">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_tabla_docentes">
+                        <!-- Docente 1 -->
+                        <tr class="fila_docente" data-departamento="Servicios Escolares" data-estado="Activo"
+                            data-nombre="Ana López García">
+                            <td class="celda_docente">
+                                <div class="columna_nombre_info">
+                                    <div class="avatar_docente avatar_morado">AL</div>
+                                    <span class="texto_nombre_docente">Ana López García</span>
+                                </div>
+                            </td>
+                            <td class="celda_docente">ana.lopez@cbtis258.edu.mx</td>
+                            <td class="celda_docente">Servicios Escolares</td>
+                            <td class="celda_docente">
+                                <span class="badge_rol badge_rol_jefe">Jefe</span>
+                            </td>
+                            <td class="celda_docente">
+                                <span class="badge_estado badge_estado_activo">
+                                    <span class="punto_estado punto_activo"></span>
+                                    Activo
+                                </span>
+                            </td>
+                            <td class="celda_docente" data-estilo-pagina="estilo-2">
+                                <button class="boton_accion_fila" title="Opciones">
+                                    <svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16">
+                                        <circle cx="12" cy="5" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="19" r="2"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Docente 2 -->
+                        <tr class="fila_docente" data-departamento="Control Escolar" data-estado="Activo"
+                            data-nombre="Luis Mendoza Ruiz">
+                            <td class="celda_docente">
+                                <div class="columna_nombre_info">
+                                    <div class="avatar_docente avatar_azul">LM</div>
+                                    <span class="texto_nombre_docente">Luis Mendoza Ruiz</span>
+                                </div>
+                            </td>
+                            <td class="celda_docente">luis.mendoza@cbtis258.edu.mx</td>
+                            <td class="celda_docente">Control Escolar</td>
+                            <td class="celda_docente">
+                                <span class="badge_rol badge_rol_docente">Docente</span>
+                            </td>
+                            <td class="celda_docente">
+                                <span class="badge_estado badge_estado_activo">
+                                    <span class="punto_estado punto_activo"></span>
+                                    Activo
+                                </span>
+                            </td>
+                            <td class="celda_docente" data-estilo-pagina="estilo-3">
+                                <button class="boton_accion_fila" title="Opciones">
+                                    <svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16">
+                                        <circle cx="12" cy="5" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="19" r="2"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Docente 3 -->
+                        <tr class="fila_docente" data-departamento="Académico" data-estado="Activo"
+                            data-nombre="María Torres Silva">
+                            <td class="celda_docente">
+                                <div class="columna_nombre_info">
+                                    <div class="avatar_docente avatar_verde">MT</div>
+                                    <span class="texto_nombre_docente">María Torres Silva</span>
+                                </div>
+                            </td>
+                            <td class="celda_docente">maria.torres@cbtis258.edu.mx</td>
+                            <td class="celda_docente">Académico</td>
+                            <td class="celda_docente">
+                                <span class="badge_rol badge_rol_docente">Docente</span>
+                            </td>
+                            <td class="celda_docente">
+                                <span class="badge_estado badge_estado_activo">
+                                    <span class="punto_estado punto_activo"></span>
+                                    Activo
+                                </span>
+                            </td>
+                            <td class="celda_docente" data-estilo-pagina="estilo-4">
+                                <button class="boton_accion_fila" title="Opciones">
+                                    <svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16">
+                                        <circle cx="12" cy="5" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="19" r="2"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Docente 4 -->
+                        <tr class="fila_docente" data-departamento="Vinculación" data-estado="Activo"
+                            data-nombre="Jorge Hernández Díaz">
+                            <td class="celda_docente">
+                                <div class="columna_nombre_info">
+                                    <div class="avatar_docente avatar_ambar">JH</div>
+                                    <span class="texto_nombre_docente">Jorge Hernández Díaz</span>
+                                </div>
+                            </td>
+                            <td class="celda_docente">jorge.hernandez@cbtis258.edu.mx</td>
+                            <td class="celda_docente">Vinculación</td>
+                            <td class="celda_docente">
+                                <span class="badge_rol badge_rol_docente">Docente</span>
+                            </td>
+                            <td class="celda_docente">
+                                <span class="badge_estado badge_estado_activo">
+                                    <span class="punto_estado punto_activo"></span>
+                                    Activo
+                                </span>
+                            </td>
+                            <td class="celda_docente" data-estilo-pagina="estilo-5">
+                                <button class="boton_accion_fila" title="Opciones">
+                                    <svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16">
+                                        <circle cx="12" cy="5" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="19" r="2"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Docente 5 -->
+                        <tr class="fila_docente" data-departamento="Orientación" data-estado="Inactivo"
+                            data-nombre="Elena Vargas Cruz">
+                            <td class="celda_docente">
+                                <div class="columna_nombre_info">
+                                    <div class="avatar_docente avatar_rojo">EV</div>
+                                    <span class="texto_nombre_docente">Elena Vargas Cruz</span>
+                                </div>
+                            </td>
+                            <td class="celda_docente">elena.vargas@cbtis258.edu.mx</td>
+                            <td class="celda_docente">Orientación</td>
+                            <td class="celda_docente">
+                                <span class="badge_rol badge_rol_docente">Docente</span>
+                            </td>
+                            <td class="celda_docente">
+                                <span class="badge_estado badge_estado_inactivo">
+                                    <span class="punto_estado punto_inactivo"></span>
+                                    Inactivo
+                                </span>
+                            </td>
+                            <td class="celda_docente" data-estilo-pagina="estilo-6">
+                                <button class="boton_accion_fila" title="Opciones">
+                                    <svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16">
+                                        <circle cx="12" cy="5" r="2"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <circle cx="12" cy="19" r="2"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Paginación -->
+                <div class="barra_paginacion">
+                    <span class="texto_paginacion" id="resumen_paginacion">Mostrando 1 a 5 de 12 docentes</span>
+                    <div class="botones_paginacion_grupo">
+                        <button class="btn_pagina" title="Anterior">&lt;</button>
+                        <button class="btn_pagina btn_pagina_activa">1</button>
+                        <button class="btn_pagina">2</button>
+                        <button class="btn_pagina">3</button>
+                        <button class="btn_pagina" title="Siguiente">&gt;</button>
+                    </div>
+                </div>
+            </div>
+            <!-- END: TablaDocentes -->
+        </main>
+        <!-- END: ContenidoPrincipal -->
+        </div>
+        <!-- END: AreaContenido -->
+        </div>
+        <!-- END: ContenedorPrincipal -->
+        <!-- BEGIN: ModalNuevoDocente -->
+        <div class="modal_overlay" data-purpose="dialogo-modal" id="modal_registro_docente">
+            <div class="modal_contenedor">
+                <div class="modal_cabecera">
+                    <h3 class="modal_titulo">Registrar nuevo docente</h3>
+                    <button class="modal_boton_cerrar" data-evento-pagina="evento-5">×</button>
+                </div>
+                <form action="/registro" class="modal_formulario" id="formulario_docente" method="POST"
+                    data-evento-pagina="evento-6">
+                    <div class="grupo_campo">
+                        <label class="label_campo" for="nombre_docente_input">Nombre completo</label>
+                        <input class="input_modal" id="nombre_docente_input" name="nombre"
+                            placeholder="Ej. Roberto Sánchez Gómez" required="" type="text" />
+                    </div>
+                    <div class="grupo_campo">
+                        <label class="label_campo" for="correo_docente_input">Correo institucional</label>
+                        <input class="input_modal" id="correo_docente_input" name="correo"
+                            placeholder="nombre.apellido@cbtis258.edu.mx" required="" type="email" />
+                    </div>
+                    <div class="grupo_campo">
+                        <label class="label_campo" for="password_docente_input">Contraseña inicial</label>
+                        <input class="input_modal" id="password_docente_input" name="password" placeholder="••••••••"
+                            required="" type="password" />
+                    </div>
+                    <div class="grupo_campo">
+                        <label class="label_campo" for="departamento_select">Departamento</label>
+                        <select class="select_modal" id="departamento_select" name="departamento" required="">
+                            <option value="Servicios Escolares">Servicios Escolares</option>
+                            <option value="Control Escolar">Control Escolar</option>
+                            <option value="Académico">Académico</option>
+                            <option value="Vinculación">Vinculación</option>
+                            <option value="Orientación">Orientación</option>
+                        </select>
+                    </div>
+                    <div class="grupo_campo">
+                        <label class="label_campo" for="rol_select">Rol asignado</label>
+                        <select class="select_modal" id="rol_select" name="rol" required="">
+                            <option value="Docente">Docente</option>
+                            <option value="Jefe">Jefe</option>
+                        </select>
+                    </div>
+                    <div class="modal_pie">
+                        <button class="boton_cancelar_modal" data-evento-pagina="evento-7"
+                            type="button">Cancelar</button>
+                        <button class="boton_guardar_modal" type="submit">Guardar Docente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/anuncios.js"></script>
+</body>
+
+</html>

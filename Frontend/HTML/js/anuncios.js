@@ -56,10 +56,10 @@
       });
     });
 
-    if (!barraSuperior.querySelector('.menu_movil')) {
+    if (!barraSuperior.querySelector('.boton_menu_hamburguesa')) {
       const boton = document.createElement('button');
       boton.type = 'button';
-      boton.className = 'menu_movil';
+      boton.className = 'boton_menu_hamburguesa';
       boton.setAttribute('aria-label', 'Abrir menú de navegación');
       boton.setAttribute('aria-expanded', 'false');
       boton.innerHTML = '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>';
