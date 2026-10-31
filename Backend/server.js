@@ -13,7 +13,6 @@ app.use(cors({
     const origenPermitido = !origin ||
       [
         'https://ocid-iota.vercel.app',
-        'https://ocid.vercel.app',
         'https://ocid.onrender.com'
       ].includes(origin) ||
       /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);

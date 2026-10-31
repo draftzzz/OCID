@@ -362,6 +362,35 @@ textarea {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    overflow-y: scroll;
+}
+
+body {
+  --sb-track-color: #232E33;
+  --sb-thumb-color: #ccd2d8;
+  --sb-size: 9px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 1px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
 }
 
 .fila_encabezado_anuncios {
