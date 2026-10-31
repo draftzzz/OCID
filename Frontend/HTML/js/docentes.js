@@ -138,7 +138,6 @@ function abrirModalDocente() {
     async function cargarDocentes() {
       const cuerpo = document.getElementById('cuerpo_tabla_docentes');
       cuerpo.innerHTML = '<tr><td class="celda_docente" colspan="6">Cargando docentes...</td></tr>';
-      document.getElementById('resumen_paginacion').textContent = 'Cargando docentes...';
       document.querySelector('.botones_paginacion_grupo').replaceChildren();
 
       try {
