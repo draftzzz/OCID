@@ -18,20 +18,26 @@
 
     const nombre = usuario && (usuario.nombre || usuario.correo);
     const etiquetaNombre = document.querySelector(
-      '.nombre_usuario, .nombre_perfil, .nombre_usuario_superior'
+      '.nombre_usuario, .nombre_perfil, .nombre_usuario_superior, #nombreUsuario'
     );
     const etiquetaRol = document.querySelector(
-      '.rol_usuario, .cargo_perfil, .rol_usuario_superior, .cargo_usuario'
+      '.rol_usuario, .cargo_perfil, .rol_usuario_superior, #etiqueta_rol_usuario'
     );
     const avatar = document.querySelector(
-      '.avatar_usuario, .avatar_perfil, .avatar_superior'
+      '.avatar_usuario, .avatar_perfil, .avatar_superior, #avatar_usuario_circulo'
     );
 
     if (nombre && etiquetaNombre) etiquetaNombre.textContent = nombre;
     if (usuario && usuario.rol && etiquetaRol) etiquetaRol.textContent = usuario.rol;
     if (nombre && avatar) {
-      avatar.textContent = nombre.split(/\s+/).slice(0, 2)
-        .map(parte => parte.charAt(0)).join('').toUpperCase();
+      const iniciales = nombre.split(/\s+/)
+        .slice(0, 2)
+        .map(parte => parte.charAt(0))
+        .join('')
+        .toUpperCase();
+      avatar.textContent = iniciales;
+      avatar.style.fontSize = '14px';
+      avatar.style.fontWeight = '700';
     }
 
     if (usuario && usuario.id) {
@@ -41,7 +47,7 @@
           if (!respuesta.ok) throw new Error(datos.error || 'No se pudieron cargar las notificaciones');
           const noLeidas = Array.isArray(datos) ? datos.filter(notificacion => !notificacion.leida).length : 0;
           document.querySelectorAll(
-            '.badge_campana, .insignia_notificacion, .etiqueta_notificaciones, .insignia_notificacion_lateral'
+            '.badge_campana, .insignia_notificacion, .etiqueta_notificaciones, .insignia_notificacion_lateral, #indicador_notificaciones'
           ).forEach(insignia => {
             insignia.textContent = noLeidas;
             insignia.style.display = noLeidas === 0 ? 'none' : '';
@@ -174,7 +180,6 @@ async function cargar_anuncios_desde_servidor() {
   renderizar_interfaz();
 }
 
-// Renderizar tarjetas principales según filtros activos
 function renderizar_interfaz() {
   const termino_busqueda = document.getElementById('filtro_busqueda_titulo').value.toLowerCase().trim();
   const depto_seleccionado = document.getElementById('filtro_departamento').value;
@@ -205,12 +210,11 @@ function renderizar_interfaz() {
       if (anuncio.tipo === 'Urgente') clase_etiqueta = 'etiqueta_urgente';
       if (anuncio.tipo === 'Moderado') clase_etiqueta = 'etiqueta_moderado';
 
-      // Verificar si el usuario actual es el autor
       const esAutor = usuarioActual && (Number(usuarioActual.id) === Number(anuncio.autor_id));
 
       const tarjeta = document.createElement('article');
       tarjeta.className = 'tarjeta_anuncio';
-      tarjeta.style.position = 'relative'; // Para posicionar el menú flotante
+      tarjeta.style.position = 'relative';
       
       tarjeta.innerHTML = `
         <div class="fila_etiqueta_anuncio">
@@ -250,10 +254,8 @@ function renderizar_interfaz() {
   actualizar_panel_lateral();
 }
 
-// Control para mostrar/ocultar el menú de opciones de cada tarjeta
 function toggleMenuOpciones(evento, idAnuncio) {
   evento.stopPropagation();
-  // Cerrar todos los demás menús abiertos
   document.querySelectorAll('[id^="menu_opciones_"]').forEach(menu => {
     if (menu.id !== `menu_opciones_${idAnuncio}`) menu.style.display = 'none';
   });
@@ -264,14 +266,12 @@ function toggleMenuOpciones(evento, idAnuncio) {
   }
 }
 
-// Cerrar menús al hacer clic fuera
 window.addEventListener('click', () => {
   document.querySelectorAll('[id^="menu_opciones_"]').forEach(menu => {
     menu.style.display = 'none';
   });
 });
 
-// Lógica de Edición y Permisos
 function prepararEdicionAnuncio(id, esAutor) {
   if (!esAutor) {
     alert('No tienes permisos para editar este anuncio porque no eres el autor.');
@@ -286,7 +286,6 @@ function prepararEdicionAnuncio(id, esAutor) {
   document.getElementById('campo_tipo').value = anuncio.prioridad || anuncio.tipo;
   document.getElementById('campo_contenido').value = anuncio.contenido;
   
-  // Encontrar el ID del departamento correspondiente si es posible
   const deptoEncontrado = departamentos_anuncios.find(d => d.nombre === anuncio.departamento);
   if (deptoEncontrado) {
     document.getElementById('campo_departamento').value = String(deptoEncontrado.id);
@@ -295,7 +294,6 @@ function prepararEdicionAnuncio(id, esAutor) {
   abrir_modal();
 }
 
-// Lógica de Eliminación y Permisos
 async function eliminarAnuncio(id, esAutor) {
   if (!esAutor) {
     alert('No tienes permisos para eliminar este anuncio porque no eres el autor.');
@@ -318,7 +316,6 @@ async function eliminarAnuncio(id, esAutor) {
   }
 }
 
-// Actualizar conteos por departamento y lista de últimos anuncios
 function actualizar_panel_lateral() {
   const conteos = {
     "Servicios Escolares": 0,
@@ -355,7 +352,6 @@ function actualizar_panel_lateral() {
   });
 }
 
-// Manejo del Modal
 const modal_nuevo = document.getElementById('modal_nuevo_anuncio');
 const boton_abrir_modal = document.getElementById('boton_abrir_modal');
 const boton_cerrar_cruz = document.getElementById('boton_cerrar_cruz');
@@ -369,7 +365,7 @@ function abrir_modal() {
 function cerrar_modal() {
   modal_nuevo.classList.remove('modal_activo');
   form_nuevo_anuncio.reset();
-  anuncioEnEdicionId = null; // Reiniciar variable de edición
+  anuncioEnEdicionId = null;
 }
 
 boton_abrir_modal.addEventListener('click', () => {
@@ -383,7 +379,6 @@ modal_nuevo.addEventListener('click', (evento) => {
   if (evento.target === modal_nuevo) cerrar_modal();
 });
 
-// Guardar o Actualizar anuncio (Soporte para POST y PUT)
 form_nuevo_anuncio.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -410,7 +405,6 @@ form_nuevo_anuncio.addEventListener('submit', async (e) => {
     let url = `${window.OCID_API_BASE}/anuncios`;
     let metodo = 'POST';
 
-    // Si estamos editando un anuncio existente, cambiamos a PUT y actualizamos la URL
     if (anuncioEnEdicionId !== null) {
       url = `${window.OCID_API_BASE}/anuncios/${anuncioEnEdicionId}`;
       metodo = 'PUT';
@@ -432,7 +426,6 @@ form_nuevo_anuncio.addEventListener('submit', async (e) => {
   }
 });
 
-// Filtros dinámicos
 document.getElementById('filtro_busqueda_titulo').addEventListener('input', renderizar_interfaz);
 document.getElementById('filtro_departamento').addEventListener('change', renderizar_interfaz);
 document.getElementById('filtro_tipo').addEventListener('change', renderizar_interfaz);
@@ -444,5 +437,4 @@ document.getElementById('boton_limpiar').addEventListener('click', () => {
   renderizar_interfaz();
 });
 
-// Inicialización al cargar la ventana
 window.addEventListener('DOMContentLoaded', cargar_anuncios_desde_servidor);

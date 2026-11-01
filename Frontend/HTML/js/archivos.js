@@ -30,8 +30,14 @@
     if (nombre && etiquetaNombre) etiquetaNombre.textContent = nombre;
     if (usuario && usuario.rol && etiquetaRol) etiquetaRol.textContent = usuario.rol;
     if (nombre && avatar) {
-      avatar.textContent = nombre.split(/\s+/).slice(0, 2)
-        .map(parte => parte.charAt(0)).join('').toUpperCase();
+      const iniciales = nombre.split(/\s+/)
+        .slice(0, 2)
+        .map(parte => parte.charAt(0))
+        .join('')
+        .toUpperCase();
+      avatar.textContent = iniciales;
+      avatar.style.fontSize = '14px';
+      avatar.style.fontWeight = '700';
     }
 
     if (usuario && usuario.id) {
@@ -154,7 +160,6 @@ function dibujarArchivos() {
   visibles.forEach(archivo => {
     const fila = document.createElement('tr');
     
-    // Columna Nombre
     const celdaNombre = document.createElement('td');
     const contenedorNombre = document.createElement('div');
     contenedorNombre.className = 'contenedor_nombre_archivo';
@@ -176,26 +181,21 @@ function dibujarArchivos() {
     contenedorNombre.append(iconoTipo, textosDiv);
     celdaNombre.appendChild(contenedorNombre);
 
-    // Columna Tipo (Badge)
     const celdaTipo = document.createElement('td');
     const badge = document.createElement('span');
     badge.className = extension === 'PDF' ? 'badge_pdf' : 'badge_xlsx';
     badge.textContent = extension;
     celdaTipo.appendChild(badge);
 
-    // Columna Departamento
     const celdaDepartamento = document.createElement('td');
     celdaDepartamento.textContent = archivo.departamento_nombre || 'Sin departamento';
 
-    // Columna Usuario (Autor)
     const celdaAutor = document.createElement('td');
     celdaAutor.textContent = archivo.autor_nombre || 'Usuario';
 
-    // Columna Fecha
     const celdaFecha = document.createElement('td');
     celdaFecha.textContent = archivo.fecha ? new Date(archivo.fecha).toLocaleDateString('es-MX') : '';
 
-    // Columna Acciones
     const celdaAcciones = document.createElement('td');
     const contenedorAcciones = document.createElement('div');
     contenedorAcciones.className = 'acciones_celda';
@@ -290,7 +290,6 @@ async function eliminarArchivo(id) {
   }
 }
 
-// Configuración de eventos del Modal y Filtros
 document.addEventListener('DOMContentLoaded', () => {
   const abrirModalBtn = document.getElementById('abrir_modal_subir');
   const cerrarModalBtn = document.getElementById('cerrar_modal_subir');
