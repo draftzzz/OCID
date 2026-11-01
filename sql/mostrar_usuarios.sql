@@ -1,2 +1,1 @@
-INSERT INTO departamentos(id, nombre, descripcion)
-VALUES (1, 'vinculacion', 'hola')
+ALTER TABLE archivos ADD COLUMN tamano INTEGER;
