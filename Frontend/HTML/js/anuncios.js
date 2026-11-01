@@ -138,6 +138,16 @@ function mostrarErrorAnuncios(mensaje) {
   }
   aviso.textContent = mensaje;
   aviso.hidden = false;
+
+  // Limpiar temporizador previo si ya existía uno corriendo
+  if (window.temporizadorAvisoAnuncios) {
+    clearTimeout(window.temporizadorAvisoAnuncios);
+  }
+
+  // Ocultar el recuadro automáticamente después de 7 segundos (7000 ms)
+  window.temporizadorAvisoAnuncios = setTimeout(() => {
+    aviso.hidden = true;
+  }, 7000);
 }
 
 async function cargar_anuncios_desde_servidor() {
@@ -274,7 +284,7 @@ window.addEventListener('click', () => {
 
 function prepararEdicionAnuncio(id, esAutor) {
   if (!esAutor) {
-    alert('No tienes permisos para editar este anuncio porque no eres el autor.');
+    mostrarErrorAnuncios('No tienes permisos para editar este anuncio porque no eres el autor.');
     return;
   }
 
@@ -296,7 +306,7 @@ function prepararEdicionAnuncio(id, esAutor) {
 
 async function eliminarAnuncio(id, esAutor) {
   if (!esAutor) {
-    alert('No tienes permisos para eliminar este anuncio porque no eres el autor.');
+    mostrarErrorAnuncios('No tienes permisos para eliminar este anuncio porque no eres el autor.');
     return;
   }
 
@@ -312,7 +322,7 @@ async function eliminarAnuncio(id, esAutor) {
     }
     await cargar_anuncios_desde_servidor();
   } catch (error) {
-    alert(error.message || 'Error al conectar con el servidor.');
+    mostrarErrorAnuncios(error.message || 'Error al conectar con el servidor.');
   }
 }
 

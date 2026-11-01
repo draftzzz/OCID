@@ -505,6 +505,31 @@ body::-webkit-scrollbar-thumb {
     background-color: #eff6ff;
 }
 
+.aviso_docentes {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(10px);
+}
+
+.aviso_docentes[hidden] {
+    display: none !important;
+}
+
+.aviso_docentes_error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
 /* ==========================================================================
    5. Grilla en Dos Columnas y Tarjetas
    ========================================================================== */
