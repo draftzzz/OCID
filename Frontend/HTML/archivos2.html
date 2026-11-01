@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CBTIS 258 - Gestión de Archivos</title>
+
+    <!-- Iconografía FontAwesome y Fuente Inter -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Hoja de Estilos -->
+    <link rel="stylesheet" href="css/archivos.css" />
+</head>
+
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">OCID</div>
+                <div class="texto_logo_subtitulo">Plataforma de Coordinación Escolar</div>
+            </div>
+        </div>
+
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion" href="inicio.html" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion" href="mi-departamento.html" id="nav_departamento">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
+            </a>
+            <a class="enlace_navegacion activo" href="archivos.html" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="tareas.html" id="nav_asistente">
+                <i class="fa-regular fa-list-check icono_nav"></i>
+                <span>Tareas</span>
+            </a>
+            <a class="enlace_navegacion" href="notificaciones.html">
+                <i class="fa-solid fa-bell icono_nav"></i>
+                <span>Notificaciones</span>
+            </a>
+            <div class="separador_menu"></div>
+            <a class="enlace_navegacion" href="mi-perfil.html">
+                <i class="fa-solid fa-user icono_nav"></i>
+                <span>Mi perfil</span>
+            </a>
+            <a class="boton_cerrar_sesion" id="boton_cerrar_sesion" onclick="cerrarSesion()">
+                <i class="fa-solid fa-arrow-right-from-bracket icono_nav"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- END: Sidebar -->
+
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior Global -->
+        <header class="barra_superior" data-purpose="cabecera_global">
+            <div class="seccion_superior_izquierda">
+                <button aria-label="Menu" class="boton_menu_hamburguesa" title="Alternar menú lateral">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones"
+                    onclick="mostrarMensaje('Tienes notificaciones del sistema', false)"
+                    title="Notificaciones del sistema">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
+                </button>
+                <div class="perfil_usuario_barra" onclick="abrirModalLogin()">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong id="nombreUsuario" style="color: #ffffff;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- BEGIN: SeccionArchivos -->
+        <section class="cuerpo_contenido" data-purpose="panel-archivos">
+            <!-- Título y botón de acción principal -->
+            <div class="encabezado_archivos">
+                <div>
+                    <h1 class="titulo_seccion">Archivos</h1>
+                    <p class="subtitulo_seccion">Consulta, descarga y comparte documentos de tu departamento.</p>
+                </div>
+                <button class="boton_subir_archivo" id="abrir_modal_subir">
+                    <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                        width="18">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" x2="12" y1="3" y2="15"></line>
+                    </svg>
+                    <span>Subir archivo</span>
+                </button>
+            </div>
+
+            <!-- Barra de filtros -->
+            <div class="barra_filtros" data-purpose="filtros-archivos">
+                <div class="filtro_busqueda">
+                    <svg class="icono_filtro_lupa" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+                    </svg>
+                    <input class="input_filtro" id="filtro_nombre" placeholder="Buscar por nombre..." type="text" />
+                </div>
+                <select class="selector_filtro" id="filtro_departamento">
+                    <option value="todos">Todos los departamentos</option>
+                </select>
+                <select class="selector_filtro" id="filtro_tipo">
+                    <option value="todos">Todos los tipos</option>
+                    <option value="pdf">PDF</option>
+                    <option value="xlsx">XLSX</option>
+                    <option value="docx">DOCX</option>
+                </select>
+            </div>
+
+            <!-- Tabla con los datos de archivos -->
+            <div class="tarjeta_tabla">
+                <table class="tabla_archivos" id="tabla_documentos">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Departamento</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_tabla_archivos">
+                        <!-- Se llena dinámicamente desde JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación o indicador -->
+            <div class="pie_paginador" data-purpose="paginador-archivos">
+                <span id="resumen_paginacion_archivos" style="font-size: 13px; color: #64748b;"></span>
+            </div>
+        </section>
+        <!-- END: SeccionArchivos -->
+    </main>
+    <!-- END: MainContentArea -->
+
+    <!-- BEGIN: VentanaModalSubirArchivo -->
+    <div class="modal_fondo" id="modal_subir_archivo">
+        <div class="modal_caja">
+            <div class="modal_encabezado">
+                <h3 class="modal_titulo">Subir nuevo documento</h3>
+                <button class="boton_cerrar_modal" id="cerrar_modal_subir">×</button>
+            </div>
+            <div class="modal_cuerpo">
+                <!-- Arrastre o selección -->
+                <div class="zona_arrastre_archivo" id="zona_archivo">
+                    <svg fill="none" height="32" stroke="#64748b" stroke-width="2" viewBox="0 0 24 24" width="32">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" x2="12" y1="3" y2="15"></line>
+                    </svg>
+                    <div style="font-size: 13px; font-weight: 600; color: #334155;">Arrastra tu archivo aquí o haz clic para explorar</div>
+                    <div style="font-size: 11px; color: #94a3b8;">Formatos aceptados: PDF, XLSX, DOCX (máx. 10MB)</div>
+                    <input id="input_archivo_oculto" style="display: none;" type="file" />
+                </div>
+                <div class="campo_formulario">
+                    <label class="etiqueta_campo" for="nombre_documento">Nombre del documento</label>
+                    <input class="input_modal" id="nombre_documento" placeholder="Ej. Lineamientos 2026.pdf" type="text" />
+                </div>
+                <div class="campo_formulario">
+                    <label class="etiqueta_campo" for="departamento_seleccion">Departamento destino</label>
+                    <select class="input_modal" id="departamento_seleccion">
+                        <option value="">Selecciona un departamento</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal_pie">
+                <button class="boton_cancelar" id="cancelar_modal">Cancelar</button>
+                <button class="boton_guardar" id="guardar_archivo">Subir archivo</button>
+            </div>
+        </div>
+    </div>
+    <!-- END: VentanaModalSubirArchivo -->
+
+    <!-- Script de Lógica de Archivos -->
+    <script src="js/archivos.js"></script>
+</body>
+
+</html>
