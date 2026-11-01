@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 const express = require('express');
@@ -552,175 +551,175 @@ app.post('/anuncios', async (req, res) => {
   }
 });
 
-    // OBTENER ARCHIVOS
-    app.get('/archivos', async (req, res) => {
-      try {
-        const resultado = await pool.query(
-          `SELECT a.id, a.nombre, a.tipo, a."tamaño" AS tamano,
-                  a.autor_id, a.departamento_id, a.anuncio_id, a.fecha,
-                  u.nombre AS autor_nombre, d.nombre AS departamento_nombre
-           FROM archivos a
-           LEFT JOIN usuarios u ON u.id = a.autor_id
-           LEFT JOIN departamentos d ON d.id = a.departamento_id
-           ORDER BY a.fecha DESC, a.id DESC`
-        );
-        res.json(resultado.rows);
-      } catch (error) {
-        console.error('Error al consultar archivos:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudieron cargar los archivos' });
-      }
-    });
+// OBTENER ARCHIVOS
+app.get('/archivos', async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT a.id, a.nombre, a.tipo, a.tamano,
+              a.autor_id, a.departamento_id, a.anuncio_id, a.fecha,
+              u.nombre AS autor_nombre, d.nombre AS departamento_nombre
+       FROM archivos a
+       LEFT JOIN usuarios u ON u.id = a.autor_id
+       LEFT JOIN departamentos d ON d.id = a.departamento_id
+       ORDER BY a.fecha DESC, a.id DESC`
+    );
+    res.json(resultado.rows);
+  } catch (error) {
+    console.error('Error al consultar archivos:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudieron cargar los archivos' });
+  }
+});
 
-    // SUBIR ARCHIVO EN LA COLUMNA ruta (CONTENIDO DATA URL)
-    app.post('/archivos', async (req, res) => {
-      const { nombre, contenido, tipo, tamano, autor_id, departamento_id } = req.body;
-      const autorId = Number(autor_id);
-      const departamentoId = Number(departamento_id);
+// SUBIR ARCHIVO
+app.post('/archivos', async (req, res) => {
+  const { nombre, contenido, tipo, tamano, autor_id, departamento_id } = req.body;
+  const autorId = Number(autor_id);
+  const departamentoId = Number(departamento_id);
 
-      if (typeof nombre !== 'string' || !nombre.trim() ||
-          typeof contenido !== 'string' || !tipo ||
-          !Number.isInteger(autorId) || autorId <= 0 ||
-          !Number.isInteger(departamentoId) || departamentoId <= 0 ||
-          !Number.isInteger(Number(tamano)) || Number(tamano) <= 0) {
-        return res.status(400).json({ success: false, error: 'Completa los datos del archivo' });
-      }
-      if (Number(tamano) > 10 * 1024 * 1024) {
-        return res.status(413).json({ success: false, error: 'El archivo supera el límite de 10 MB' });
-      }
-      const contenidoCoincide = typeof contenido === 'string' &&
-        /^data:([\w.+/-]+);base64,([A-Za-z0-9+/]+=*)$/.exec(contenido);
-      if (!contenidoCoincide) {
-        return res.status(400).json({ success: false, error: 'El contenido del archivo no es válido' });
-      }
-      const contenidoBinario = Buffer.from(contenidoCoincide[2], 'base64');
-      if (contenidoCoincide[1] !== tipo || contenidoBinario.length !== Number(tamano)) {
-        return res.status(400).json({ success: false, error: 'El tipo o tamaño del archivo no coincide' });
-      }
+  if (typeof nombre !== 'string' || !nombre.trim() ||
+      typeof contenido !== 'string' || !tipo ||
+      !Number.isInteger(autorId) || autorId <= 0 ||
+      !Number.isInteger(departamentoId) || departamentoId <= 0 ||
+      !Number.isInteger(Number(tamano)) || Number(tamano) <= 0) {
+    return res.status(400).json({ success: false, error: 'Completa los datos del archivo' });
+  }
+  if (Number(tamano) > 10 * 1024 * 1024) {
+    return res.status(413).json({ success: false, error: 'El archivo supera el límite de 10 MB' });
+  }
+  const contenidoCoincide = typeof contenido === 'string' &&
+    /^data:([\w.+/-]+);base64,([A-Za-z0-9+/]+=*)$/.exec(contenido);
+  if (!contenidoCoincide) {
+    return res.status(400).json({ success: false, error: 'El contenido del archivo no es válido' });
+  }
+  const contenidoBinario = Buffer.from(contenidoCoincide[2], 'base64');
+  if (contenidoCoincide[1] !== tipo || contenidoBinario.length !== Number(tamano)) {
+    return res.status(400).json({ success: false, error: 'El tipo o tamaño del archivo no coincide' });
+  }
 
-      try {
-        const [usuarioExiste, departamentoExiste] = await Promise.all([
-          pool.query('SELECT id FROM usuarios WHERE id = $1', [autorId]),
-          pool.query('SELECT id FROM departamentos WHERE id = $1', [departamentoId])
-        ]);
-        if (!usuarioExiste.rowCount || !departamentoExiste.rowCount) {
-          return res.status(400).json({ success: false, error: 'El usuario o departamento no existe' });
-        }
-        const resultado = await pool.query(
-          `INSERT INTO archivos
-             (nombre, ruta, tipo, "tamaño", autor_id, departamento_id, anuncio_id, fecha)
-           VALUES ($1, $2, $3, $4, $5, $6, NULL, NOW())
-           RETURNING id, nombre, tipo, "tamaño" AS tamano, autor_id, departamento_id, fecha`,
-          [nombre.trim(), contenido, tipo, Number(tamano), autorId, departamentoId]
-        );
-        res.status(201).json({ success: true, archivo: resultado.rows[0] });
-      } catch (error) {
-        console.error('Error al guardar archivo:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudo guardar el archivo' });
-      }
-    });
+  try {
+    const [usuarioExiste, departamentoExiste] = await Promise.all([
+      pool.query('SELECT id FROM usuarios WHERE id = $1', [autorId]),
+      pool.query('SELECT id FROM departamentos WHERE id = $1', [departamentoId])
+    ]);
+    if (!usuarioExiste.rowCount || !departamentoExiste.rowCount) {
+      return res.status(400).json({ success: false, error: 'El usuario o departamento no existe' });
+    }
+    const resultado = await pool.query(
+      `INSERT INTO archivos
+         (nombre, ruta, tipo, tamano, autor_id, departamento_id, anuncio_id, fecha)
+       VALUES ($1, $2, $3, $4, $5, $6, NULL, NOW())
+       RETURNING id, nombre, tipo, tamano, autor_id, departamento_id, fecha`,
+      [nombre.trim(), contenido, tipo, Number(tamano), autorId, departamentoId]
+    );
+    res.status(201).json({ success: true, archivo: resultado.rows[0] });
+  } catch (error) {
+    console.error('Error al guardar archivo:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudo guardar el archivo' });
+  }
+});
 
-    // DESCARGAR ARCHIVO
-    app.get('/archivos/:id', async (req, res) => {
-      const id = Number(req.params.id);
-      if (!Number.isInteger(id) || id <= 0) {
-        return res.status(400).json({ success: false, error: 'ID de archivo inválido' });
-      }
-      try {
-        const resultado = await pool.query(
-          'SELECT nombre, ruta, tipo FROM archivos WHERE id = $1',
-          [id]
-        );
-        if (resultado.rowCount === 0) {
-          return res.status(404).json({ success: false, error: 'El archivo no existe' });
-        }
-        res.json({ success: true, archivo: resultado.rows[0] });
-      } catch (error) {
-        console.error('Error al descargar archivo:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudo descargar el archivo' });
-      }
-    });
+// DESCARGAR ARCHIVO
+app.get('/archivos/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ success: false, error: 'ID de archivo inválido' });
+  }
+  try {
+    const resultado = await pool.query(
+      'SELECT nombre, ruta, tipo FROM archivos WHERE id = $1',
+      [id]
+    );
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({ success: false, error: 'El archivo no existe' });
+    }
+    res.json({ success: true, archivo: resultado.rows[0] });
+  } catch (error) {
+    console.error('Error al descargar archivo:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudo descargar el archivo' });
+  }
+});
 
-    // ELIMINAR ARCHIVO
-    app.delete('/archivos/:id', async (req, res) => {
-      const id = Number(req.params.id);
-      if (!Number.isInteger(id) || id <= 0) {
-        return res.status(400).json({ success: false, error: 'ID de archivo inválido' });
-      }
-      try {
-        const resultado = await pool.query('DELETE FROM archivos WHERE id = $1 RETURNING id', [id]);
-        if (resultado.rowCount === 0) {
-          return res.status(404).json({ success: false, error: 'El archivo no existe' });
-        }
-        res.json({ success: true });
-      } catch (error) {
-        console.error('Error al eliminar archivo:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudo eliminar el archivo' });
-      }
-    });
+// ELIMINAR ARCHIVO
+app.delete('/archivos/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({ success: false, error: 'ID de archivo inválido' });
+  }
+  try {
+    const resultado = await pool.query('DELETE FROM archivos WHERE id = $1 RETURNING id', [id]);
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({ success: false, error: 'El archivo no existe' });
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al eliminar archivo:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudo eliminar el archivo' });
+  }
+});
 
-    // OBTENER NOTIFICACIONES DE UN USUARIO
-    app.get('/notificaciones', async (req, res) => {
-      const usuarioId = Number(req.query.usuario_id);
-      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.status(400).json({ success: false, error: 'ID de usuario inválido' });
-      }
-      try {
-        const resultado = await pool.query(
-          `SELECT n.id, n.usuario_id, n.anuncio_id, n.tarea_id, n.leida, n.fecha,
-                  a.titulo AS anuncio_titulo
-           FROM notificaciones n
-           LEFT JOIN anuncios a ON a.id = n.anuncio_id
-           WHERE n.usuario_id = $1
-           ORDER BY n.fecha DESC, n.id DESC`,
-          [usuarioId]
-        );
-        res.json(resultado.rows);
-      } catch (error) {
-        console.error('Error al consultar notificaciones:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudieron cargar las notificaciones' });
-      }
-    });
+// OBTENER NOTIFICACIONES DE UN USUARIO
+app.get('/notificaciones', async (req, res) => {
+  const usuarioId = Number(req.query.usuario_id);
+  if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+    return res.status(400).json({ success: false, error: 'ID de usuario inválido' });
+  }
+  try {
+    const resultado = await pool.query(
+      `SELECT n.id, n.usuario_id, n.anuncio_id, n.leida, n.fecha,
+              a.titulo AS anuncio_titulo
+       FROM notificaciones n
+       LEFT JOIN anuncios a ON a.id = n.anuncio_id
+       WHERE n.usuario_id = $1
+       ORDER BY n.fecha DESC, n.id DESC`,
+      [usuarioId]
+    );
+    res.json(resultado.rows);
+  } catch (error) {
+    console.error('Error al consultar notificaciones:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudieron cargar las notificaciones' });
+  }
+});
 
-    // MARCAR NOTIFICACIÓN COMO LEÍDA
-    app.patch('/notificaciones/:id/leida', async (req, res) => {
-      const id = Number(req.params.id);
-      const usuarioId = Number(req.body.usuario_id);
-      if (!Number.isInteger(id) || id <= 0 || !Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.status(400).json({ success: false, error: 'Datos de notificación inválidos' });
-      }
-      try {
-        const resultado = await pool.query(
-          `UPDATE notificaciones SET leida = TRUE
-           WHERE id = $1 AND usuario_id = $2 RETURNING id`,
-          [id, usuarioId]
-        );
-        if (resultado.rowCount === 0) {
-          return res.status(404).json({ success: false, error: 'La notificación no existe' });
-        }
-        res.json({ success: true });
-      } catch (error) {
-        console.error('Error al marcar notificación:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudo actualizar la notificación' });
-      }
-    });
+// MARCAR NOTIFICACIÓN COMO LEÍDA
+app.patch('/notificaciones/:id/leida', async (req, res) => {
+  const id = Number(req.params.id);
+  const usuarioId = Number(req.body.usuario_id);
+  if (!Number.isInteger(id) || id <= 0 || !Number.isInteger(usuarioId) || usuarioId <= 0) {
+    return res.status(400).json({ success: false, error: 'Datos de notificación inválidos' });
+  }
+  try {
+    const resultado = await pool.query(
+      `UPDATE notificaciones SET leida = TRUE
+       WHERE id = $1 AND usuario_id = $2 RETURNING id`,
+      [id, usuarioId]
+    );
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({ success: false, error: 'La notificación no existe' });
+    }
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al marcar notificación:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudo actualizar la notificación' });
+  }
+});
 
-    // MARCAR TODAS LAS NOTIFICACIONES COMO LEÍDAS
-    app.patch('/notificaciones/leidas', async (req, res) => {
-      const usuarioId = Number(req.body.usuario_id);
-      if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
-        return res.status(400).json({ success: false, error: 'ID de usuario inválido' });
-      }
-      try {
-        await pool.query(
-          'UPDATE notificaciones SET leida = TRUE WHERE usuario_id = $1 AND leida = FALSE',
-          [usuarioId]
-        );
-        res.json({ success: true });
-      } catch (error) {
-        console.error('Error al marcar notificaciones:', error.message);
-        res.status(500).json({ success: false, error: 'No se pudieron actualizar las notificaciones' });
-      }
-    });
+// MARCAR TODAS LAS NOTIFICACIONES COMO LEÍDAS
+app.patch('/notificaciones/leidas', async (req, res) => {
+  const usuarioId = Number(req.body.usuario_id);
+  if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+    return res.status(400).json({ success: false, error: 'ID de usuario inválido' });
+  }
+  try {
+    await pool.query(
+      'UPDATE notificaciones SET leida = TRUE WHERE usuario_id = $1 AND leida = FALSE',
+      [usuarioId]
+    );
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error al marcar notificaciones:', error.message);
+    res.status(500).json({ success: false, error: 'No se pudieron actualizar las notificaciones' });
+  }
+});
 
 // ELIMINAR ANUNCIO
 app.delete('/anuncios/:id', async (req, res) => {
