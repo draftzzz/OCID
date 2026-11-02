@@ -44,7 +44,7 @@
       fetch(window.OCID_API_BASE + '/notificaciones?usuario_id=' + encodeURIComponent(usuario.id))
         .then(async respuesta => {
           const datos = await respuesta.json();
-          if (!respuesta.ok) throw new Error(datos.error || 'No se pudieron cargar las notificaciones');
+          if (!respuesta.ok) throw new Error('No se pudo cargar');
           const noLeidas = Array.isArray(datos) ? datos.filter(notificacion => !notificacion.leida).length : 0;
           document.querySelectorAll(
             '.badge_campana, .insignia_notificacion, .etiqueta_notificaciones, .insignia_notificacion_lateral, #indicador_notificaciones'
@@ -129,11 +129,55 @@ function sesionArchivos() {
   }
 }
 
+// Función centralizada para mostrar avisos con auto-ocultado a los 7 segundos
+function mostrarAvisoArchivos(mensaje, esError) {
+  let aviso = document.getElementById('aviso_archivos');
+  if (!aviso) {
+    aviso = document.createElement('div');
+    aviso.id = 'aviso_archivos';
+    aviso.className = 'aviso_docentes';
+    aviso.setAttribute('role', 'status');
+    const barraFiltros = document.querySelector('.barra_filtros');
+    if (barraFiltros) {
+      barraFiltros.before(aviso);
+    } else {
+      document.body.prepend(aviso);
+    }
+  }
+
+  let textoFinal = mensaje;
+  if (esError && (mensaje.toLowerCase().includes('failed to fetch') || mensaje.toLowerCase().includes('networkerror') || mensaje.toLowerCase().includes('error'))) {
+    textoFinal = 'No se pudo cargar';
+  }
+
+  aviso.textContent = textoFinal;
+
+  if (esError) {
+    aviso.classList.add('aviso_docentes_error');
+  } else {
+    aviso.classList.remove('aviso_docentes_error');
+  }
+
+  aviso.style.display = 'flex';
+
+  if (window.temporizadorAvisoArchivos) {
+    clearTimeout(window.temporizadorAvisoArchivos);
+  }
+
+  window.temporizadorAvisoArchivos = setTimeout(() => {
+    aviso.style.display = 'none';
+  }, 7000);
+}
+
 async function respuestaArchivos(ruta, opciones) {
-  const respuesta = await fetch(apiArchivos + ruta, opciones);
-  const datos = await respuesta.json();
-  if (!respuesta.ok) throw new Error(datos.error || 'No se pudo completar la operación');
-  return datos;
+  try {
+    const respuesta = await fetch(apiArchivos + ruta, opciones);
+    const datos = await respuesta.json();
+    if (!respuesta.ok) throw new Error('No se pudo cargar');
+    return datos;
+  } catch (err) {
+    throw new Error('No se pudo cargar');
+  }
 }
 
 function formatearTamano(bytes) {
@@ -212,7 +256,7 @@ function dibujarArchivos() {
     botonEliminar.className = 'boton_accion_icono';
     botonEliminar.title = 'Eliminar';
     botonEliminar.innerHTML = '<svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="17"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
-    botonEliminar.addEventListener('click', () => eliminarArchivo(archivo.id));
+    botonEliminar.addEventListener('click', () => eliminarArchivo(archivo.id, archivo.autor_id));
 
     contenedorAcciones.append(botonDescargar, botonEliminar);
     celdaAcciones.appendChild(contenedorAcciones);
@@ -257,7 +301,7 @@ async function cargarArchivos() {
 
     dibujarArchivos();
   } catch (error) {
-    console.error('Error al cargar archivos:', error);
+    mostrarAvisoArchivos('No se pudo cargar', true);
   }
 }
 
@@ -276,17 +320,26 @@ async function descargarArchivo(id) {
     enlace.click();
     URL.revokeObjectURL(url);
   } catch (error) {
-    alert(error.message);
+    mostrarAvisoArchivos('No se pudo cargar', true);
   }
 }
 
-async function eliminarArchivo(id) {
+async function eliminarArchivo(id, autorId) {
+  const usuario = sesionArchivos();
+  
+  if (!usuario || Number(usuario.id) !== Number(autorId)) {
+    mostrarAvisoArchivos('No puedes eliminar este archivo porque no te pertenece.', true);
+    return;
+  }
+
   if (!window.confirm('¿Estás seguro de eliminar este archivo?')) return;
+  
   try {
     await respuestaArchivos('/archivos/' + encodeURIComponent(id), { method: 'DELETE' });
+    mostrarAvisoArchivos('El archivo se eliminó correctamente.', false);
     await cargarArchivos();
   } catch (error) {
-    alert(error.message);
+    mostrarAvisoArchivos('No se pudo cargar', true);
   }
 }
 
@@ -332,11 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const departamentoId = departamentoIdSelect ? Number(departamentoIdSelect) : null;
 
       if (!archivo || !usuario || !usuario.id || !departamentoId) {
-        alert('Inicia sesión, selecciona un archivo y elige un departamento de destino.');
+        mostrarAvisoArchivos('Inicia sesión, selecciona un archivo y elige un departamento de destino.', true);
         return;
       }
       if (archivo.size > 10 * 1024 * 1024) {
-        alert('El archivo supera el límite de 10 MB.');
+        mostrarAvisoArchivos('El archivo supera el límite de 10 MB.', true);
         return;
       }
 
@@ -364,9 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modalArchivo.style.display = 'none';
         selectorArchivo.value = '';
         document.getElementById('nombre_documento').value = '';
+        mostrarAvisoArchivos('Archivo subido correctamente.', false);
         await cargarArchivos();
       } catch (error) {
-        alert(error.message);
+        mostrarAvisoArchivos('No se pudo cargar', true);
       }
     });
   }

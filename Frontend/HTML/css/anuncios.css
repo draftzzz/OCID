@@ -35,7 +35,7 @@ textarea {
 }
 
 /* ==========================================================================
-   2. Menú Lateral (Sidebar de anuncios2.html)
+   2. Menú Lateral (Sidebar)
    ========================================================================== */
 .barra_lateral {
     width: 256px;
@@ -49,6 +49,7 @@ textarea {
     position: sticky;
     top: 0px;
     z-index: 40;
+    transition: transform 0.2s ease;
 }
 
 .encabezado_logo {
@@ -195,7 +196,7 @@ textarea {
     flex-direction: column;
     min-width: 0px;
     height: 100vh;
-    overflow-y: auto;
+    overflow: hidden;
     background-color: #f1f5f9;
 }
 
@@ -228,15 +229,14 @@ textarea {
     gap: 20px;
 }
 
+/* Ocultar botones de menú hamburguesa por defecto en PC */
+.menu_movil,
 .boton_menu_hamburguesa {
-    border: 0px;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    display: none;
+}
+
+.fondo_menu_movil {
+    display: none;
 }
 
 .contenedor_busqueda {
@@ -285,6 +285,7 @@ textarea {
     padding: 6px;
     border-radius: 8px;
     cursor: pointer;
+    margin-left: 30px
 }
 
 .punto_notificacion {
@@ -352,9 +353,10 @@ textarea {
 }
 
 /* ==========================================================================
-   4. Cuerpo de Anuncios y Componentes
+   4. Cuerpo de Anuncios y Scroll Personalizado en Contenido Principal (con px)
    ========================================================================== */
 .cuerpo_contenido {
+    flex: 1;
     padding: 28px 32px;
     max-width: 1300px;
     width: 100%;
@@ -362,34 +364,26 @@ textarea {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    
+    /* Scroll personalizado configurado en px */
+    scrollbar-width: thin;
+    scrollbar-color: #ccd2d8 #232E33;
 }
 
-body {
-    --sb-track-color: #232E33;
-    --sb-thumb-color: #ccd2d8;
-    --sb-size: 9px;
+.cuerpo_contenido::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
 }
 
-body::-webkit-scrollbar {
-    width: var(--sb-size)
-}
-
-body::-webkit-scrollbar-track {
-    background: var(--sb-track-color);
+.cuerpo_contenido::-webkit-scrollbar-track {
+    background: #232E33;
     border-radius: 1px;
 }
 
-body::-webkit-scrollbar-thumb {
-    background: var(--sb-thumb-color);
+.cuerpo_contenido::-webkit-scrollbar-thumb {
+    background: #ccd2d8;
     border-radius: 1px;
-
-}
-
-@supports not selector(::-webkit-scrollbar) {
-    body {
-        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-    }
 }
 
 .fila_encabezado_anuncios {
@@ -511,9 +505,7 @@ body::-webkit-scrollbar-thumb {
     color: #991b1b;
     padding: 12px 16px;
     border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -525,9 +517,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aviso_docentes_error {
-    background-color: #fef2f2;
-    border-color: #fecaca;
+    background-color: #fee2e2;
     color: #991b1b;
+    border-color: #fca5a5;
 }
 
 /* ==========================================================================
@@ -652,79 +644,6 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-.titulo_bloque_lateral {
-    font-size: 13px;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 14px;
-}
-
-.lista_conteo_departamentos {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.fila_conteo_departamento {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-}
-
-.indicador_con_nombre {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: #334155;
-}
-
-.punto_departamento {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-}
-
-.punto_servicios {
-    background-color: #3b82f6;
-}
-
-.punto_control {
-    background-color: #f59e0b;
-}
-
-.punto_academico {
-    background-color: #ef4444;
-}
-
-.punto_vinculacion {
-    background-color: #10b981;
-}
-
-.punto_orientacion {
-    background-color: #8b5cf6;
-}
-
-.cifra_departamento {
-    font-weight: 700;
-    color: #0f172a;
-    font-size: 12px;
-}
-
-.columna_lateral_derecha {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.tarjeta_lateral_panel {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 18px 20px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .titulo_bloque_lateral {
@@ -966,9 +885,29 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* ==========================================================================
-   8. Media Queries Responsivos
+   8. Media Queries Responsivos (Menú Hamburguesa limpio solo en móviles)
    ========================================================================== */
 @media (max-width: 900px) {
+    .menu_movil,
+    .boton_menu_hamburguesa {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #94a3b8 !important;
+        font-size: 18px !important;
+        cursor: pointer;
+    }
+
+    .menu_movil:hover,
+    .boton_menu_hamburguesa:hover {
+        color: #ffffff !important;
+    }
+
     .barra_lateral {
         position: fixed;
         left: 0px;
@@ -981,7 +920,23 @@ body::-webkit-scrollbar-thumb {
     body.menu_movil_abierto .barra_lateral,
     .barra_lateral.menu_abierto {
         transform: translateX(0px);
-        left: 0px;
+    }
+
+    .fondo_menu_movil {
+        position: fixed;
+        inset: 0px;
+        z-index: 35;
+        display: block;
+        background-color: rgba(15, 23, 42, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        border: none;
+    }
+
+    body.menu_movil_abierto .fondo_menu_movil {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .contenedor_dos_columnas {

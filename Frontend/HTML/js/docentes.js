@@ -1,6 +1,7 @@
 /* Lógica propia de docentes.html */
 (function () {
   window.OCID_API_BASE = 'https://ocid.onrender.com';
+  window.listaDepartamentosOCID = [];
 
   function iniciarInterfaz() {
     const barraSuperior = document.querySelector('.barra_superior');
@@ -128,28 +129,55 @@ window.addEventListener('click', function(evento) {
 });
 
 function mostrarAvisoDocentes(mensaje, error) {
-  let aviso = document.getElementById('aviso_docentes');
+  let aviso = document.getElementById('aviso_anuncios') || document.getElementById('aviso_docentes');
   if (!aviso) {
     aviso = document.createElement('p');
     aviso.id = 'aviso_docentes';
     aviso.className = 'aviso_docentes';
     aviso.setAttribute('role', 'status');
-    document.querySelector('.barra_filtros').before(aviso);
+    const barraFiltros = document.querySelector('.barra_filtros');
+    if (barraFiltros) {
+      barraFiltros.before(aviso);
+    } else {
+      document.body.prepend(aviso);
+    }
   }
-  aviso.textContent = mensaje;
-  aviso.classList.toggle('aviso_docentes_error', Boolean(error));
-  aviso.hidden = false;
+  
+  // Limpiar y formatear mensajes de error comunes (como TypeError por red / failed to fetch)
+  let textoFinal = mensaje;
+  if (mensaje && (mensaje.toLowerCase().includes('failed to fetch') || mensaje.toLowerCase().includes('networkerror'))) {
+    textoFinal = 'No se pudo cargar';
+  }
+
+  aviso.textContent = textoFinal;
+  
+  if (error) {
+    aviso.classList.add('aviso_docentes_error');
+  } else {
+    aviso.classList.remove('aviso_docentes_error');
+  }
+  
+  aviso.style.display = 'flex';
+
+  if (window.temporizadorAvisoDocentes) {
+    clearTimeout(window.temporizadorAvisoDocentes);
+  }
+
+  window.temporizadorAvisoDocentes = setTimeout(() => {
+    aviso.style.display = 'none';
+  }, 7000);
 }
 
 async function cargarDocentes() {
   const cuerpo = document.getElementById('cuerpo_tabla_docentes');
   cuerpo.innerHTML = '<tr><td class="celda_docente" colspan="6">Cargando docentes...</td></tr>';
-  document.querySelector('.botones_paginacion_grupo').replaceChildren();
+  const grupoPaginacion = document.querySelector('.botones_paginacion_grupo');
+  if (grupoPaginacion) grupoPaginacion.replaceChildren();
 
   try {
     const respuesta = await fetch(`${window.OCID_API_BASE}/login`);
     const datos = await respuesta.json();
-    if (!respuesta.ok) throw new Error(datos.error || 'No se pudieron cargar los docentes.');
+    if (!respuesta.ok) throw new Error(datos.error || 'No se pudo cargar');
     if (!Array.isArray(datos)) throw new Error('La respuesta del servidor no es válida.');
 
     cuerpo.replaceChildren();
@@ -159,8 +187,8 @@ async function cargarDocentes() {
     }
     filtrarTablaDocentes();
   } catch (error) {
-    cuerpo.innerHTML = '<tr><td class="celda_docente" colspan="6">No se pudo conectar con el servidor. Intenta recargar.</td></tr>';
-    mostrarAvisoDocentes(error.message, true);
+    cuerpo.innerHTML = '<tr><td class="celda_docente" colspan="6">No se pudo cargar. Intenta recargar.</td></tr>';
+    mostrarAvisoDocentes('No se pudo cargar', true);
     filtrarTablaDocentes();
   }
 }
@@ -169,33 +197,50 @@ async function cargarDepartamentosDocentes() {
   try {
     const respuesta = await fetch(`${window.OCID_API_BASE}/departamentos`);
     const datos = await respuesta.json();
-    if (!respuesta.ok) throw new Error(datos.error || 'No se pudieron cargar los departamentos.');
+    if (!respuesta.ok) throw new Error(datos.error || 'No se pudo cargar');
 
-    const selector = document.getElementById('departamento_select');
-    selector.replaceChildren();
-    datos.forEach(departamento => {
-      const opcion = document.createElement('option');
-      opcion.value = departamento.nombre;
-      opcion.textContent = departamento.nombre;
-      selector.appendChild(opcion);
-    });
+    window.listaDepartamentosOCID = datos;
+
+    const filtroDepto = document.getElementById('filtro_departamento');
+    if (filtroDepto) {
+      filtroDepto.replaceChildren(new Option('Todos los departamentos', 'todos'));
+      datos.forEach(departamento => {
+        filtroDepto.add(new Option(departamento.nombre, departamento.nombre));
+      });
+    }
+
+    const selectorModal = document.getElementById('departamento_select');
+    if (selectorModal) {
+      selectorModal.replaceChildren();
+      datos.forEach(departamento => {
+        const opcion = document.createElement('option');
+        opcion.value = departamento.nombre;
+        opcion.textContent = departamento.nombre;
+        selectorModal.appendChild(opcion);
+      });
+    }
+
+    cargarDocentes();
   } catch (error) {
-    mostrarAvisoDocentes(error.message, true);
+    mostrarAvisoDocentes('No se pudo cargar', true);
   }
 }
 
 function agregarFilaDocente(docente) {
   const nombre = docente.nombre || 'Sin nombre';
-  const departamento = docente.departamento_nombre || 'Sin departamento';
+  const deptoActualId = docente.departamento_id || '';
+  const deptoActualNombre = docente.departamento_nombre || docente.departamento || 'Sin departamento';
   const rol = docente.rol || 'Docente';
   const iniciales = nombre.split(/\s+/).slice(0, 2).map(parte => parte[0]).join('').toUpperCase();
+  
   const fila = document.createElement('tr');
   fila.className = 'fila_docente';
   fila.dataset.id = String(docente.id);
   fila.dataset.nombre = nombre;
-  fila.dataset.departamento = departamento;
+  fila.dataset.departamento = deptoActualNombre;
   fila.dataset.estado = 'Activo';
 
+  // Columna Nombre
   const celdaNombre = document.createElement('td');
   celdaNombre.className = 'celda_docente';
   const columnaNombre = document.createElement('div');
@@ -210,13 +255,66 @@ function agregarFilaDocente(docente) {
   celdaNombre.appendChild(columnaNombre);
   fila.appendChild(celdaNombre);
 
-  [docente.correo || '', departamento].forEach(texto => {
-    const celda = document.createElement('td');
-    celda.className = 'celda_docente';
-    celda.textContent = texto;
-    fila.appendChild(celda);
+  // Columna Correo
+  const celdaCorreo = document.createElement('td');
+  celdaCorreo.className = 'celda_docente';
+  celdaCorreo.textContent = docente.correo || '';
+  fila.appendChild(celdaCorreo);
+
+  // Columna Departamento
+  const celdaDepto = document.createElement('td');
+  celdaDepto.className = 'celda_docente';
+  const selectDepto = document.createElement('select');
+  selectDepto.className = 'select_modal';
+  selectDepto.style.padding = '4px 8px';
+  selectDepto.style.fontSize = '13px';
+
+  const optionSinDepto = document.createElement('option');
+  optionSinDepto.value = '';
+  optionSinDepto.textContent = 'Sin departamento';
+  selectDepto.appendChild(optionSinDepto);
+
+  if (window.listaDepartamentosOCID) {
+    window.listaDepartamentosOCID.forEach(dep => {
+      const opt = document.createElement('option');
+      opt.value = String(dep.id);
+      opt.textContent = dep.nombre;
+      if (Number(dep.id) === Number(deptoActualId) || dep.nombre === deptoActualNombre) {
+        opt.selected = true;
+      }
+      selectDepto.appendChild(opt);
+    });
+  }
+
+  selectDepto.addEventListener('change', async () => {
+    const nuevoDeptoId = selectDepto.value ? Number(selectDepto.value) : null;
+    try {
+      const respuesta = await fetch(`${window.OCID_API_BASE}/usuarios/${docente.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: docente.nombre,
+          correo: docente.correo,
+          departamento_id: nuevoDeptoId
+        })
+      });
+      const datos = await respuesta.json();
+      if (!respuesta.ok || !datos.success) {
+        throw new Error(datos.error || 'No se pudo cargar');
+      }
+      mostrarAvisoDocentes('Departamento actualizado correctamente.', false);
+      const deptoSeleccionadoObj = window.listaDepartamentosOCID.find(d => Number(d.id) === Number(nuevoDeptoId));
+      const nuevoNombreDepto = deptoSeleccionadoObj ? deptoSeleccionadoObj.nombre : 'Sin departamento';
+      fila.dataset.departamento = nuevoNombreDepto;
+    } catch (error) {
+      mostrarAvisoDocentes('No se pudo cargar', true);
+    }
   });
 
+  celdaDepto.appendChild(selectDepto);
+  fila.appendChild(celdaDepto);
+
+  // Columna Rol
   const celdaRol = document.createElement('td');
   celdaRol.className = 'celda_docente';
   const insigniaRol = document.createElement('span');
@@ -225,11 +323,13 @@ function agregarFilaDocente(docente) {
   celdaRol.appendChild(insigniaRol);
   fila.appendChild(celdaRol);
 
+  // Columna Estado
   const celdaEstado = document.createElement('td');
   celdaEstado.className = 'celda_docente';
   celdaEstado.innerHTML = '<span class="badge_estado badge_estado_activo"><span class="punto_estado punto_activo"></span>Activo</span>';
   fila.appendChild(celdaEstado);
 
+  // Columna Acciones
   const celdaAccion = document.createElement('td');
   celdaAccion.className = 'celda_docente';
   celdaAccion.style.textAlign = 'right';
@@ -242,6 +342,7 @@ function agregarFilaDocente(docente) {
   botonEliminar.addEventListener('click', () => eliminarDocente(docente.id));
   celdaAccion.appendChild(botonEliminar);
   fila.appendChild(celdaAccion);
+
   document.getElementById('cuerpo_tabla_docentes').appendChild(fila);
 }
 
@@ -265,7 +366,7 @@ async function procesarRegistroDocente(evento) {
     });
     const datos = await respuesta.json();
     if (!respuesta.ok || !datos.success) {
-      throw new Error(datos.error || 'No se pudo registrar al docente.');
+      throw new Error(datos.error || 'No se pudo cargar');
     }
 
     formulario.reset();
@@ -273,7 +374,7 @@ async function procesarRegistroDocente(evento) {
     mostrarAvisoDocentes('Docente registrado correctamente.', false);
     await cargarDocentes();
   } catch (error) {
-    mostrarAvisoDocentes(error.message, true);
+    mostrarAvisoDocentes('No se pudo cargar', true);
   } finally {
     botonGuardar.disabled = false;
   }
@@ -298,17 +399,17 @@ async function eliminarDocente(id) {
     });
     const datos = await respuesta.json();
     if (!respuesta.ok || !datos.success) {
-      throw new Error(datos.error || 'No se pudo eliminar al docente.');
+      throw new Error(datos.error || 'No se pudo cargar');
     }
     mostrarAvisoDocentes('Docente eliminado correctamente.', false);
     await cargarDocentes();
   } catch (error) {
-    mostrarAvisoDocentes(error.message, true);
+    mostrarAvisoDocentes('No se pudo cargar', true);
   }
 }
 
 let paginaDocentes = 1;
-const docentesPorPagina = 10;
+const docentesPorPagina = 4;
 
 function filtrarTablaDocentes() {
   const textoFiltro = document.getElementById('filtro_nombre_input').value.toLowerCase().trim();
@@ -327,6 +428,7 @@ function filtrarTablaDocentes() {
   const paginas = Math.max(1, Math.ceil(coincidentes.length / docentesPorPagina));
   paginaDocentes = Math.min(paginaDocentes, paginas);
   const inicio = (paginaDocentes - 1) * docentesPorPagina;
+  
   coincidentes.forEach((fila, indice) => {
     fila.hidden = indice < inicio || indice >= inicio + docentesPorPagina;
   });
@@ -334,15 +436,19 @@ function filtrarTablaDocentes() {
     if (!coincidentes.includes(fila)) fila.hidden = true;
   });
 
-  const desde = coincidentes.length ? inicio + 1 : 0;
-  const hasta = Math.min(inicio + docentesPorPagina, coincidentes.length);
-  document.getElementById('resumen_paginacion').textContent =
-    `Mostrando ${desde} a ${hasta} de ${coincidentes.length} docentes`;
+  const cantidadMostrados = Math.min(docentesPorPagina, coincidentes.length - inicio);
+  const totalDocentes = coincidentes.length;
+  const resumenPaginacion = document.getElementById('resumen_paginacion');
+  if (resumenPaginacion) {
+    // Formato solicitado: Mostrando [cantidad mostrada] de [X] cantidad de docentes
+    resumenPaginacion.textContent = `Mostrando ${Math.max(0, cantidadMostrados)} de ${totalDocentes} docentes`;
+  }
   renderizarPaginacionDocentes(paginas);
 }
 
 function renderizarPaginacionDocentes(paginas) {
   const grupo = document.querySelector('.botones_paginacion_grupo');
+  if (!grupo) return;
   grupo.replaceChildren();
 
   const agregarBoton = (texto, pagina, etiqueta) => {
@@ -351,7 +457,9 @@ function renderizarPaginacionDocentes(paginas) {
     boton.className = 'btn_pagina' + (pagina === paginaDocentes ? ' btn_pagina_activa' : '');
     boton.textContent = texto;
     boton.setAttribute('aria-label', etiqueta);
-    boton.disabled = pagina === paginaDocentes;
+    if (pagina === paginaDocentes) {
+      boton.disabled = true;
+    }
     boton.addEventListener('click', () => {
       paginaDocentes = pagina;
       filtrarTablaDocentes();
@@ -359,22 +467,27 @@ function renderizarPaginacionDocentes(paginas) {
     grupo.appendChild(boton);
   };
 
-  if (paginaDocentes > 1) agregarBoton('‹', paginaDocentes - 1, 'Página anterior');
+  if (paginaDocentes > 1) {
+    agregarBoton('‹', paginaDocentes - 1, 'Página anterior');
+  }
+  
   for (let pagina = 1; pagina <= paginas; pagina++) {
     agregarBoton(String(pagina), pagina, `Página ${pagina}`);
   }
-  if (paginaDocentes < paginas) agregarBoton('›', paginaDocentes + 1, 'Página siguiente');
+
+  if (paginaDocentes < paginas) {
+    agregarBoton('›', paginaDocentes + 1, 'Página siguiente');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  cargarDocentes();
   cargarDepartamentosDocentes();
 });
 
 document.querySelectorAll('[data-evento-pagina="evento-1"]').forEach(function (elemento) { elemento.addEventListener('click', function (event) { abrirModalDocente() }); });
-document.querySelectorAll('[data-evento-pagina="evento-2"]').forEach(function (elemento) { elemento.addEventListener('input', function (event) { filtrarTablaDocentes() }); });
-document.querySelectorAll('[data-evento-pagina="evento-3"]').forEach(function (elemento) { elemento.addEventListener('change', function (event) { filtrarTablaDocentes() }); });
-document.querySelectorAll('[data-evento-pagina="evento-4"]').forEach(function (elemento) { elemento.addEventListener('change', function (event) { filtrarTablaDocentes() }); });
+document.querySelectorAll('[data-evento-pagina="evento-2"]').forEach(function (elemento) { elemento.addEventListener('input', function (event) { paginaDocentes = 1; filtrarTablaDocentes() }); });
+document.querySelectorAll('[data-evento-pagina="evento-3"]').forEach(function (elemento) { elemento.addEventListener('change', function (event) { paginaDocentes = 1; filtrarTablaDocentes() }); });
+document.querySelectorAll('[data-evento-pagina="evento-4"]').forEach(function (elemento) { elemento.addEventListener('change', function (event) { paginaDocentes = 1; filtrarTablaDocentes() }); });
 document.querySelectorAll('[data-evento-pagina="evento-5"]').forEach(function (elemento) { elemento.addEventListener('click', function (event) { cerrarModalDocente() }); });
 document.querySelectorAll('[data-evento-pagina="evento-6"]').forEach(function (elemento) { elemento.addEventListener('submit', function (event) { procesarRegistroDocente(event) }); });
-document.querySelectorAll('[data-evento-pagina="evento-7"]').forEach(function (elemento) { elemento.addEventListener('click', function (event) { cerrarModalDocente() }); });
+document.querySelectorAll('[data-evento-pagina="evento-7"]').forEach(function (elemento)  { elemento.addEventListener('click', function (event) { cerrarModalDocente() }); });

@@ -44,7 +44,7 @@
       fetch(window.OCID_API_BASE + '/notificaciones?usuario_id=' + encodeURIComponent(usuario.id))
         .then(async respuesta => {
           const datos = await respuesta.json();
-          if (!respuesta.ok) throw new Error(datos.error || 'No se pudieron cargar las notificaciones');
+          if (!respuesta.ok) throw new Error('No se pudo cargar');
           const noLeidas = Array.isArray(datos) ? datos.filter(notificacion => !notificacion.leida).length : 0;
           document.querySelectorAll(
             '.badge_campana, .insignia_notificacion, .etiqueta_notificaciones, .insignia_notificacion_lateral, #indicador_notificaciones'
@@ -62,37 +62,54 @@
       });
     });
 
-    if (!barraSuperior.querySelector('.boton_menu_hamburguesa')) {
-      const boton = document.createElement('button');
-      boton.type = 'button';
-      boton.className = 'boton_menu_hamburguesa';
-      boton.setAttribute('aria-label', 'Abrir menú de navegación');
-      boton.setAttribute('aria-expanded', 'false');
-      boton.innerHTML = '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>';
-      barraSuperior.prepend(boton);
-
-      const fondo = document.createElement('button');
-      fondo.type = 'button';
-      fondo.className = 'fondo_menu_movil';
-      fondo.setAttribute('aria-label', 'Cerrar menú de navegación');
-      document.body.appendChild(fondo);
-
-      function cambiarMenu(abierto) {
-        document.body.classList.toggle('menu_movil_abierto', abierto);
-        boton.setAttribute('aria-expanded', String(abierto));
+    // Control Único y Visible del Menú Móvil
+    let botonMenu = barraSuperior.querySelector('.menu_movil, .boton_menu_hamburguesa');
+    if (!botonMenu) {
+      botonMenu = document.createElement('button');
+      botonMenu.type = 'button';
+      botonMenu.className = 'boton_menu_hamburguesa';
+      botonMenu.setAttribute('aria-label', 'Abrir menú de navegación');
+      botonMenu.setAttribute('aria-expanded', 'false');
+      
+      botonMenu.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+      
+      const seccionIzquierda = barraSuperior.querySelector('.seccion_superior_izquierda') || barraSuperior;
+      seccionIzquierda.prepend(botonMenu);
+    } else {
+      if (!botonMenu.querySelector('svg')) {
+        botonMenu.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
       }
-
-      boton.addEventListener('click', () => {
-        cambiarMenu(!document.body.classList.contains('menu_movil_abierto'));
-      });
-      fondo.addEventListener('click', () => cambiarMenu(false));
-      barraLateral.querySelectorAll('a').forEach(enlace => {
-        enlace.addEventListener('click', () => cambiarMenu(false));
-      });
-      document.addEventListener('keydown', evento => {
-        if (evento.key === 'Escape') cambiarMenu(false);
-      });
     }
+
+    let fondoMovil = document.querySelector('.fondo_menu_movil');
+    if (!fondoMovil) {
+      fondoMovil = document.createElement('button');
+      fondoMovil.type = 'button';
+      fondoMovil.className = 'fondo_menu_movil';
+      fondoMovil.setAttribute('aria-label', 'Cerrar menú de navegación');
+      document.body.appendChild(fondoMovil);
+    }
+
+    function alternarMenu(abrir) {
+      const estado = abrir !== undefined ? abrir : !document.body.classList.contains('menu_movil_abierto');
+      document.body.classList.toggle('menu_movil_abierto', estado);
+      botonMenu.setAttribute('aria-expanded', String(estado));
+    }
+
+    botonMenu.addEventListener('click', (evento) => {
+      evento.stopPropagation();
+      alternarMenu();
+    });
+
+    fondoMovil.addEventListener('click', () => alternarMenu(false));
+
+    barraLateral.querySelectorAll('a').forEach(enlace => {
+      enlace.addEventListener('click', () => alternarMenu(false));
+    });
+
+    document.addEventListener('keydown', evento => {
+      if (evento.key === 'Escape') alternarMenu(false);
+    });
 
     barraLateral.querySelectorAll('a[href="#"]').forEach(enlace => {
       if (enlace.textContent.toLowerCase().includes('cerrar sesión')) {
@@ -136,15 +153,19 @@ function mostrarErrorAnuncios(mensaje) {
     aviso.setAttribute('role', 'alert');
     document.querySelector('.barra_filtros').before(aviso);
   }
-  aviso.textContent = mensaje;
+
+  let textoFinal = mensaje;
+  if (mensaje && (mensaje.toLowerCase().includes('failed to fetch') || mensaje.toLowerCase().includes('networkerror'))) {
+    textoFinal = 'No se pudo cargar';
+  }
+
+  aviso.textContent = textoFinal;
   aviso.hidden = false;
 
-  // Limpiar temporizador previo si ya existía uno corriendo
   if (window.temporizadorAvisoAnuncios) {
     clearTimeout(window.temporizadorAvisoAnuncios);
   }
 
-  // Ocultar el recuadro automáticamente después de 7 segundos (7000 ms)
   window.temporizadorAvisoAnuncios = setTimeout(() => {
     aviso.hidden = true;
   }, 7000);
@@ -160,10 +181,10 @@ async function cargar_anuncios_desde_servidor() {
       respuestaAnuncios.json(),
       respuestaDepartamentos.json()
     ]);
-    if (!respuestaAnuncios.ok) throw new Error(datosAnuncios.error || 'No se pudieron cargar los anuncios.');
-    if (!respuestaDepartamentos.ok) throw new Error(datosDepartamentos.error || 'No se pudieron cargar los departamentos.');
+    if (!respuestaAnuncios.ok) throw new Error('No se pudo cargar');
+    if (!respuestaDepartamentos.ok) throw new Error('No se pudo cargar');
     if (!Array.isArray(datosAnuncios) || !Array.isArray(datosDepartamentos)) {
-      throw new Error('El servidor devolvió datos no válidos.');
+      throw new Error('No se pudo cargar');
     }
 
     lista_de_anuncios = datosAnuncios.map(anuncio => ({
@@ -176,16 +197,18 @@ async function cargar_anuncios_desde_servidor() {
     departamentos_anuncios = datosDepartamentos;
 
     const selectorDepartamento = document.getElementById('campo_departamento');
-    selectorDepartamento.replaceChildren();
-    datosDepartamentos.forEach(departamento => {
-      const opcion = document.createElement('option');
-      opcion.value = String(departamento.id);
-      opcion.textContent = departamento.nombre;
-      selectorDepartamento.appendChild(opcion);
-    });
+    if (selectorDepartamento) {
+      selectorDepartamento.replaceChildren();
+      datosDepartamentos.forEach(departamento => {
+        const opcion = document.createElement('option');
+        opcion.value = String(departamento.id);
+        opcion.textContent = departamento.nombre;
+        selectorDepartamento.appendChild(opcion);
+      });
+    }
   } catch (error) {
     lista_de_anuncios = [];
-    mostrarErrorAnuncios(error.message || 'No se pudo conectar con el servidor.');
+    mostrarErrorAnuncios('No se pudo cargar');
   }
   renderizar_interfaz();
 }
@@ -210,6 +233,7 @@ function renderizar_interfaz() {
   });
 
   const contenedor = document.getElementById('contenedor_tarjetas_anuncios');
+  if (!contenedor) return;
   contenedor.innerHTML = '';
 
   if (anuncios_filtrados.length === 0) {
@@ -318,11 +342,11 @@ async function eliminarAnuncio(id, esAutor) {
     });
     const datos = await respuesta.json();
     if (!respuesta.ok || !datos.success) {
-      throw new Error(datos.error || 'No se pudo eliminar el anuncio.');
+      throw new Error('No se pudo cargar');
     }
     await cargar_anuncios_desde_servidor();
   } catch (error) {
-    mostrarErrorAnuncios(error.message || 'Error al conectar con el servidor.');
+    mostrarErrorAnuncios('No se pudo cargar');
   }
 }
 
@@ -341,13 +365,14 @@ function actualizar_panel_lateral() {
     }
   });
 
-  document.getElementById('conteo_servicios').textContent = conteos['Servicios Escolares'];
-  document.getElementById('conteo_control').textContent = conteos['Control Escolar'];
-  document.getElementById('conteo_academico').textContent = conteos['Académico'];
-  document.getElementById('conteo_vinculacion').textContent = conteos['Vinculación'];
-  document.getElementById('conteo_orientacion').textContent = conteos['Orientación'];
+  if (document.getElementById('conteo_servicios')) document.getElementById('conteo_servicios').textContent = conteos['Servicios Escolares'];
+  if (document.getElementById('conteo_control')) document.getElementById('conteo_control').textContent = conteos['Control Escolar'];
+  if (document.getElementById('conteo_academico')) document.getElementById('conteo_academico').textContent = conteos['Académico'];
+  if (document.getElementById('conteo_vinculacion')) document.getElementById('conteo_vinculacion').textContent = conteos['Vinculación'];
+  if (document.getElementById('conteo_orientacion')) document.getElementById('conteo_orientacion').textContent = conteos['Orientación'];
 
   const contenedor_ultimos = document.getElementById('contenedor_ultimos_anuncios');
+  if (!contenedor_ultimos) return;
   contenedor_ultimos.innerHTML = '';
   
   const ultimos_tres = lista_de_anuncios.slice(0, 3);
@@ -369,82 +394,90 @@ const boton_cancelar = document.getElementById('boton_cancelar_modal');
 const form_nuevo_anuncio = document.getElementById('formulario_nuevo_anuncio');
 
 function abrir_modal() {
-  modal_nuevo.classList.add('modal_activo');
+  if (modal_nuevo) modal_nuevo.classList.add('modal_activo');
 }
 
 function cerrar_modal() {
-  modal_nuevo.classList.remove('modal_activo');
-  form_nuevo_anuncio.reset();
+  if (modal_nuevo) modal_nuevo.classList.remove('modal_activo');
+  if (form_nuevo_anuncio) form_nuevo_anuncio.reset();
   anuncioEnEdicionId = null;
 }
 
-boton_abrir_modal.addEventListener('click', () => {
-  anuncioEnEdicionId = null;
-  abrir_modal();
-});
-boton_cerrar_cruz.addEventListener('click', cerrar_modal);
-boton_cancelar.addEventListener('click', cerrar_modal);
+if (boton_abrir_modal) {
+  boton_abrir_modal.addEventListener('click', () => {
+    anuncioEnEdicionId = null;
+    abrir_modal();
+  });
+}
+if (boton_cerrar_cruz) boton_cerrar_cruz.addEventListener('click', cerrar_modal);
+if (boton_cancelar) boton_cancelar.addEventListener('click', cerrar_modal);
 
-modal_nuevo.addEventListener('click', (evento) => {
-  if (evento.target === modal_nuevo) cerrar_modal();
-});
+if (modal_nuevo) {
+  modal_nuevo.addEventListener('click', (evento) => {
+    if (evento.target === modal_nuevo) cerrar_modal();
+  });
+}
 
-form_nuevo_anuncio.addEventListener('submit', async (e) => {
-  e.preventDefault();
+if (form_nuevo_anuncio) {
+  form_nuevo_anuncio.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  let usuario;
-  try {
-    usuario = JSON.parse(localStorage.getItem('usuario_ocid') || 'null');
-  } catch (error) {
-    usuario = null;
-  }
-  if (!usuario || !usuario.id) {
-    mostrarErrorAnuncios('Inicia sesión para publicar un anuncio.');
-    return;
-  }
-
-  const objeto_anuncio = {
-    titulo: document.getElementById('campo_titulo').value.trim(),
-    prioridad: document.getElementById('campo_tipo').value,
-    departamento_id: Number(document.getElementById('campo_departamento').value),
-    contenido: document.getElementById('campo_contenido').value.trim(),
-    autor_id: Number(usuario.id)
-  };
-
-  try {
-    let url = `${window.OCID_API_BASE}/anuncios`;
-    let metodo = 'POST';
-
-    if (anuncioEnEdicionId !== null) {
-      url = `${window.OCID_API_BASE}/anuncios/${anuncioEnEdicionId}`;
-      metodo = 'PUT';
+    let usuario;
+    try {
+      usuario = JSON.parse(localStorage.getItem('usuario_ocid') || 'null');
+    } catch (error) {
+      usuario = null;
+    }
+    if (!usuario || !usuario.id) {
+      mostrarErrorAnuncios('Inicia sesión para publicar un anuncio.');
+      return;
     }
 
-    const respuesta = await fetch(url, {
-      method: metodo,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(objeto_anuncio)
-    });
-    const datos = await respuesta.json();
-    if (!respuesta.ok || !datos.success) {
-      throw new Error(datos.error || 'No se pudo procesar la solicitud del anuncio.');
+    const objeto_anuncio = {
+      titulo: document.getElementById('campo_titulo').value.trim(),
+      prioridad: document.getElementById('campo_tipo').value,
+      departamento_id: Number(document.getElementById('campo_departamento').value),
+      contenido: document.getElementById('campo_contenido').value.trim(),
+      autor_id: Number(usuario.id)
+    };
+
+    try {
+      let url = `${window.OCID_API_BASE}/anuncios`;
+      let metodo = 'POST';
+
+      if (anuncioEnEdicionId !== null) {
+        url = `${window.OCID_API_BASE}/anuncios/${anuncioEnEdicionId}`;
+        metodo = 'PUT';
+      }
+
+      const respuesta = await fetch(url, {
+        method: metodo,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(objeto_anuncio)
+      });
+      const datos = await respuesta.json();
+      if (!respuesta.ok || !datos.success) {
+        throw new Error('No se pudo cargar');
+      }
+      cerrar_modal();
+      await cargar_anuncios_desde_servidor();
+    } catch (error) {
+      mostrarErrorAnuncios('No se pudo cargar');
     }
-    cerrar_modal();
-    await cargar_anuncios_desde_servidor();
-  } catch (error) {
-    mostrarErrorAnuncios(error.message || 'No se pudo conectar con el servidor.');
-  }
-});
+  });
+}
 
-document.getElementById('filtro_busqueda_titulo').addEventListener('input', renderizar_interfaz);
-document.getElementById('filtro_departamento').addEventListener('change', renderizar_interfaz);
-document.getElementById('filtro_tipo').addEventListener('change', renderizar_interfaz);
+if (document.getElementById('filtro_busqueda_titulo')) document.getElementById('filtro_busqueda_titulo').addEventListener('input', renderizar_interfaz);
+if (document.getElementById('filtro_departamento')) document.getElementById('filtro_departamento').addEventListener('change', renderizar_interfaz);
+if (document.getElementById('filtro_tipo')) document.getElementById('filtro_tipo').addEventListener('change', renderizar_interfaz);
 
-document.getElementById('boton_limpiar').addEventListener('click', () => {
-  document.getElementById('filtro_busqueda_titulo').value = '';
-  document.getElementById('filtro_departamento').value = '';
-  document.getElementById('filtro_tipo').value = '';
-  renderizar_interfaz();
-});
+if (document.getElementById('boton_limpiar')) {
+  document.getElementById('boton_limpiar').addEventListener('click', () => {
+    document.getElementById('filtro_busqueda_titulo').value = '';
+    document.getElementById('filtro_departamento').value = '';
+    document.getElementById('filtro_tipo').value = '';
+    renderizar_interfaz();
+  });
+}
 
 window.addEventListener('DOMContentLoaded', cargar_anuncios_desde_servidor);

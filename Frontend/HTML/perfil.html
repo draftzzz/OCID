@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>OCID - Mi Perfil</title>
+
+    <!-- Iconografía FontAwesome y Fuente Inter -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Hojas de Estilo Base y Perfil -->
+    <link rel="stylesheet" href="css/perfil.css" />
+</head>
+
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">OCID</div>
+                <div class="texto_logo_subtitulo">Plataforma de Comunicación Escolar</div>
+            </div>
+        </div>
+
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion" href="inicio.html" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion" href="mi-departamento.html" id="nav_departamento">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
+            </a>
+            <a class="enlace_navegacion" href="archivos.html" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="tareas.html" id="nav_asistente">
+                <i class="fa-regular fa-list-check icono_nav"></i>
+                <span>Tareas</span>
+            </a>
+            <a class="enlace_navegacion" href="notificaciones.html">
+                <i class="fa-solid fa-bell icono_nav"></i>
+                <span>Notificaciones</span>
+            </a>
+            <div class="separador_menu"></div>
+            <a class="enlace_navegacion activo" href="mi-perfil.html">
+                <i class="fa-solid fa-user icono_nav"></i>
+                <span>Mi perfil</span>
+            </a>
+            <a class="boton_cerrar_sesion" id="boton_cerrar_sesion" onclick="cerrarSesion()">
+                <i class="fa-solid fa-arrow-right-from-bracket icono_nav"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior Global -->
+        <header class="barra_superior" data-purpose="cabecera_global">
+            <div class="seccion_superior_izquierda">
+                <button aria-label="Menu" class="boton_menu_hamburguesa" title="Alternar menú lateral">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones" title="Notificaciones del sistema">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
+                </button>
+                <div class="perfil_usuario_barra">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        CR
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong id="nombreUsuario" style="color: #ffffff;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Área de Trabajo Principal -->
+        <div class="contenido_principal" data-purpose="area_configuracion">
+            <!-- Título de la Sección -->
+            <div class="cabecera_pagina">
+                <h1 class="titulo_pagina">Mi Perfil</h1>
+                <p class="subtitulo_pagina">Administra tu cuenta y preferencias de la plataforma.</p>
+            </div>
+
+            <!-- Cuadrícula de 2 Columnas -->
+            <div class="curicula_configuracion">
+                <!-- Columna Izquierda: Información Personal -->
+                <section class="tarjeta_configuracion">
+                    <h2 class="tarjeta_titulo">Información personal</h2>
+                    
+                    <!-- Avatar con Iniciales Dynamicas -->
+                    <div class="seccion_avatar_perfil">
+                        <div class="avatar_grande" id="avatar_vista_previa">
+                            CR
+                        </div>
+                        <div>
+                            <p class="texto_avatar_aviso">Las iniciales se generan automáticamente a partir de tu nombre de usuario.</p>
+                        </div>
+                    </div>
+
+                    <!-- Formulario Datos de Usuario -->
+                    <form id="formulario_datos_perfil">
+                        <div class="grupo_formulario">
+                            <label class="etiqueta_formulario" for="campo_nombre_completo">Nombre completo</label>
+                            <input class="campo_input" id="campo_nombre_completo" required type="text" value="Carlos Ramírez" />
+                        </div>
+                        <div class="grupo_formulario">
+                            <label class="etiqueta_formulario" for="campo_correo_electronico">Correo electrónico</label>
+                            <input class="campo_input" id="campo_correo_electronico" required type="email" value="carlos.ramirez@edu.mx" />
+                        </div>
+                        <div class="grupo_formulario">
+                            <label class="etiqueta_formulario" for="campo_departamento">Departamento</label>
+                            <select class="campo_input" id="campo_departamento">
+                                <option value="Servicios Escolares">Servicios Escolares</option>
+                                <option value="Control Escolar">Control Escolar</option>
+                                <option value="Académico">Académico</option>
+                                <option value="Vinculación">Vinculación</option>
+                                <option value="Orientación">Orientación</option>
+                            </select>
+                        </div>
+                        <div class="grupo_formulario">
+                            <label class="etiqueta_formulario" for="campo_rol_usuario">Rol</label>
+                            <input class="campo_input campo_input_deshabilitado" id="campo_rol_usuario" readonly type="text" value="Jefe de Departamento" />
+                        </div>
+                        <div style="margin-top: 24px;">
+                            <button class="boton_primario_azul" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Actualizar perfil</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Columna Derecha: Cambio de Contraseña y Preferencias -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Tarjeta de Contraseña -->
+                    <section class="tarjeta_configuracion">
+                        <h2 class="tarjeta_titulo">Cambiar contraseña</h2>
+                        <form id="formulario_contrasena">
+                            <div class="grupo_formulario">
+                                <label class="etiqueta_formulario" for="campo_clave_actual">Contraseña actual</label>
+                                <input class="campo_input" id="campo_clave_actual" placeholder="••••••••" required type="password" />
+                            </div>
+                            <div class="grupo_formulario">
+                                <label class="etiqueta_formulario" for="campo_clave_nueva">Nueva contraseña</label>
+                                <input class="campo_input" id="campo_clave_nueva" placeholder="••••••••" required type="password" />
+                            </div>
+                            <div class="grupo_formulario">
+                                <label class="etiqueta_formulario" for="campo_clave_confirmacion">Confirmar contraseña</label>
+                                <input class="campo_input" id="campo_clave_confirmacion" placeholder="••••••••" required type="password" />
+                            </div>
+                            <button class="boton_primario_azul boton_primario_azul_ancho" type="submit">
+                                Cambiar contraseña
+                            </button>
+                        </form>
+                    </section>
+
+                    <!-- Tarjeta de Preferencias -->
+                    <section class="tarjeta_configuracion">
+                        <h2 class="tarjeta_titulo">Preferencias</h2>
+                        <div class="fila_preferencia">
+                            <span class="texto_preferencia">Notificaciones del sistema</span>
+                            <label class="interruptor_etiqueta">
+                                <input checked id="toggle_sistema" type="checkbox" />
+                                <span class="interruptor_deslizador"></span>
+                            </label>
+                        </div>
+                        <div class="fila_preferencia">
+                            <span class="texto_preferencia">Notificaciones de tareas</span>
+                            <label class="interruptor_etiqueta">
+                                <input checked id="toggle_tareas" type="checkbox" />
+                                <span class="interruptor_deslizador"></span>
+                            </label>
+                        </div>
+                        <div class="fila_preferencia">
+                            <span class="texto_preferencia">Notificaciones de anuncios</span>
+                            <label class="interruptor_etiqueta">
+                                <input checked id="toggle_anuncios" type="checkbox" />
+                                <span class="interruptor_deslizador"></span>
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Confirmar Cierre de Sesión -->
+    <div class="capa_modal" id="modal_confirmar_cierre">
+        <div class="caja_modal">
+            <div class="icono_modal_alerta">
+                <i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 20px;"></i>
+            </div>
+            <h3 class="titulo_modal">¿Estás seguro de que deseas cerrar sesión?</h3>
+            <p class="descripcion_modal">Terminarás la sesión activa actual del sistema OCID y deberás ingresar tus credenciales nuevamente.</p>
+            <div class="botones_modal">
+                <button class="boton_secundario_gris" id="boton_cancelar_modal" type="button">Cancelar</button>
+                <button class="boton_peligro_rojo" id="boton_confirmar_cierre_definitivo" type="button">Confirmar Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificación Toast Dinámica -->
+    <div class="notificacion_toast" id="toast_mensaje" role="status">
+        <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 16px;"></i>
+        <span id="texto_toast">Cambios guardados con éxito.</span>
+    </div>
+
+    <script src="js/configuracion.js"></script>
+</body>
+
+</html>

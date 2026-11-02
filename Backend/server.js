@@ -657,6 +657,128 @@ app.delete('/archivos/:id', async (req, res) => {
   }
 });
 
+// ==========================================
+// SECCIÓN DE TAREAS (CALENDARIO)
+// ==========================================
+
+// OBTENER TAREAS
+app.get('/tareas', async (req, res) => {
+  try {
+    const resultado = await pool.query(
+      `SELECT
+         t.id,
+         t.titulo,
+         t.fecha,
+         t.horario,
+         t.departamento,
+         t.autor_id,
+         t.fecha_creacion,
+         u.nombre AS autor_nombre
+       FROM tareas t
+       LEFT JOIN usuarios u
+         ON u.id = t.autor_id
+       ORDER BY t.fecha ASC, t.id DESC`
+    );
+
+    res.json(resultado.rows);
+
+  } catch (error) {
+    console.error('Error al consultar tareas:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudieron cargar las tareas'
+    });
+  }
+});
+
+// CREAR TAREA
+app.post('/tareas', async (req, res) => {
+  const { titulo, fecha, horario, departamento, autor_id } = req.body;
+
+  if (!titulo || !fecha) {
+    return res.status(400).json({
+      success: false,
+      error: 'El título y la fecha son obligatorios'
+    });
+  }
+
+  let autorId = null;
+  if (autor_id !== null && autor_id !== undefined && autor_id !== '') {
+    autorId = Number(autor_id);
+    if (!Number.isInteger(autorId) || autorId <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'El autor de la tarea no es válido'
+      });
+    }
+  }
+
+  try {
+    const resultado = await pool.query(
+      `INSERT INTO tareas (titulo, fecha, horario, departamento, autor_id)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, titulo, fecha, horario, departamento, autor_id, fecha_creacion`,
+      [
+        titulo.trim(),
+        fecha,
+        horario || 'Horario a confirmar',
+        departamento || 'General',
+        autorId
+      ]
+    );
+
+    res.status(201).json({
+      success: true,
+      tarea: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error al crear tarea:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo guardar la tarea'
+    });
+  }
+});
+
+// ELIMINAR TAREA
+app.delete('/tareas/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'ID de tarea inválido'
+    });
+  }
+
+  try {
+    const resultado = await pool.query(
+      'DELETE FROM tareas WHERE id = $1 RETURNING id',
+      [id]
+    );
+
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'La tarea no existe'
+      });
+    }
+
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error('Error al eliminar tarea:', error.message);
+
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo eliminar la tarea'
+    });
+  }
+});
+
 // OBTENER NOTIFICACIONES DE UN USUARIO
 app.get('/notificaciones', async (req, res) => {
   const usuarioId = Number(req.query.usuario_id);
