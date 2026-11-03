@@ -1,274 +1,276 @@
 <!DOCTYPE html>
+<html lang="es">
 
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>OCID - Mi Departamento</title>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>OCID - Mi Departamento</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- BEGIN: CustomStyles -->
+    <!-- Iconografía FontAwesome y Fuente Inter -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-<!-- END: CustomStyles -->
-
-
-<link rel="stylesheet" href="css/mi-departamento.css"/>
-<link rel="stylesheet" href="css/menu-theme.css"/>
+    <!-- Hojas de Estilos Globales y del Módulo -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/mi-departamento.css" />
 </head>
-<body>
-<!-- BEGIN: MainLayout -->
-<div class="diseno_pantalla" data-purpose="contenedor_aplicacion">
-<!-- BEGIN: Sidebar -->
-<aside class="barra_lateral" data-purpose="barra_navegacion_lateral">
-<!-- Encabezado con Escudo y Nombre del Plantel -->
-<div class="contenedor_logo">
-<div class="icono_escudo">258</div>
-<div>
-<div class="texto_logo_titulo">OCID</div>
-<div class="texto_logo_sub">Plataforma de Comunicación Escolar</div>
-</div>
-</div>
-<!-- Enlaces de navegación principal -->
-<nav class="menu_navegacion">
-<a class="item_menu" href="inicio.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          Inicio
-        </a>
-<!-- Opción Activa: Mi Departamento -->
-<a class="item_menu item_menu_activo" href="mi-departamento.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          Mi Departamento
-        </a>
-<a class="item_menu" href="anuncios.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
-          Anuncios
-        </a>
-<a class="item_menu" href="archivos.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-          Archivos
-        </a>
-<a class="item_menu" href="docentes.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
-          Docentes
-        </a>
-<a class="item_menu" href="calendario.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
-          Calendario
-        </a>
-<a class="item_menu" href="tareas.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-          Tareas
-        </a>
-<a class="item_menu" href="notificaciones.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-          Notificaciones
-          <span class="badge_notificacion_lateral">3</span>
-</a>
-</nav>
-<!-- Pie de navegación lateral -->
-<div class="seccion_inferior_menu">
-<a class="item_menu" href="configuracion.html">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          Mi perfil
-        </a>
-<a class="item_menu" href="#salir">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
-          Cerrar sesión
-        </a>
-</div>
-</aside>
-<!-- END: Sidebar -->
-<!-- BEGIN: MainContent -->
-<main class="contenido_principal">
-<!-- BEGIN: TopBar -->
-<header class="barra_superior" data-purpose="barra_herramientas_superior">
-<!-- Botón Hamburguesa -->
-<button aria-label="Abrir menú" data-estilo-pagina="estilo-1" type="button">
-<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
-</button>
-<!-- Barra de búsqueda central -->
-<div class="grupo_busqueda">
-<input aria-label="Campo de búsqueda" class="campo_busqueda" placeholder="Buscar..." type="text"/>
-<svg class="icono_busqueda" fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
-</div>
-<!-- Perfil y Notificaciones -->
-<div class="contenedor_usuario_superior">
-<button aria-label="Ver notificaciones" class="boton_campana" type="button">
-<svg fill="none" height="19" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="19"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-<span class="badge_campana">3</span>
-</button>
-<div class="perfil_superior">
-<div class="avatar_usuario">CR</div>
-<div class="info_usuario">
-<span class="nombre_usuario">Carlos Ramírez</span>
-<span class="rol_usuario">Jefe de Departamento</span>
-</div>
-</div>
-</div>
-</header>
-<!-- END: TopBar -->
-<!-- BEGIN: DepartmentDashboard -->
-<div class="area_trabajo">
-<!-- Título de sección -->
-<div class="cabecera_modulo">
-<h1 class="titulo_pagina">Mi Departamento</h1>
-<p class="subtitulo_pagina">Información y miembros de tu departamento.</p>
-</div>
-<!-- Fila superior: Resumen de departamento y Tarjeta del Jefe -->
-<div class="cuadricula_superior">
-<!-- Tarjeta de información principal de Servicios Escolares -->
-<div class="tarjeta_general" data-purpose="tarjeta_resumen_departamento">
-<div class="encabezado_departamento">
-<div class="icono_dep_destacado">
-<svg fill="none" height="26" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="26"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
-</div>
-<div data-estilo-pagina="estilo-2">
-<h2 class="nombre_departamento" id="nombre_departamento_texto">Servicios Escolares</h2>
-<div class="detalle_departamento" id="detalle_departamento_texto">Gestión de la información escolar y control de trámites académicos.</div>
-</div>
-<button aria-label="Opciones de departamento" class="boton_acciones">
-<svg fill="currentColor" height="18" viewbox="0 0 24 24" width="18"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
-</button>
-</div>
-<!-- Métricas estadísticas del departamento -->
-<div class="fila_metricas">
-<div class="caja_metrica" data-purpose="metrica_docentes">
-<div class="icono_metrica icono_docentes">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-</div>
-<div>
-<div class="etiqueta_metrica">Docentes</div>
-<div class="valor_metrica" id="total_docentes">8</div>
-</div>
-</div>
-<div class="caja_metrica" data-purpose="metrica_documentos">
-<div class="icono_metrica icono_documentos">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-</div>
-<div>
-<div class="etiqueta_metrica">Documentos</div>
-<div class="valor_metrica" id="total_documentos">15</div>
-</div>
-</div>
-<div class="caja_metrica" data-purpose="metrica_eventos">
-<div class="icono_metrica icono_eventos">
-<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
-</div>
-<div>
-<div class="etiqueta_metrica">Eventos</div>
-<div class="valor_metrica" id="total_eventos">3</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tarjeta de contacto Jefe de Departamento -->
-<div class="tarjeta_jefe" data-purpose="tarjeta_jefe_departamento">
-<div class="titulo_caja_pequena">Jefe de departamento</div>
-<div class="avatar_jefe_grande" id="avatar_jefe">AL</div>
-<h3 class="nombre_jefe" id="nombre_jefe">Ana López García</h3>
-<span class="correo_jefe" id="correo_jefe">ana.lopez@edu.mx</span>
-<button class="boton_contactar" id="boton_abrir_contacto" type="button">Contactar</button>
-</div>
-</div>
-<!-- Sección de Descripción Institucional -->
-<div class="tarjeta_descripcion" data-purpose="bloque_descripcion">
-<div class="titulo_seccion_bloque">Descripción</div>
-<p class="texto_parrafo_desc" id="parrafo_descripcion">
-            El departamento de Servicios Escolares se encarga de organizar el registro, inscripción, control de documentos y atención académica a estudiantes.
-          </p>
-</div>
-<!-- Sección de Tabla de Integrantes del Departamento -->
-<div class="tarjeta_integrantes" data-purpose="bloque_integrantes">
-<div class="cabecera_integrantes">
-<div class="titulo_seccion_bloque" data-estilo-pagina="estilo-3">Integrantes del departamento</div>
-<a class="enlace_ver_todos" href="#ver_todos_integrantes">
-              Ver todos
-              <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-</a>
-</div>
-<table class="tabla_integrantes">
-<thead>
-<tr>
-<th>Nombre</th>
-<th>Puesto</th>
-<th>Estado</th>
-<th data-estilo-pagina="estilo-4"></th>
-</tr>
-</thead>
-<tbody id="cuerpo_tabla_integrantes">
-<tr>
-<td><span class="nombre_miembro">Ana López García</span></td>
-<td>Jefe</td>
-<td><span class="badge_estado_activo">Activo</span></td>
-<td data-estilo-pagina="estilo-5">
-<button aria-label="Acciones de usuario" class="boton_acciones">
-<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
-</button>
-</td>
-</tr>
-<tr>
-<td><span class="nombre_miembro">Luis Mendoza Ruiz</span></td>
-<td>Docente</td>
-<td><span class="badge_estado_activo">Activo</span></td>
-<td data-estilo-pagina="estilo-6">
-<button aria-label="Acciones de usuario" class="boton_acciones">
-<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
-</button>
-</td>
-</tr>
-<tr>
-<td><span class="nombre_miembro">María Torres Silva</span></td>
-<td>Docente</td>
-<td><span class="badge_estado_activo">Activo</span></td>
-<td data-estilo-pagina="estilo-7">
-<button aria-label="Acciones de usuario" class="boton_acciones">
-<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
-</button>
-</td>
-</tr>
-<tr>
-<td><span class="nombre_miembro">Jorge Hernández Díaz</span></td>
-<td>Docente</td>
-<td><span class="badge_estado_activo">Activo</span></td>
-<td data-estilo-pagina="estilo-8">
-<button aria-label="Acciones de usuario" class="boton_acciones">
-<svg fill="currentColor" height="16" viewbox="0 0 24 24" width="16"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- END: DepartmentDashboard -->
-</main>
-<!-- END: MainContent -->
-</div>
-<!-- END: MainLayout -->
-<!-- BEGIN: ModalContact -->
-<div class="modal_contacto" data-purpose="modal_contactar_jefe" id="modal_contacto">
-<div class="caja_modal">
-<div data-estilo-pagina="estilo-9">
-<h3 data-estilo-pagina="estilo-10">Enviar mensaje al Jefe de Departamento</h3>
-<button id="boton_cerrar_modal" data-estilo-pagina="estilo-11">✕</button>
-</div>
-<p data-estilo-pagina="estilo-12">
-        Destinatario: <strong id="modal_destinatario">Ana López García (ana.lopez@edu.mx)</strong>
-</p>
-<div data-estilo-pagina="estilo-13">
-<label for="asunto_mensaje" data-estilo-pagina="estilo-14">Asunto</label>
-<input id="asunto_mensaje" placeholder="Ingresa el asunto..." data-estilo-pagina="estilo-15" type="text"/>
-<label for="cuerpo_mensaje" data-estilo-pagina="estilo-16">Mensaje</label>
-<textarea id="cuerpo_mensaje" placeholder="Escribe tu mensaje institucional aquí..." rows="4" data-estilo-pagina="estilo-17"></textarea>
-<div data-estilo-pagina="estilo-18">
-<button id="boton_cancelar_modal" data-estilo-pagina="estilo-19" type="button">Cancelar</button>
-<button id="boton_enviar_mensaje" data-estilo-pagina="estilo-20" type="button">Enviar Mensaje</button>
-</div>
-</div>
-</div>
-</div>
-<!-- END: ModalContact -->
-<!-- BEGIN: LogicScript -->
 
-<!-- END: LogicScript -->
-<script src="js/mi-departamento.js"></script>
-</body></html>
+<body>
+    <!-- BEGIN: Sidebar -->
+    <aside class="barra_lateral" data-purpose="navegacion-principal">
+        <!-- Logotipo y Nombre del Plantel -->
+        <div class="encabezado_logo">
+            <div class="icono_escudo">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+                <div class="texto_logo_titulo">OCID</div>
+                <div class="texto_logo_subtitulo">Plataforma de Coordinación Escolar</div>
+            </div>
+        </div>
+
+        <!-- Menú de Enlaces -->
+        <nav class="navegacion_lateral">
+            <a class="enlace_navegacion" href="inicio.html" id="nav_inicio">
+                <i class="fa-solid fa-house icono_nav"></i>
+                <span>Inicio</span>
+            </a>
+            <a class="enlace_navegacion activo" href="mi-departamento.html" id="nav_departamento">
+                <i class="fa-solid fa-building-user icono_nav"></i>
+                <span>Mi Departamento</span>
+            </a>
+            <a class="enlace_navegacion" href="anuncios.html" id="nav_anuncios">
+                <i class="fa-solid fa-bullhorn icono_nav"></i>
+                <span>Anuncios</span>
+                <span class="insignia_notificacion" id="badge_conteo_anuncios">3</span>
+            </a>
+            <a class="enlace_navegacion" href="archivos.html" id="nav_archivos">
+                <i class="fa-regular fa-folder-open icono_nav"></i>
+                <span>Archivos</span>
+            </a>
+            <a class="enlace_navegacion" href="docentes.html" id="nav_docentes">
+                <i class="fa-solid fa-users-gear icono_nav"></i>
+                <span>Docentes</span>
+            </a>
+            <a class="enlace_navegacion" href="calendario.html" id="nav_calendario">
+                <i class="fa-regular fa-calendar-days icono_nav"></i>
+                <span>Calendario</span>
+            </a>
+            <a class="enlace_navegacion" href="tareas.html" id="nav_asistente">
+                <i class="fa-regular fa-list-check icono_nav"></i>
+                <span>Tareas</span>
+            </a>
+            <a class="enlace_navegacion" href="notificaciones.html">
+                <i class="fa-solid fa-bell icono_nav"></i>
+                <span>Notificaciones</span>
+            </a>
+            <div class="separador_menu"></div>
+            <a class="enlace_navegacion" href="mi-perfil.html">
+                <i class="fa-solid fa-user icono_nav"></i>
+                <span>Mi perfil</span>
+            </a>
+            <a class="boton_cerrar_sesion" id="boton_cerrar_sesion">
+                <i class="fa-solid fa-arrow-right-from-bracket icono_nav"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- END: Sidebar -->
+
+    <!-- BEGIN: MainContentArea -->
+    <main class="area_principal">
+        <!-- Barra Superior Global -->
+        <header class="barra_superior" data-purpose="cabecera_global">
+            <div class="seccion_superior_izquierda">
+                <button aria-label="Abrir menú de navegación" class="boton_menu_hamburguesa" title="Alternar menú lateral" type="button">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="contenedor_busqueda">
+                    <i class="fa-solid fa-magnifying-glass icono_busqueda"></i>
+                    <input class="campo_busqueda" id="campo_busqueda_general" placeholder="Buscar..." type="text" />
+                </div>
+            </div>
+            <div class="seccion_superior_derecha">
+                <button class="boton_notificaciones" title="Notificaciones del sistema" type="button">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="punto_notificacion" id="indicador_notificaciones">3</span>
+                </button>
+                <div class="perfil_usuario_barra">
+                    <div class="avatar_usuario" id="avatar_usuario_circulo">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div class="detalles_usuario">
+                        <strong class="nombre_usuario_texto" id="nombreUsuario" style="color: #ffffff;">Cargando...</strong>
+                        <span class="rol_usuario_texto" id="etiqueta_rol_usuario">Jefe de Departamento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down icono_dropdown"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- BEGIN: ContenidoPrincipal / DepartmentDashboard -->
+        <div class="contenido_principal" data-purpose="department_view">
+            <!-- Título de sección -->
+            <div class="cabecera_modulo">
+                <h1 class="titulo_pagina">Mi Departamento</h1>
+                <p class="subtitulo_pagina">Información y miembros de tu departamento.</p>
+            </div>
+
+            <!-- Fila superior: Resumen de departamento y Tarjeta del Jefe -->
+            <div class="cuadricula_superior">
+                <!-- Tarjeta de información principal del departamento -->
+                <div class="tarjeta_general" data-purpose="tarjeta_resumen_departamento">
+                    <div class="encabezado_departamento">
+                        <div class="icono_dep_destacado">
+                            <svg fill="none" height="26" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="26">
+                                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                                <path d="m3.3 7 8.7 5 8.7-5"></path>
+                                <path d="M12 22V12"></path>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h2 class="nombre_departamento" id="nombre_departamento_texto"></h2>
+                            <div class="detalle_departamento" id="detalle_departamento_texto"></div>
+                        </div>
+                        <button aria-label="Opciones de departamento" class="boton_acciones" type="button">
+                            <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+                        </button>
+                    </div>
+
+                    <!-- Métricas estadísticas del departamento -->
+                    <div class="fila_metricas">
+                        <div class="caja_metrica" data-purpose="metrica_docentes">
+                            <div class="icono_metrica icono_docentes">
+                                <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                            </div>
+                            <div>
+                                <div class="etiqueta_metrica">Docentes</div>
+                                <div class="valor_metrica" id="total_docentes"></div>
+                            </div>
+                        </div>
+                        <div class="caja_metrica" data-purpose="metrica_documentos">
+                            <div class="icono_metrica icono_documentos">
+                                <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            </div>
+                            <div>
+                                <div class="etiqueta_metrica">Documentos</div>
+                                <div class="valor_metrica" id="total_documentos"></div>
+                            </div>
+                        </div>
+                        <div class="caja_metrica" data-purpose="metrica_eventos">
+                            <div class="icono_metrica icono_eventos">
+                                <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                            </div>
+                            <div>
+                                <div class="etiqueta_metrica">Eventos</div>
+                                <div class="valor_metrica" id="total_eventos"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de contacto Jefe de Departamento -->
+                <div class="tarjeta_jefe" data-purpose="tarjeta_jefe_departamento">
+                    <div class="titulo_caja_pequena">Jefe de departamento</div>
+                    <div class="avatar_jefe_grande" id="avatar_jefe">AL</div>
+                    <h3 class="nombre_jefe" id="nombre_jefe">Ana López García</h3>
+                    <span class="correo_jefe" id="correo_jefe">ana.lopez@edu.mx</span>
+                    <button class="boton_contactar" id="boton_abrir_contacto" type="button">Contactar</button>
+                </div>
+            </div>
+
+            <!-- Sección de Descripción Institucional -->
+            <div class="tarjeta_descripcion" data-purpose="bloque_descripcion">
+                <div class="titulo_seccion_bloque">Descripción</div>
+                <p class="texto_parrafo_desc" id="parrafo_descripcion">
+                </p>
+            </div>
+
+            <!-- Sección de Tabla de Integrantes del Departamento -->
+            <div class="tarjeta_integrantes" data-purpose="bloque_integrantes">
+                <div class="cabecera_integrantes">
+                    <div class="titulo_seccion_bloque" style="margin-bottom: 0px;">Integrantes del departamento</div>
+                    <a class="enlace_ver_todos" href="#ver_todos_integrantes">
+                        Ver todos
+                        <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><line x1="5" x2="19" y1="12" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="tabla_integrantes">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Puesto</th>
+                                <th>Estado</th>
+                                <th style="width: 40px; text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo_tabla_integrantes">
+                            <!-- El contenido de la tabla se carga dinámicamente mediante el script -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END: ContenidoPrincipal -->
+    </main>
+    <!-- END: MainContentArea -->
+
+    <!-- BEGIN: ModalContact -->
+    <div class="modal_contacto" data-purpose="modal_contactar_jefe" id="modal_contacto">
+        <div class="caja_modal">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 style="font-size: 16px; font-weight: 700; margin: 0px; color: #0f172a;">Enviar mensaje al Jefe de Departamento</h3>
+                <button id="boton_cerrar_modal" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px;" type="button">✕</button>
+            </div>
+            <p style="font-size: 12px; color: #64748b; margin-top: 0px; margin-bottom: 14px;">
+                Destinatario: <strong id="modal_destinatario">Ana López García (ana.lopez@edu.mx)</strong>
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <label for="asunto_mensaje" style="font-size: 12px; font-weight: 600; color: #334155;">Asunto</label>
+                <input id="asunto_mensaje" placeholder="Ingresa el asunto..." style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; font-size: 13px;" type="text" />
+                <label for="cuerpo_mensaje" style="font-size: 12px; font-weight: 600; color: #334155;">Mensaje</label>
+                <textarea id="cuerpo_mensaje" placeholder="Escribe tu mensaje institucional aquí..." rows="4" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; font-size: 13px;"></textarea>
+                <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+                    <button id="boton_cancelar_modal" style="background-color: #e2e8f0; color: #334155; border: none; border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer;" type="button">Cancelar</button>
+                    <button id="boton_enviar_mensaje" style="background-color: #1e5bf6; color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer;" type="button">Enviar Mensaje</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: ModalContact -->
+
+    <!-- BEGIN: ModalEditarDepartamento -->
+    <div class="modal_contacto" data-purpose="modal_editar_departamento" id="modal_editar_departamento">
+        <div class="caja_modal">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 style="font-size: 16px; font-weight: 700; margin: 0px; color: #0f172a;">Editar información del departamento</h3>
+                <button id="boton_cerrar_modal_depto" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px;" type="button">✕</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <label for="input_editar_nombre_depto" style="font-size: 12px; font-weight: 600; color: #334155;">Nombre del departamento</label>
+                <input id="input_editar_nombre_depto" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; font-size: 13px;" type="text" />
+                
+                <label for="input_editar_desc_depto" style="font-size: 12px; font-weight: 600; color: #334155;">Descripción</label>
+                <textarea id="input_editar_desc_depto" rows="3" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; font-size: 13px;"></textarea>
+                
+                <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+                    <button id="boton_cancelar_modal_depto" style="background-color: #e2e8f0; color: #334155; border: none; border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer;" type="button">Cancelar</button>
+                    <button id="boton_guardar_modal_depto" style="background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer;" type="button">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: ModalEditarDepartamento -->
+
+    <!-- Menú desplegable para los tres puntitos del departamento -->
+    <div id="menu_opciones_departamento" style="display: none; position: absolute; background: white; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); z-index: 50; width: 160px; padding: 4px 0;">
+        <button id="opcion_editar_departamento" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: #0f172a; display: flex; align-items: center; gap: 8px;" type="button">
+            <i class="fa-solid fa-pen" style="font-size: 12px;"></i> Editar departamento
+        </button>
+    </div>
+
+    <!-- Script del módulo -->
+    <script src="js/mi-departamento.js"></script>
+</body>
+
+</html>

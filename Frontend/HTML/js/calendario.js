@@ -111,16 +111,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function mostrarAviso(mensaje) {
     let aviso = document.getElementById('aviso_calendario');
     if (!aviso) {
-      aviso = document.createElement('p');
+      aviso = document.createElement('div');
       aviso.id = 'aviso_calendario';
       aviso.className = 'aviso_docentes aviso_docentes_error';
-      const cuerpo = document.querySelector('.cuerpo_pagina');
-      if (cuerpo) cuerpo.prepend(aviso);
+      aviso.setAttribute('role', 'alert');
+      
+      // Selecciona el contenedor div principal que engloba tanto el título "Calendario" como el subtítulo
+      const contenedorTitulos = document.querySelector('.cuerpo_pagina > div:first-child');
+      if (contenedorTitulos) {
+        contenedorTitulos.after(aviso);
+      } else {
+        const cuerpo = document.querySelector('.cuerpo_pagina') || document.body;
+        cuerpo.prepend(aviso);
+      }
     }
+    
     aviso.textContent = mensaje;
     aviso.style.display = 'flex';
+    aviso.hidden = false;
+
     if (window.temporizadorAvisoCalendario) clearTimeout(window.temporizadorAvisoCalendario);
-    window.temporizadorAvisoCalendario = setTimeout(() => { aviso.style.display = 'none'; }, 7000);
+    window.temporizadorAvisoCalendario = setTimeout(() => { 
+      aviso.hidden = true;
+      aviso.style.display = 'none'; 
+    }, 7000);
   }
 
   function fechaClave(fecha) {
@@ -192,13 +206,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.prepararEdicionTarea = function(id, esAutor) {
-    if (!esAutor) {
-      mostrarAviso('No tienes permisos para editar esta tarea porque no eres el autor.');
-      return;
+    let usuarioActual = null;
+    try {
+      usuarioActual = JSON.parse(localStorage.getItem('usuario_ocid') || 'null');
+    } catch (e) {
+      usuarioActual = null;
     }
 
     const tarea = tareas.find(t => t.id === id);
     if (!tarea) return;
+
+    const autorVerificado = usuarioActual && (Number(usuarioActual.id) === Number(tarea.autor_id));
+
+    if (!esAutor || !autorVerificado) {
+      mostrarAviso('No tienes permisos para editar esta tarea porque no eres el autor.');
+      return;
+    }
 
     tareaEnEdicionId = id;
     document.getElementById('input_titulo_evento').value = tarea.titulo || '';
@@ -214,7 +237,17 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.eliminarTareaBD = async function(id, esAutor) {
-    if (!esAutor) {
+    let usuarioActual = null;
+    try {
+      usuarioActual = JSON.parse(localStorage.getItem('usuario_ocid') || 'null');
+    } catch (e) {
+      usuarioActual = null;
+    }
+
+    const tarea = tareas.find(t => t.id === id);
+    const autorVerificado = tarea && usuarioActual && (Number(usuarioActual.id) === Number(tarea.autor_id));
+
+    if (!esAutor || !autorVerificado) {
       mostrarAviso('No tienes permisos para eliminar esta tarea porque no eres el autor.');
       return;
     }
@@ -251,6 +284,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const f = new Date((tarea.fecha.includes('T') ? tarea.fecha : tarea.fecha + 'T00:00:00'));
       const esAutor = usuarioActual && (Number(usuarioActual.id) === Number(tarea.autor_id));
 
+      let horaCreacionTexto = '';
+      if (tarea.fecha_creacion) {
+        const fechaCreacionObj = new Date(tarea.fecha_creacion);
+        if (!isNaN(fechaCreacionObj.getTime())) {
+          horaCreacionTexto = fechaCreacionObj.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+        }
+      }
+
+      const nombreDueño = tarea.autor_nombre || 'Coordinación';
+
       const item = document.createElement('div');
       item.className = 'item_evento';
       item.style.position = 'relative';
@@ -265,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="horario_item_evento">${escaparHTML(tarea.horario || 'Horario a confirmar')}</div>
           <div class="departamento_item_evento">
             <span class="punto_departamento"></span>
-            ${escaparHTML(tarea.departamento || 'General')}
+            ${escaparHTML(tarea.departamento || 'General')} &bull; <small style="color: #64748b;">Creado por: <strong>${escaparHTML(nombreDueño)}</strong> ${horaCreacionTexto ? 'a las ' + horaCreacionTexto : ''}</small>
           </div>
         </div>
         <div style="position: relative;">
@@ -398,6 +441,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!titulo || !fecha) {
       alert('Ingresa un título y una fecha válida.');
       return;
+    }
+
+    if (tareaEnEdicionId !== null) {
+      const tareaAEditar = tareas.find(t => t.id === tareaEnEdicionId);
+      if (tareaAEditar && usuario && Number(tareaAEditar.autor_id) !== Number(usuario.id)) {
+        mostrarAviso('No tienes permisos para editar esta tarea porque no eres el autor.');
+        modal.style.display = 'none';
+        tareaEnEdicionId = null;
+        return;
+      }
     }
 
     try {

@@ -26,7 +26,10 @@ a {
     color: inherit;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
     font-family: inherit;
     outline: none;
 }
@@ -200,6 +203,19 @@ button, input, select, textarea {
     color: #ffffff;
 }
 
+.titulo_pagina {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 28px;
+}
+
+.subtitulo_pagina {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
 .seccion_superior_izquierda {
     display: flex;
     align-items: center;
@@ -306,6 +322,13 @@ button, input, select, textarea {
     flex-direction: column;
 }
 
+.nombre_usuario_texto {
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
 .rol_usuario_texto {
     color: #94a3b8;
     font-size: 11px;
@@ -351,7 +374,8 @@ button, input, select, textarea {
     align-items: start;
 }
 
-.tarjeta_calendario, .tarjeta_eventos {
+.tarjeta_calendario,
+.tarjeta_eventos {
     background-color: #ffffff;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
@@ -824,7 +848,8 @@ button, input, select, textarea {
         padding: 16px 12px !important;
     }
 
-    .tarjeta_calendario, .tarjeta_eventos {
+    .tarjeta_calendario,
+    .tarjeta_eventos {
         padding: 16px;
     }
 

@@ -134,13 +134,13 @@ app.get('/login', async (req, res) => {
 // ACTUALIZAR PERFIL DE USUARIO
 app.put('/usuarios/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const { nombre, correo, departamento_id } = req.body;
+  const { nombre, correo, departamento_id, rol } = req.body;
 
   if (!Number.isInteger(id) || id <= 0 ||
-      typeof nombre !== 'string' || !nombre.trim() ||
-      typeof correo !== 'string' || !correo.trim() ||
-      (departamento_id !== null && departamento_id !== undefined &&
-       (!Number.isInteger(Number(departamento_id)) || Number(departamento_id) <= 0))) {
+    typeof nombre !== 'string' || !nombre.trim() ||
+    typeof correo !== 'string' || !correo.trim() ||
+    (departamento_id !== null && departamento_id !== undefined && departamento_id !== '' &&
+      (!Number.isInteger(Number(departamento_id)) || Number(departamento_id) <= 0))) {
     return res.status(400).json({
       success: false,
       error: 'Los datos del perfil no son válidos'
@@ -148,19 +148,20 @@ app.put('/usuarios/:id', async (req, res) => {
   }
 
   try {
-    const departamentoId = departamento_id ? Number(departamento_id) : null;
+    const departamentoId = (departamento_id !== null && departamento_id !== undefined && departamento_id !== '') ? Number(departamento_id) : null;
     if (departamentoId) {
       const departamento = await pool.query('SELECT id FROM departamentos WHERE id = $1', [departamentoId]);
       if (departamento.rowCount === 0) {
         return res.status(400).json({ success: false, error: 'El departamento no existe' });
       }
     }
+    const rolUsuario = rol ? String(rol).trim() : 'Docente';
     const resultado = await pool.query(
       `UPDATE usuarios
-       SET nombre = $1, correo = $2, departamento_id = $3
-       WHERE id = $4
+       SET nombre = $1, correo = $2, departamento_id = $3, rol = $4
+       WHERE id = $5
        RETURNING id, nombre, correo, rol, departamento_id`,
-      [nombre.trim(), correo.trim(), departamentoId, id]
+      [nombre.trim(), correo.trim(), departamentoId, rolUsuario, id]
     );
 
     if (resultado.rowCount === 0) {
@@ -183,7 +184,7 @@ app.patch('/usuarios/:id/password', async (req, res) => {
   const { password_actual, password_nueva } = req.body;
 
   if (!Number.isInteger(id) || id <= 0 || !password_actual ||
-      typeof password_nueva !== 'string' || password_nueva.length < 6) {
+    typeof password_nueva !== 'string' || password_nueva.length < 6) {
     return res.status(400).json({
       success: false,
       error: 'Ingresa la contraseña actual y una nueva contraseña de al menos 6 caracteres'
@@ -202,7 +203,7 @@ app.patch('/usuarios/:id/password', async (req, res) => {
       const usuario = await pool.query('SELECT id FROM usuarios WHERE id = $1', [id]);
       return res.status(usuario.rowCount ? 401 : 404).json({
         success: false,
-        error: usuario.rowCount ? 'La contraseña actual es incorrecta' : 'El usuario no existe'
+        error: usuario.rowCount ? 'La contraseña actual no es correcta' : 'El usuario no existe'
       });
     }
     res.json({ success: true });
@@ -492,8 +493,8 @@ app.post('/anuncios', async (req, res) => {
     let departamentoId = null;
 
     if (departamento_id !== null &&
-        departamento_id !== undefined &&
-        departamento_id !== '') {
+      departamento_id !== undefined &&
+      departamento_id !== '') {
       departamentoId = Number(departamento_id);
 
       if (!Number.isInteger(departamentoId) || departamentoId <= 0) {
@@ -508,17 +509,17 @@ app.post('/anuncios', async (req, res) => {
     try {
       await cliente.query('BEGIN');
       const resultado = await cliente.query(
-      `INSERT INTO anuncios
+        `INSERT INTO anuncios
          (titulo, contenido, prioridad, autor_id, departamento_id, fecha)
        VALUES ($1, $2, $3, $4, $5, NOW())
        RETURNING *`,
-      [
-        titulo.trim(),
-        contenido.trim(),
-        prioridad || 'Informativo',
-        autorId,
-        departamentoId
-      ]
+        [
+          titulo.trim(),
+          contenido.trim(),
+          prioridad || 'Informativo',
+          autorId,
+          departamentoId
+        ]
       );
 
       await cliente.query(
@@ -637,10 +638,10 @@ app.post('/archivos', async (req, res) => {
   const departamentoId = Number(departamento_id);
 
   if (typeof nombre !== 'string' || !nombre.trim() ||
-      typeof contenido !== 'string' || !tipo ||
-      !Number.isInteger(autorId) || autorId <= 0 ||
-      !Number.isInteger(departamentoId) || departamentoId <= 0 ||
-      !Number.isInteger(Number(tamano)) || Number(tamano) <= 0) {
+    typeof contenido !== 'string' || !tipo ||
+    !Number.isInteger(autorId) || autorId <= 0 ||
+    !Number.isInteger(departamentoId) || departamentoId <= 0 ||
+    !Number.isInteger(Number(tamano)) || Number(tamano) <= 0) {
     return res.status(400).json({ success: false, error: 'Completa los datos del archivo' });
   }
   if (Number(tamano) > 10 * 1024 * 1024) {

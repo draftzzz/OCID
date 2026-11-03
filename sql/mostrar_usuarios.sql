@@ -1,1 +1,1 @@
-select * from anuncios
+ALTER TABLE tareas ADD COLUMN IF NOT EXISTS fecha_creacion TIMESTAMP DEFAULT NOW();
