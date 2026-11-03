@@ -440,7 +440,6 @@ function filtrarTablaDocentes() {
   const totalDocentes = coincidentes.length;
   const resumenPaginacion = document.getElementById('resumen_paginacion');
   if (resumenPaginacion) {
-    // Formato solicitado: Mostrando [cantidad mostrada] de [X] cantidad de docentes
     resumenPaginacion.textContent = `Mostrando ${Math.max(0, cantidadMostrados)} de ${totalDocentes} docentes`;
   }
   renderizarPaginacionDocentes(paginas);

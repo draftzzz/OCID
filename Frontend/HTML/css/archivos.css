@@ -49,6 +49,7 @@ textarea {
     position: sticky;
     top: 0px;
     z-index: 40;
+    transition: transform 0.2s ease;
 }
 
 .encabezado_logo {
@@ -220,15 +221,14 @@ textarea {
     gap: 20px;
 }
 
+/* Ocultar botones de menú hamburguesa por defecto en PC */
+.menu_movil,
 .boton_menu_hamburguesa {
-    border: 0px;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    display: none;
+}
+
+.fondo_menu_movil {
+    display: none;
 }
 
 .contenedor_busqueda {
@@ -277,6 +277,7 @@ textarea {
     padding: 6px;
     border-radius: 8px;
     cursor: pointer;
+    margin-left: 30px;
 }
 
 .punto_notificacion {
@@ -344,13 +345,18 @@ textarea {
 }
 
 /* ==========================================================================
-   4. Zona de Contenido de Archivos (Diseño adaptado de archivos.css)
+   4. Zona de Contenido de Archivos (Inputs Grandes de 44px)
    ========================================================================== */
 .cuerpo_contenido {
-    padding: 32px 36px;
+    flex: 1;
+    padding: 28px 32px;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0px auto;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    overflow-y: auto;
 }
 
 .encabezado_archivos {
@@ -361,16 +367,16 @@ textarea {
 }
 
 .titulo_seccion {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: #0f172a;
-    line-height: 30px;
+    line-height: 28px;
 }
 
 .subtitulo_seccion {
     font-size: 13px;
     color: #64748b;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .boton_subir_archivo {
@@ -378,14 +384,14 @@ textarea {
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 13px;
+    padding: 11px 20px;
+    font-size: 13.5px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(37, 99, 235, 0.2);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     transition: background-color 0.2s ease;
 }
 
@@ -393,59 +399,63 @@ textarea {
     background-color: #1d4ed8;
 }
 
-/* Barra de filtros */
+/* Barra de filtros con inputs grandes (44px) */
 .barra_filtros {
+    background-color: #ffffff;
+    padding: 16px 20px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.03);
     flex-wrap: wrap;
 }
 
 .filtro_busqueda {
     position: relative;
-    flex-grow: 1;
+    flex: 1.5;
     min-width: 240px;
 }
 
 .input_filtro {
     width: 100%;
-    height: 40px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
+    height: 44px !important;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
     padding: 0px 14px 0px 38px;
-    font-size: 13px;
+    font-size: 14px;
     color: #0f172a;
+    background-color: #f8fafc;
 }
 
 .input_filtro:focus {
     border-color: #2563eb;
+    background-color: #ffffff;
 }
 
 .icono_filtro_lupa {
     position: absolute;
-    left: 12px;
-    top: 12px;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
     color: #94a3b8;
     width: 16px;
     height: 16px;
+    pointer-events: none;
 }
 
 .selector_filtro {
-    height: 40px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
+    flex: 1;
+    height: 44px !important;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
-    padding: 0px 32px 0px 14px;
-    font-size: 13px;
+    padding: 0px 14px;
+    font-size: 14px;
     color: #334155;
+    background-color: #f8fafc;
     cursor: pointer;
-    min-width: 180px;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 14px;
+    min-width: 200px;
 }
 
 .selector_filtro:focus {
@@ -457,7 +467,7 @@ textarea {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    box-shadow: 0px 1px 3px rgba(15, 23, 42, 0.05);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
@@ -469,7 +479,7 @@ textarea {
 
 .tabla_archivos thead tr {
     border-bottom: 1px solid #e2e8f0;
-    background-color: #ffffff;
+    background-color: #f8fafc;
 }
 
 .tabla_archivos th {
@@ -496,7 +506,7 @@ textarea {
 
 .tabla_archivos td {
     padding: 16px 20px;
-    font-size: 13px;
+    font-size: 13.5px;
     color: #334155;
     vertical-align: middle;
 }
@@ -504,12 +514,12 @@ textarea {
 .contenedor_nombre_archivo {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .icono_tipo_pdf {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 8px;
     background-color: #fee2e2;
     color: #ef4444;
@@ -522,8 +532,8 @@ textarea {
 }
 
 .icono_tipo_xlsx {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 8px;
     background-color: #dcfce7;
     color: #10b981;
@@ -548,8 +558,8 @@ textarea {
 
 .badge_pdf {
     display: inline-block;
-    padding: 3px 9px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 16px;
     background-color: #fee2e2;
     color: #ef4444;
     font-size: 11px;
@@ -558,8 +568,8 @@ textarea {
 
 .badge_xlsx {
     display: inline-block;
-    padding: 3px 9px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 16px;
     background-color: #dcfce7;
     color: #10b981;
     font-size: 11px;
@@ -569,7 +579,7 @@ textarea {
 .acciones_celda {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .boton_accion_icono {
@@ -580,13 +590,13 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
+    padding: 8px;
     border-radius: 6px;
     transition: all 0.2s;
 }
 
 .boton_accion_icono:hover {
-    background-color: #e2e8f0;
+    background-color: #f1f5f9;
     color: #0f172a;
 }
 
@@ -599,44 +609,13 @@ textarea {
     padding-top: 12px;
 }
 
-.item_paginacion {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #64748b;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    cursor: pointer;
-}
-
-.item_paginacion:hover {
-    background-color: #f1f5f9;
-    color: #0f172a;
-}
-
-.item_paginacion_activo {
-    background-color: #2563eb;
-    color: #ffffff;
-    border-color: #2563eb;
-}
-
-.item_paginacion_activo:hover {
-    background-color: #1d4ed8;
-    color: #ffffff;
-}
-
 /* Recuadro de avisos para archivos */
 .aviso_docentes {
     padding: 12px 16px;
     border-radius: 8px;
     background-color: #d1fae5;
     color: #065f46;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -650,7 +629,7 @@ textarea {
     border-color: #fca5a5;
 }
 
-/* Modal Emergente */
+/* Modal Emergente con inputs grandes (44px) */
 .modal_fondo {
     display: none;
     position: fixed;
@@ -658,10 +637,10 @@ textarea {
     left: 0px;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(15, 23, 42, 0.6);
+    background-color: rgba(15, 23, 42, 0.65);
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 9999;
     padding: 16px;
 }
 
@@ -669,7 +648,7 @@ textarea {
     background-color: #ffffff;
     border-radius: 14px;
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
@@ -678,12 +657,12 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 24px;
+    padding: 20px 24px;
     border-bottom: 1px solid #e2e8f0;
 }
 
 .modal_titulo {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     color: #0f172a;
 }
@@ -694,10 +673,16 @@ textarea {
     color: #94a3b8;
     font-size: 20px;
     cursor: pointer;
-    line-height: 1;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .boton_cerrar_modal:hover {
+    background-color: #f1f5f9;
     color: #0f172a;
 }
 
@@ -705,7 +690,7 @@ textarea {
     padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
 }
 
 .zona_arrastre_archivo {
@@ -729,22 +714,24 @@ textarea {
 .campo_formulario {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .etiqueta_campo {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
-    color: #475569;
+    color: #334155;
 }
 
 .input_modal {
-    height: 38px;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    padding: 0px 12px;
-    font-size: 13px;
+    width: 100%;
+    height: 44px !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0px 14px;
+    font-size: 14px;
     background-color: #ffffff;
+    color: #0f172a;
 }
 
 .input_modal:focus {
@@ -757,15 +744,15 @@ textarea {
     border-top: 1px solid #e2e8f0;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 12px;
 }
 
 .boton_cancelar {
     background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13.5px;
     font-weight: 600;
     color: #475569;
     cursor: pointer;
@@ -778,9 +765,9 @@ textarea {
 .boton_guardar {
     background-color: #2563eb;
     border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 13px;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13.5px;
     font-weight: 600;
     color: #ffffff;
     cursor: pointer;
@@ -788,4 +775,209 @@ textarea {
 
 .boton_guardar:hover {
     background-color: #1d4ed8;
+}
+
+/* ==========================================================================
+   6. Media Queries Responsivos (Menú Hamburguesa Operativo y Tabla Adaptada)
+   ========================================================================== */
+@media (max-width: 900px) {
+    /* Forzar visibilidad y funcionamiento del botón hamburguesa */
+    .menu_movil,
+    .boton_menu_hamburguesa {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #94a3b8 !important;
+        font-size: 20px !important;
+        cursor: pointer;
+    }
+
+    .menu_movil:hover,
+    .boton_menu_hamburguesa:hover {
+        color: #ffffff !important;
+    }
+
+    /* Menú lateral flotante operativo por encima de todo (z-index elevado) */
+    .barra_lateral {
+        position: fixed !important;
+        left: 0px !important;
+        top: 0px !important;
+        height: 100vh !important;
+        z-index: 10000 !important;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease-in-out;
+        box-shadow: 10px 0px 30px rgba(15, 23, 42, 0.4);
+    }
+
+    body.menu_movil_abierto .barra_lateral,
+    .barra_lateral.menu_abierto {
+        transform: translateX(0px) !important;
+    }
+
+    /* Fondo oscuro cubriendo toda la pantalla de forma funcional */
+    .fondo_menu_movil {
+        position: fixed !important;
+        inset: 0px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        display: none;
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        border: none;
+    }
+
+    body.menu_movil_abierto .fondo_menu_movil {
+        display: block !important;
+    }
+
+    .encabezado_archivos {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .boton_subir_archivo {
+        justify-content: center;
+        width: 100%;
+        height: 44px;
+    }
+
+    /* Ajuste de filtros e inputs grandes para móvil */
+    .barra_filtros {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        padding: 16px;
+    }
+
+    .filtro_busqueda,
+    .input_filtro,
+    .selector_filtro {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: 44px !important;
+    }
+
+    /* Conversión de la tabla a formato de tarjetas apiladas */
+    .tarjeta_tabla {
+        border: none;
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .tabla_archivos,
+    .tabla_archivos tbody,
+    .tabla_archivos tr,
+    .tabla_archivos td,
+    .tabla_archivos th {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla_archivos thead {
+        display: none;
+    }
+
+    .tabla_archivos tbody tr {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 14px;
+        gap: 10px;
+    }
+
+    .tabla_archivos td {
+        padding: 4px 0 !important;
+        border: none !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tabla_archivos td:nth-child(1) {
+        order: 1;
+        width: 100%;
+    }
+
+    .tabla_archivos td:nth-child(2) {
+        order: 2;
+    }
+
+    .tabla_archivos td:nth-child(2):before {
+        content: "Tipo:";
+        font-weight: 600;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .tabla_archivos td:nth-child(3) {
+        order: 3;
+    }
+
+    .tabla_archivos td:nth-child(3):before {
+        content: "Departamento:";
+        font-weight: 600;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .tabla_archivos td:nth-child(4) {
+        order: 4;
+    }
+
+    .tabla_archivos td:nth-child(4):before {
+        content: "Usuario:";
+        font-weight: 600;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .tabla_archivos td:nth-child(5) {
+        order: 5;
+    }
+
+    .tabla_archivos td:nth-child(5):before {
+        content: "Fecha:";
+        font-weight: 600;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .tabla_archivos td:nth-child(6) {
+        order: 6;
+        padding-top: 10px !important;
+        border-top: 1px solid #f1f5f9 !important;
+        margin-top: 6px;
+    }
+
+    .tabla_archivos td:nth-child(6):before {
+        content: "Acciones:";
+        font-weight: 600;
+        color: #64748b;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .barra_superior {
+        padding: 0px 12px;
+    }
+
+    .seccion_superior_derecha .detalles_usuario,
+    .seccion_superior_derecha .icono_dropdown {
+        display: none;
+    }
+
+    .cuerpo_contenido {
+        padding: 16px 12px;
+    }
 }

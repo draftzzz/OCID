@@ -250,7 +250,7 @@ function renderizar_interfaz() {
       tarjeta.className = 'tarjeta_anuncio';
       tarjeta.style.position = 'relative';
       
-      tarjeta.innerHTML = `
+tarjeta.innerHTML = `
         <div class="fila_etiqueta_anuncio">
           <span class="etiqueta_tipo ${clase_etiqueta}">
             <span class="punto_etiqueta"></span>
@@ -259,8 +259,14 @@ function renderizar_interfaz() {
           <div style="position: relative;">
             <button class="boton_opciones_anuncio" title="Más opciones" onclick="toggleMenuOpciones(event, ${anuncio.id})">&#8942;</button>
             <div id="menu_opciones_${anuncio.id}" style="display: none; position: absolute; right: 0; top: 25px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); z-index: 50; width: 140px; padding: 4px 0;">
-              <button onclick="prepararEdicionAnuncio(${anuncio.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#0f172a' : '#94a3b8'};">Editar</button>
-              <button onclick="eliminarAnuncio(${anuncio.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#ef4444' : '#94a3b8'};">Eliminar</button>
+              <button onclick="prepararEdicionAnuncio(${anuncio.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#0f172a' : '#94a3b8'}; display: flex; align-items: center; gap: 8px;">
+                <svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Editar
+              </button>
+              <button onclick="eliminarAnuncio(${anuncio.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#ef4444' : '#94a3b8'}; display: flex; align-items: center; gap: 8px;">
+                <svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Eliminar
+              </button>
             </div>
           </div>
         </div>

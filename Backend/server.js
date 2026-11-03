@@ -551,6 +551,66 @@ app.post('/anuncios', async (req, res) => {
   }
 });
 
+// ACTUALIZAR ANUNCIO
+app.put('/anuncios/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const { titulo, contenido, prioridad, departamento_id } = req.body;
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'ID de anuncio inválido'
+    });
+  }
+
+  if (!titulo || !contenido) {
+    return res.status(400).json({
+      success: false,
+      error: 'El título y el contenido son obligatorios'
+    });
+  }
+
+  try {
+    let departamentoId = null;
+    if (departamento_id !== null && departamento_id !== undefined && departamento_id !== '') {
+      departamentoId = Number(departamento_id);
+    }
+
+    const resultado = await pool.query(
+      `UPDATE anuncios
+       SET titulo = $1, contenido = $2, prioridad = $3, departamento_id = $4
+       WHERE id = $5
+       RETURNING *`,
+      [
+        titulo.trim(),
+        contenido.trim(),
+        prioridad || 'Informativo',
+        departamentoId,
+        id
+      ]
+    );
+
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'El anuncio no existe'
+      });
+    }
+
+    res.json({
+      success: true,
+      anuncio: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error al actualizar anuncio:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo actualizar el anuncio'
+    });
+  }
+});
+
 // OBTENER ARCHIVOS
 app.get('/archivos', async (req, res) => {
   try {
@@ -739,6 +799,61 @@ app.post('/tareas', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'No se pudo guardar la tarea'
+    });
+  }
+});
+
+// ACTUALIZAR TAREA
+app.put('/tareas/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const { titulo, fecha, horario, departamento } = req.body;
+
+  if (!Number.isInteger(id) || id <= 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'ID de tarea inválido'
+    });
+  }
+
+  if (!titulo || !fecha) {
+    return res.status(400).json({
+      success: false,
+      error: 'El título y la fecha son obligatorios'
+    });
+  }
+
+  try {
+    const resultado = await pool.query(
+      `UPDATE tareas
+       SET titulo = $1, fecha = $2, horario = $3, departamento = $4
+       WHERE id = $5
+       RETURNING *`,
+      [
+        titulo.trim(),
+        fecha,
+        horario || 'Horario a confirmar',
+        departamento || 'General',
+        id
+      ]
+    );
+
+    if (resultado.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'La tarea no existe'
+      });
+    }
+
+    res.json({
+      success: true,
+      tarea: resultado.rows[0]
+    });
+
+  } catch (error) {
+    console.error('Error al actualizar tarea:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'No se pudo actualizar la tarea'
     });
   }
 });

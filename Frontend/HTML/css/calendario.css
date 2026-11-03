@@ -317,13 +317,31 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   4. Módulo de Calendario
+   4. Módulo de Calendario y Avisos
    ========================================================================== */
 .cuerpo_pagina {
     padding: 32px 36px;
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+.aviso_docentes {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.aviso_docentes_error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
 }
 
 .distribucion_dos_columnas {
@@ -346,6 +364,8 @@ button, input, select, textarea {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .control_mes {
@@ -355,10 +375,11 @@ button, input, select, textarea {
 }
 
 .boton_flecha {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
     background-color: #ffffff;
     color: #475569;
     display: flex;
@@ -370,6 +391,17 @@ button, input, select, textarea {
 .boton_flecha:hover {
     background-color: #f8fafc;
     color: #0f172a;
+}
+
+.badge_flecha_mes {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ef4444;
+    border: 1px solid #ffffff;
 }
 
 .titulo_mes_anio {
@@ -477,7 +509,7 @@ button, input, select, textarea {
     border-left: 2px solid #2563eb;
 }
 
-/* Eventos Laterales */
+/* Eventos Laterales y Menú de Opciones */
 .encabezado_eventos {
     display: flex;
     align-items: center;
@@ -574,15 +606,48 @@ button, input, select, textarea {
     background-color: #2563eb;
 }
 
+.boton_opciones_anuncio {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.boton_opciones_anuncio:hover {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.boton_accion_icono {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.boton_accion_icono:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
 .boton_nuevo_evento {
     width: 100%;
     margin-top: 20px;
-    height: 40px;
+    height: 44px;
     background-color: #2563eb;
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -595,20 +660,7 @@ button, input, select, textarea {
     background-color: #1d4ed8;
 }
 
-.boton_eliminar_evento {
-    border: none;
-    background: transparent;
-    color: #ef4444;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-.boton_eliminar_evento:hover {
-    background-color: #fee2e2;
-}
-
-/* Modal Emergente */
+/* Modal Emergente con Inputs Grandes (44px) */
 .modal_overlay {
     display: none;
     position: fixed;
@@ -616,22 +668,23 @@ button, input, select, textarea {
     background-color: rgba(15, 23, 42, 0.6);
     align-items: center;
     justify-content: center;
-    z-index: 50;
+    z-index: 10000;
     backdrop-filter: blur(2px);
+    padding: 16px;
 }
 
 .modal_caja {
     background-color: #ffffff;
-    border-radius: 12px;
-    width: 440px;
-    max-width: 90vw;
+    border-radius: 14px;
+    width: 480px;
+    max-width: 100%;
     box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border: 1px solid #e2e8f0;
 }
 
 .modal_cabecera {
-    padding: 16px 20px;
+    padding: 18px 20px;
     border-bottom: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
@@ -639,7 +692,7 @@ button, input, select, textarea {
 }
 
 .modal_titulo {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: #0f172a;
 }
@@ -647,7 +700,7 @@ button, input, select, textarea {
 .modal_cerrar {
     background: transparent;
     border: none;
-    font-size: 20px;
+    font-size: 22px;
     color: #64748b;
     cursor: pointer;
 }
@@ -656,28 +709,29 @@ button, input, select, textarea {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
 }
 
 .campo_formulario {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .etiqueta_formulario {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #334155;
 }
 
 .input_formulario {
-    height: 38px;
+    height: 44px !important;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 0px 12px;
-    font-size: 13px;
+    border-radius: 8px;
+    padding: 0px 14px;
+    font-size: 14px;
     color: #0f172a;
+    background-color: #ffffff;
 }
 
 .input_formulario:focus {
@@ -685,18 +739,18 @@ button, input, select, textarea {
 }
 
 .modal_pie {
-    padding: 14px 20px;
+    padding: 16px 20px;
     border-top: 1px solid #e2e8f0;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 12px;
     background-color: #f8fafc;
 }
 
 .boton_cancelar {
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13.5px;
     font-weight: 600;
     border: 1px solid #cbd5e1;
     background-color: #ffffff;
@@ -705,9 +759,9 @@ button, input, select, textarea {
 }
 
 .boton_guardar {
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13.5px;
     font-weight: 600;
     border: none;
     background-color: #2563eb;
@@ -716,7 +770,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   5. Responsivo
+   5. Responsivo Móvil / Teléfono (Pantallas < 900px y < 600px)
    ========================================================================== */
 @media (max-width: 900px) {
     .distribucion_dos_columnas {
@@ -724,27 +778,97 @@ button, input, select, textarea {
     }
 
     .boton_menu_hamburguesa {
-        display: flex;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent !important;
+        border: none !important;
+        color: #94a3b8 !important;
+        font-size: 20px !important;
+        cursor: pointer;
     }
 
     .barra_lateral {
         position: fixed !important;
-        left: 0px;
-        top: 0px;
-        height: 100vh;
+        left: 0px !important;
+        top: 0px !important;
+        height: 100vh !important;
+        z-index: 10000 !important;
         transform: translateX(-100%);
-        box-shadow: 8px 0px 24px rgba(15, 23, 42, 0.2);
+        transition: transform 0.25s ease-in-out;
+        box-shadow: 10px 0px 30px rgba(15, 23, 42, 0.4);
     }
 
     body.menu_movil_abierto .barra_lateral {
-        transform: translateX(0px);
+        transform: translateX(0px) !important;
     }
 
     .fondo_menu_movil {
-        position: fixed;
-        inset: 0px;
-        z-index: 35;
-        background-color: rgba(15, 23, 42, 0.55);
+        position: fixed !important;
+        inset: 0px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        display: none;
+        background-color: rgba(15, 23, 42, 0.6) !important;
         border: none;
+    }
+
+    body.menu_movil_abierto .fondo_menu_movil {
+        display: block !important;
+    }
+
+    .cuerpo_pagina {
+        padding: 16px 12px !important;
+    }
+
+    .tarjeta_calendario, .tarjeta_eventos {
+        padding: 16px;
+    }
+
+    .encabezado_calendario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control_mes {
+        justify-content: space-between;
+    }
+
+    .selector_vistas {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .boton_vista {
+        flex: 1;
+    }
+
+    .celda_dia {
+        min-height: 54px;
+        padding: 4px;
+    }
+
+    .numero_dia {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    .marca_evento_item {
+        font-size: 9px;
+        padding: 1px 4px;
+    }
+}
+
+@media (max-width: 600px) {
+    .barra_superior {
+        padding: 0px 12px;
+    }
+
+    .seccion_superior_derecha .detalles_usuario,
+    .seccion_superior_derecha .icono_dropdown {
+        display: none;
     }
 }

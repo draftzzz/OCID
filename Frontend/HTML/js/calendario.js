@@ -63,7 +63,7 @@
       botonMenu.type = 'button';
       botonMenu.className = 'boton_menu_hamburguesa';
       botonMenu.setAttribute('aria-label', 'Abrir menú');
-      botonMenu.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+      botonMenu.innerHTML = '<i class="fa-solid fa-bars"></i>';
       const seccionIzquierda = barraSuperior.querySelector('.seccion_superior_izquierda') || barraSuperior;
       seccionIzquierda.prepend(botonMenu);
     }
@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let tareas = [];
   let fechaSeleccionada = new Date(2026, 8, 15);
   let vistaActual = 'mes';
+  let tareaEnEdicionId = null;
 
   const grilla = document.getElementById('contenedor_grilla_dias');
   const listaEventos = document.getElementById('lista_eventos_contenedor');
@@ -118,7 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     aviso.textContent = mensaje;
     aviso.style.display = 'flex';
-    setTimeout(() => { aviso.style.display = 'none'; }, 7000);
+    if (window.temporizadorAvisoCalendario) clearTimeout(window.temporizadorAvisoCalendario);
+    window.temporizadorAvisoCalendario = setTimeout(() => { aviso.style.display = 'none'; }, 7000);
   }
 
   function fechaClave(fecha) {
@@ -142,16 +144,116 @@ document.addEventListener('DOMContentLoaded', () => {
     dibujarTodo();
   }
 
+  function actualizarBadgesNavMes() {
+    const badgePrevio = document.getElementById('badge_mes_previo');
+    const badgeSiguiente = document.getElementById('badge_mes_siguiente');
+    if (!badgePrevio || !badgeSiguiente) return;
+
+    const mesActual = fechaSeleccionada.getMonth();
+    const anioActual = fechaSeleccionada.getFullYear();
+
+    let tienePrevio = false;
+    let tieneSiguiente = false;
+
+    tareas.forEach(tarea => {
+      if (!tarea.fecha) return;
+      const f = new Date(tarea.fecha.includes('T') ? tarea.fecha : tarea.fecha + 'T00:00:00');
+      const tAnio = f.getFullYear();
+      const tMes = f.getMonth();
+
+      if (tAnio < anioActual || (tAnio === anioActual && tMes < mesActual)) {
+        tienePrevio = true;
+      }
+      if (tAnio > anioActual || (tAnio === anioActual && tMes > mesActual)) {
+        tieneSiguiente = true;
+      }
+    });
+
+    badgePrevio.style.display = tienePrevio ? 'block' : 'none';
+    badgeSiguiente.style.display = tieneSiguiente ? 'block' : 'none';
+  }
+
+  window.toggleMenuOpcionesTarea = function(evento, idTarea) {
+    evento.stopPropagation();
+    document.querySelectorAll('[id^="menu_opciones_tarea_"]').forEach(menu => {
+      if (menu.id !== `menu_opciones_tarea_${idTarea}`) menu.style.display = 'none';
+    });
+
+    const menu = document.getElementById(`menu_opciones_tarea_${idTarea}`);
+    if (menu) {
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  };
+
+  window.addEventListener('click', () => {
+    document.querySelectorAll('[id^="menu_opciones_tarea_"]').forEach(menu => {
+      menu.style.display = 'none';
+    });
+  });
+
+  window.prepararEdicionTarea = function(id, esAutor) {
+    if (!esAutor) {
+      mostrarAviso('No tienes permisos para editar esta tarea porque no eres el autor.');
+      return;
+    }
+
+    const tarea = tareas.find(t => t.id === id);
+    if (!tarea) return;
+
+    tareaEnEdicionId = id;
+    document.getElementById('input_titulo_evento').value = tarea.titulo || '';
+    const fechaFormatBD = tarea.fecha.includes('T') ? tarea.fecha.split('T')[0] : tarea.fecha;
+    campoFecha.value = fechaFormatBD;
+    document.getElementById('input_horario_evento').value = tarea.horario || '';
+    document.getElementById('input_depto_evento').value = tarea.departamento || '';
+
+    const tituloModal = modal.querySelector('.modal_titulo');
+    if (tituloModal) tituloModal.textContent = 'Editar evento';
+
+    modal.style.display = 'flex';
+  };
+
+  window.eliminarTareaBD = async function(id, esAutor) {
+    if (!esAutor) {
+      mostrarAviso('No tienes permisos para eliminar esta tarea porque no eres el autor.');
+      return;
+    }
+
+    if (!confirm('¿Estás seguro de que deseas eliminar esta tarea?')) return;
+
+    try {
+      const respuesta = await fetch(`${window.OCID_API_BASE}/tareas/${id}`, {
+        method: 'DELETE'
+      });
+      const datos = await respuesta.json();
+      if (!respuesta.ok || !datos.success) throw new Error('No se pudo cargar');
+
+      await cargarTareasDesdeDB();
+    } catch (error) {
+      mostrarAviso('No se pudo cargar');
+    }
+  };
+
   function dibujarListaEventos() {
     if (!listaEventos) return;
     listaEventos.replaceChildren();
+
+    let usuarioActual = null;
+    try {
+      usuarioActual = JSON.parse(localStorage.getItem('usuario_ocid') || 'null');
+    } catch (e) {
+      usuarioActual = null;
+    }
 
     const ordenados = tareas.slice().sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)));
 
     ordenados.forEach(tarea => {
       const f = new Date((tarea.fecha.includes('T') ? tarea.fecha : tarea.fecha + 'T00:00:00'));
+      const esAutor = usuarioActual && (Number(usuarioActual.id) === Number(tarea.autor_id));
+
       const item = document.createElement('div');
       item.className = 'item_evento';
+      item.style.position = 'relative';
 
       item.innerHTML = `
         <div class="caja_fecha">
@@ -166,16 +268,21 @@ document.addEventListener('DOMContentLoaded', () => {
             ${escaparHTML(tarea.departamento || 'General')}
           </div>
         </div>
+        <div style="position: relative;">
+          <button class="boton_opciones_anuncio" title="Más opciones" onclick="toggleMenuOpcionesTarea(event, ${tarea.id})">&#8942;</button>
+          <div id="menu_opciones_tarea_${tarea.id}" style="display: none; position: absolute; right: 0; top: 25px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); z-index: 50; width: 140px; padding: 4px 0;">
+            <button onclick="prepararEdicionTarea(${tarea.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#0f172a' : '#94a3b8'}; flex-direction: row; gap: 8px; display: flex; align-items: center;">
+              <svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              Editar
+            </button>
+            <button onclick="eliminarTareaBD(${tarea.id}, ${esAutor})" style="width: 100%; text-align: left; background: none; border: none; padding: 8px 12px; font-size: 13px; cursor: pointer; color: ${esAutor ? '#ef4444' : '#94a3b8'}; flex-direction: row; gap: 8px; display: flex; align-items: center;">
+              <svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Eliminar
+            </button>
+          </div>
+        </div>
       `;
 
-      const botonEliminar = document.createElement('button');
-      botonEliminar.type = 'button';
-      botonEliminar.className = 'boton_eliminar_evento';
-      botonEliminar.title = 'Eliminar tarea';
-      botonEliminar.innerHTML = '<i class="fa-solid fa-trash"></i>';
-      botonEliminar.addEventListener('click', () => eliminarTareaBD(tarea.id));
-
-      item.appendChild(botonEliminar);
       listaEventos.appendChild(item);
     });
 
@@ -259,10 +366,13 @@ document.addEventListener('DOMContentLoaded', () => {
         fechaSeleccionada = new Date(fecha);
         campoFecha.value = clave;
         dibujarGrilla();
+        actualizarBadgesNavMes();
       });
 
       grilla.appendChild(celda);
     });
+
+    actualizarBadgesNavMes();
   }
 
   function dibujarTodo() {
@@ -276,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })[c]);
   }
 
-  async function crearTareaBD() {
+  async function guardarTareaBD() {
     const titulo = document.getElementById('input_titulo_evento').value.trim();
     const fecha = campoFecha.value;
     const horario = document.getElementById('input_horario_evento').value.trim();
@@ -291,8 +401,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const respuesta = await fetch(`${window.OCID_API_BASE}/tareas`, {
-        method: 'POST',
+      let url = `${window.OCID_API_BASE}/tareas`;
+      let metodo = 'POST';
+
+      if (tareaEnEdicionId !== null) {
+        url = `${window.OCID_API_BASE}/tareas/${tareaEnEdicionId}`;
+        metodo = 'PUT';
+      }
+
+      const respuesta = await fetch(url, {
+        method: metodo,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           titulo,
@@ -310,22 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('input_titulo_evento').value = '';
       document.getElementById('input_horario_evento').value = '';
       document.getElementById('input_depto_evento').value = '';
-
-      await cargarTareasDesdeDB();
-    } catch (error) {
-      mostrarAviso('No se pudo cargar');
-    }
-  }
-
-  async function eliminarTareaBD(id) {
-    if (!confirm('¿Estás seguro de que deseas eliminar esta tarea?')) return;
-
-    try {
-      const respuesta = await fetch(`${window.OCID_API_BASE}/tareas/${id}`, {
-        method: 'DELETE'
-      });
-      const datos = await respuesta.json();
-      if (!respuesta.ok || !datos.success) throw new Error('No se pudo cargar');
+      tareaEnEdicionId = null;
 
       await cargarTareasDesdeDB();
     } catch (error) {
@@ -354,15 +457,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('boton_abrir_modal').addEventListener('click', () => {
+    tareaEnEdicionId = null;
+    const tituloModal = modal.querySelector('.modal_titulo');
+    if (tituloModal) tituloModal.textContent = 'Registrar nuevo evento';
     campoFecha.value = fechaClave(fechaSeleccionada);
     modal.style.display = 'flex';
   });
 
   [document.getElementById('boton_cerrar_modal'), document.getElementById('boton_cancelar_modal')].forEach(b => {
-    if (b) b.addEventListener('click', () => { modal.style.display = 'none'; });
+    if (b) b.addEventListener('click', () => { 
+      modal.style.display = 'none'; 
+      tareaEnEdicionId = null;
+    });
   });
 
-  document.getElementById('boton_guardar_evento').addEventListener('click', crearTareaBD);
+  document.getElementById('boton_guardar_evento').addEventListener('click', guardarTareaBD);
 
   cargarTareasDesdeDB();
 });
