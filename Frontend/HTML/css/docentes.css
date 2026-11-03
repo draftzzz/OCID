@@ -892,21 +892,34 @@ button, input, select, textarea {
 /* ==========================================================================
    6. Adaptación Completa para Teléfonos Móviles
    ========================================================================== */
-@media (max-width: 768px) {
-    .cuerpo_pagina {
-        padding: 16px 12px !important;
+@media (max-width: 900px) {
+    /* Ocultar la campana de notificaciones en teléfonos y tablets */
+    .boton_notificaciones {
+        display: none !important;
     }
 
-    .distribucion_dos_columnas {
-        grid-template-columns: 1fr;
-    }
-
+    .menu_movil,
     .boton_menu_hamburguesa {
-        display: flex;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #94a3b8 !important;
+        font-size: 18px !important;
+        cursor: pointer;
+    }
+
+    .menu_movil:hover,
+    .boton_menu_hamburguesa:hover {
+        color: #ffffff !important;
     }
 
     .barra_lateral {
-        position: fixed !important;
+        position: fixed;
         left: 0px;
         top: 0px;
         height: 100vh;
@@ -914,7 +927,8 @@ button, input, select, textarea {
         box-shadow: 8px 0px 24px rgba(15, 23, 42, 0.2);
     }
 
-    body.menu_movil_abierto .barra_lateral {
+    body.menu_movil_abierto .barra_lateral,
+    .barra_lateral.menu_abierto {
         transform: translateX(0px);
     }
 
@@ -922,8 +936,22 @@ button, input, select, textarea {
         position: fixed;
         inset: 0px;
         z-index: 35;
+        display: block;
         background-color: rgba(15, 23, 42, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
         border: none;
+    }
+
+    body.menu_movil_abierto .fondo_menu_movil {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .distribucion_dos_columnas,
+    .contenedor_dos_columnas {
+        grid-template-columns: 1fr;
     }
 
     /* Corrección de Filtros e Inputs Móviles */
